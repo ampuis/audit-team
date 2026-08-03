@@ -849,11 +849,11 @@
                 <table class="w-full text-left border-collapse text-xs">
                     <thead class="sticky top-0 bg-slate-900 border-b border-white/10 text-sky-300 font-bold z-10">
                         <tr>
-                            <th class="p-3 border-r border-white/10 w-2/5">1) รายละเอียดงาน / โครงการ</th>
-                            <th class="p-3 border-r border-white/10 w-1/5">2) ประเภทภาระงานหลัก</th>
-                            <th class="p-3 border-r border-white/10 w-1/5 text-center">3) ทีมรับผิดชอบ</th>
-                            <th class="p-3 border-r border-white/10 w-1/12 text-center">4) ไตรมาส</th>
-                            <th class="p-3 w-1/12 text-right">5) Manday</th>
+                            <th class="p-3 border-r border-white/10 w-[32%]">รายละเอียดงาน / โครงการ</th>
+                            <th class="p-3 border-r border-white/10 w-[24%]">ประเภทภาระงานหลัก</th>
+                            <th class="p-3 border-r border-white/10 w-[16%] text-center">ทีมรับผิดชอบ</th>
+                            <th class="p-3 border-r border-white/10 w-[14%] text-center">ไตรมาส</th>
+                            <th class="p-3 w-[14%] text-right">Manday</th>
                         </tr>
                     </thead>
                     <tbody id="workload-detail-tbody" class="divide-y divide-white/10 text-slate-300">
@@ -1189,23 +1189,19 @@
                 if (txt) txt.innerText = "🟢 Cloud Sync Active";
 
                 firebaseDb.collection('members').onSnapshot(snapshot => {
-                    if (!snapshot.empty) {
-                        let members = [];
-                        snapshot.forEach(doc => members.push(doc.data()));
-                        masterMembers = members;
-                        localStorage.setItem('audit_members', JSON.stringify(masterMembers));
-                        window.refreshAllViews();
-                    }
+                    let members = [];
+                    snapshot.forEach(doc => members.push(doc.data()));
+                    masterMembers = members;
+                    localStorage.setItem('audit_members', JSON.stringify(masterMembers));
+                    window.refreshAllViews();
                 });
 
                 firebaseDb.collection('workloads').onSnapshot(snapshot => {
-                    if (!snapshot.empty) {
-                        let workloads = [];
-                        snapshot.forEach(doc => workloads.push(doc.data()));
-                        masterWorkloads = workloads;
-                        localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
-                        window.refreshAllViews();
-                    }
+                    let workloads = [];
+                    snapshot.forEach(doc => workloads.push(doc.data()));
+                    masterWorkloads = workloads;
+                    localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
+                    window.refreshAllViews();
                 });
 
                 window.playChime(800, 'sine', 0.2);
@@ -1894,13 +1890,33 @@
             if (!editId) return;
 
             masterMembers = masterMembers.filter(m => m.id !== editId);
+            localStorage.setItem('audit_members', JSON.stringify(masterMembers));
 
             if (isFirebaseConnected && firebaseDb && editId) {
-                firebaseDb.collection('members').doc(editId).delete().catch(err => console.error("Cloud delete member error:", err));
+                firebaseDb.collection('members').doc(editId).delete()
+                    .then(() => console.log("Member permanently deleted from Firestore:", editId))
+                    .catch(err => console.error("Cloud delete member error:", err));
             }
 
-            window.syncStateToCloudOrLocal();
             window.resetMemberForm();
+            window.refreshAllViews();
+        };
+
+        window.deleteWorkloadItem = function(id) {
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            masterWorkloads = masterWorkloads.filter(w => w.id !== id);
+            localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
+
+            if (isFirebaseConnected && firebaseDb && id) {
+                firebaseDb.collection('workloads').doc(id).delete()
+                    .then(() => console.log("Workload item permanently deleted from Firestore:", id))
+                    .catch(err => console.error("Cloud delete workload error:", err));
+            }
+
+            window.refreshAllViews();
         };
 
         window.playChime = function(freq = 500, type = 'sine', duration = 0.1) {
