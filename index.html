@@ -1588,14 +1588,14 @@
                             ${teamMembers.map((m, idx) => {
                                 const isLeader = idx === 0 && m.isLeader;
                                 return `
-                                    <div class="bg-slate-50 border border-slate-200 hover:border-sky-400 p-2.5 rounded-xl text-center relative flex flex-col items-center justify-center min-h-[130px] group hover:shadow-md pt-4">
+                                    <div class="bg-slate-50 border border-slate-200 hover:border-sky-400 p-2.5 rounded-xl text-center relative flex flex-col items-center justify-center min-h-[140px] group hover:shadow-md pt-5">
                                         <div class="relative shrink-0 flex justify-center mb-1">
-                                            ${isLeader ? '<div class="absolute -top-4 z-20 text-amber-500 text-base drop-shadow animate-bounce"><i class="fa-solid fa-crown"></i></div>' : ''}
-                                            <div class="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-full p-1 bg-white shadow-md border-2 ${meta.border} overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                                            ${isLeader ? '<div class="absolute -top-5 z-20 text-amber-500 text-lg drop-shadow animate-bounce"><i class="fa-solid fa-crown"></i></div>' : ''}
+                                            <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full p-1 bg-white shadow-md border-2 ${meta.border} overflow-hidden transition-transform duration-300 group-hover:scale-105">
                                                 <img src="${m.avatar}" onerror="this.src='https://placehold.co/150x150/0284c7/ffffff?text=${encodeURIComponent(m.name.charAt(0))}'" class="w-full h-full rounded-full object-cover">
                                             </div>
                                         </div>
-                                        <div class="font-bold text-slate-800 text-xs sm:text-sm truncate w-full mt-1">${m.name}</div>
+                                        <div class="font-bold text-slate-800 text-xs sm:text-sm truncate w-full mt-1.5">${m.name}</div>
                                     </div>
                                 `;
                             }).join('')}
