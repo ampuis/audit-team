@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annual Inspection Team Restructuring 2026</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Firebase Compat SDKs for Realtime Cloud Data Synchronization -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <style>
+        * {
+            font-family: 'Prompt', sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0b0f17;
+            color: #f8fafc;
+            overflow: hidden;
+            user-select: none;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .presentation-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.98);
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            transition: all 0.3s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.7);
+        }
+
+        /* Old Team Dark Vintage Theme */
+        .theme-old-container {
+            background: linear-gradient(180deg, #0d131f 0%, #151d2a 100%);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9);
+            border-radius: 1.25rem;
+        }
+
+        .old-team-row {
+            border-radius: 0.85rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .old-member-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(71, 85, 105, 0.4);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+        }
+
+        .old-member-photo {
+            filter: sepia(0.4) grayscale(0.35) contrast(1.05) brightness(0.85);
+            transition: all 0.3s ease;
+        }
+
+        .old-member-card:hover .old-member-photo {
+            filter: sepia(0.1) grayscale(0) contrast(1.1) brightness(1);
+        }
+
+        /* New Team Bright Theme */
+        .theme-new-container {
+            background: linear-gradient(180deg, #f0f7ff 0%, #e0f2fe 100%);
+            color: #0f172a;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            box-shadow: 0 15px 40px rgba(56, 189, 248, 0.25);
+            border-radius: 1.25rem;
+        }
+
+        .new-team-row {
+            background: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: 1rem;
+            box-shadow: 0 8px 25px rgba(148, 163, 184, 0.15);
+        }
+
+        /* Custom Scrollbars */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.4);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(56, 189, 248, 0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Animated Particles Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="presentation-wrapper">
+
+        <!-- Top Header Controls Bar -->
+        <div class="w-full px-3 sm:px-6 py-2 border-b border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 z-20 bg-slate-900/90 backdrop-blur-md shrink-0">
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-ping"></span>
+                    <span class="font-bold text-white tracking-wider uppercase text-[11px] sm:text-xs">Internal Audit 2026</span>
+                </div>
+                
+                <!-- Cloud Status Indicator -->
+                <div id="cloud-status-badge" class="bg-slate-800 border border-slate-700 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-medium flex items-center gap-1.5 shadow-sm">
+                    <span id="cloud-status-dot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span id="cloud-status-text" class="text-emerald-300">🟢 Cloud Sync</span>
+                </div>
+
+                <!-- Admin Auth Status Button -->
+                <button onclick="toggleAdminAuthModal()" id="admin-login-badge" class="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-amber-300 transition shadow cursor-pointer">
+                    <span id="admin-status-dot" class="w-2 h-2 rounded-full bg-amber-400"></span>
+                    <span id="admin-status-text">🔒 Guest Mode (เข้าสู่ระบบ)</span>
+                </button>
+            </div>
+            
+            <div class="flex items-center gap-3 sm:gap-5 ml-auto">
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <span id="slide-num-current" class="text-sky-400 font-bold text-sm">1</span>
+                    <span>/</span>
+                    <span id="slide-num-total" class="font-medium">10</span>
+                </div>
+
+                <button onclick="toggleAudio()" id="btn-audio" class="hover:text-sky-400 transition" title="Toggle Audio">
+                    <i class="fa-solid fa-volume-high text-xs sm:text-sm"></i>
+                </button>
+                <button onclick="toggleFullscreen()" class="hover:text-sky-400 transition" title="Toggle Fullscreen">
+                    <i class="fa-solid fa-expand text-xs sm:text-sm"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide Content Viewport -->
+        <div class="relative flex-grow w-full overflow-hidden">
+
+            <!-- Slide 1: Welcome -->
+            <div class="slide active" id="slide-1">
+                <div class="h-full flex flex-col justify-center items-center text-center max-w-4xl mx-auto my-auto">
+                    <div class="inline-flex items-center gap-2 bg-sky-500/20 border border-sky-400/30 text-sky-300 px-4 py-1.5 rounded-full text-xs font-semibold mb-6 animate-bounce">
+                        <i class="fa-solid fa-sparkles"></i> Annual Seminar 2026
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-sky-200 to-sky-400 leading-tight">
+                        แผนการตรวจสอบ<br>ประจำปี 2570
+                    </h1>
+                    
+                    <p class="text-base md:text-lg text-slate-300 font-light mb-8 max-w-2xl leading-relaxed">
+                        ยกระดับประสิทธิภาพการทำงาน ปรับเปลี่ยนโครงสร้างอย่างเป็นระบบ<br>
+                        การตรวจสอบที่ครอบคลุม <span class="text-sky-400 font-semibold">100%</span> 
+                    </p>
+
+                    <div class="flex items-center gap-4">
+                        <button onclick="nextSlide()" class="btn-glow text-white font-semibold px-8 py-3.5 rounded-xl text-base flex items-center gap-3">
+                            <span>เริ่มการนำเสนอ</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button onclick="goToSlide(5)" class="glass-card hover:bg-slate-700/50 text-sky-400 font-medium px-6 py-3.5 rounded-xl text-sm flex items-center gap-2 border border-sky-400/30">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>ข้ามไปหน้าเปิดตัวทีมใหม่</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Strategic Vision -->
+            <div class="slide" id="slide-2">
+                <div class="flex flex-col h-full justify-between">
+                    <div>
+                        <div class="inline-flex items-center gap-2 bg-sky-500/20 text-sky-300 px-3 py-1 rounded-full text-xs font-semibold mb-2"><i class="fa-solid fa-chart-line"></i> Strategic Vision</div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white">กลยุทธหลัก</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-auto">
+                        <div class="glass-card p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center text-xl mb-4">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-2">แผนการตรวจสอบที่ครอบคลุมงานทุกมิติ 100%</h3>
+                                <p class="text-slate-300 text-xs leading-relaxed">
+                                    แจงภาระงานให้ครอบคลุม เพื่อบริหารจัดการแบ่งงานอย่างทั่วถึง
+                                </p>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10 text-xs text-slate-400 flex justify-between">
+                                <span>เป้าหมาย:</span>
+                                <span class="text-emerald-400 font-medium">งานตรวจสอบครอบคลุมทุกมิติ</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xl mb-4">
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-2">เพิ่มความเชี่ยวชาญ</h3>
+                                <p class="text-slate-300 text-xs leading-relaxed">
+                                    วางแผนพัฒนาบุคลากรให้ได้รับการอบรม/เรียนรู้ที่หลากหลาย เพิ่มการรับรู้เกี่ยวกับการบริหารจัดการของมหาวิทยาลัย เพื่อนำมาปรับใช้ในการตรวจสอบรอบด้าน
+                                </p>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10 text-xs text-slate-400 flex justify-between">
+                                <span>เป้าหมาย:</span>
+                                <span class="text-emerald-400 font-medium">งานตรวจสอบมีคุณภาพ</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl mb-4">
+                                    <i class="fa-solid fa-microchip"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-2">ปรับโครงสร้างการทำงาน</h3>
+                                <p class="text-slate-300 text-xs leading-relaxed">
+                                    โครงสร้างเดิม 3 ทีม มีปริมาณงานการตรวจสอบต่อทีมสูงเกินไป ทำให้เกิดคอขวดและข้อจำกัดด้านระยะเวลา
+                                </p>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-white/10 text-xs text-slate-400 flex justify-between">
+                                <span>เป้าหมาย:</span>
+                                <span class="text-emerald-400 font-medium">เพิ่มประสิทธิภาพและการทำงานอย่างเป็นระบบ</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Structural Analysis -->
+            <div class="slide" id="slide-3">
+                <div class="flex flex-col h-full justify-between">
+                    <div>
+                        <div class="inline-flex items-center gap-2 bg-sky-500/20 text-sky-300 px-3 py-1 rounded-full text-xs font-semibold mb-2"><i class="fa-solid fa-code-compare"></i> Structural Analysis</div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white">ภารกิจงานตรวจสอบเดิมVSภารกิจงานตรวจสอบใหม่</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-auto">
+                        <div class="glass-card p-6 border-red-500/20 bg-red-950/10">
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+                                <h3 class="text-lg font-bold text-red-400 flex items-center gap-2">
+                                    <i class="fa-solid fa-boxes-stacked"></i> งานตรวจสอบเดิม
+                                </h3>
+                                <span class="bg-red-500/20 text-red-300 text-xs px-3 py-1 rounded-full">Generalist</span>
+                            </div>
+                            <ul class="space-y-4 text-slate-300 text-xs md:text-sm">
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-xmark text-red-400 mt-1"></i>
+                                    <span><strong>งานตรวจสอบประจำปี:</strong> ด้านผลการดำเนินงาน ด้านการเงิน ด้านการดำเนินงาน ด้านการปฏิบัติตามกฎระเบียบข้อบังคับ</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-xmark text-red-400 mt-1"></i>
+                                    <span><strong>งบการเงิน:</strong> จำนวน 50 หน่วยงาน</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-xmark text-red-400 mt-1"></i>
+                                    <span><strong>งานอื่นตามที่ได้รับมอบหมาย:</strong> ความเสี่ยง ควบคุมภายใน การประกันคุณภาพ</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="glass-card p-6 border-emerald-500/30 bg-emerald-950/10 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-emerald-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-bl-lg">
+                                RECOMMENDED
+                            </div>
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+                                <h3 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
+                                    <i class="fa-solid fa-cubes-stacked"></i> งานตรวจสอบใหม่ (ครอบคลุมทุกมิติ)
+                                </h3>
+                                <span class="bg-emerald-500/20 text-emerald-300 text-xs px-3 py-1 rounded-full">Specialized</span>
+                            </div>
+                            <ul class="space-y-4 text-slate-300 text-xs md:text-sm">
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                    <span><strong>งานตรวจสอบประจำปี:</strong> ด้านผลการดำเนินงาน ด้านการเงิน ด้านการดำเนินงาน ด้านการปฏิบัติตามกฎระเบียบข้อบังคับ</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                    <span><strong>งานตรวจสอบเฉพาะทาง:</strong> IT Audit, โครงการพิเศษตามที่ได้รับมอบนโยบายจากผู้บริหาร</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                    <span><strong>งานตรวจสอบกองทุนสวัสดิการบุคลากรมหาวิทยาลัย:</strong> และเงินทุนสวัสดิการบุคลากรสำนักงานมหาวิทยาลัย (20,000 บาท)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                    <span><strong>งบการเงิน:</strong> จำนวน 50 หน่วยงาน</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                    <span><strong>งานอื่นตามที่ได้รับมอบหมาย:</strong> ความเสี่ยง ควบคุมภายใน การประกันคุณภาพ</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Manday Calculator & Matrix Workload Allocation Table -->
+            <div class="slide" id="slide-4">
+                <div class="flex flex-col h-full justify-between overflow-y-auto custom-scrollbar pr-1">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="inline-flex items-center gap-2 bg-sky-500/20 text-sky-300 px-3 py-1 rounded-full text-xs font-semibold">
+                                <i class="fa-solid fa-calculator"></i> Capacity & Workload Planning 2570
+                            </div>
+                            <div class="text-xs text-slate-400">
+                                สรุปกำลังวันทำงานจริง (Manday) และการจัดสรรภาระงาน
+                            </div>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white">ประมาณการวันทำงานจริง & ภาระงานตรวจสอบปี 2570</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 my-2">
+                        <!-- Manday Calculator Box -->
+                        <div class="lg:col-span-5 glass-card p-4 border-sky-400/30 flex flex-col justify-between">
+                            <h3 class="text-sm font-bold text-sky-300 pb-2 border-b border-white/10 flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-check text-sky-400"></i>
+                                <span>คำนวณวันทำงานจริงต่อคน (Manday/Auditor)</span>
+                            </h3>
+
+                            <div class="space-y-2.5 my-3 text-xs">
+                                <div class="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-white/5">
+                                    <span class="text-slate-300">จำนวนวันทั้งหมดใน 1 ปี</span>
+                                    <div class="flex items-center gap-1.5">
+                                        <input type="number" id="calc-total-days" value="365" oninput="calculateMandays()" class="w-16 bg-slate-800 text-center font-bold text-white rounded px-1.5 py-0.5 border border-slate-700">
+                                        <span class="text-slate-400 text-[10px]">วัน</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-white/5">
+                                    <span class="text-slate-300">หัก: วันหยุดเสาร์-อาทิตย์/นักขัตฤกษ์</span>
+                                    <div class="flex items-center gap-1.5">
+                                        <input type="number" id="calc-holidays" value="120" oninput="calculateMandays()" class="w-16 bg-slate-800 text-center font-bold text-red-400 rounded px-1.5 py-0.5 border border-slate-700">
+                                        <span class="text-slate-400 text-[10px]">วัน</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-white/5">
+                                    <span class="text-slate-300">หัก: วันลาประจำปี (ป่วย/กิจ/พักร้อน)</span>
+                                    <div class="flex items-center gap-1.5">
+                                        <input type="number" id="calc-leaves" value="15" oninput="calculateMandays()" class="w-16 bg-slate-800 text-center font-bold text-amber-400 rounded px-1.5 py-0.5 border border-slate-700">
+                                        <span class="text-slate-400 text-[10px]">วัน</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-white/5">
+                                    <span class="text-slate-300">หัก: วันประชุม/อบรม/สัมมนา</span>
+                                    <div class="flex items-center gap-1.5">
+                                        <input type="number" id="calc-trainings" value="10" oninput="calculateMandays()" class="w-16 bg-slate-800 text-center font-bold text-purple-400 rounded px-1.5 py-0.5 border border-slate-700">
+                                        <span class="text-slate-400 text-[10px]">วัน</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-3 bg-gradient-to-r from-sky-950 to-slate-900 rounded-xl border border-sky-400/40 text-center">
+                                <div class="text-[11px] text-slate-300">วันทำงานจริงสุทธิ / สมาชิก 1 คน</div>
+                                <div class="text-3xl font-extrabold text-sky-400 my-0.5" id="res-net-manday">220</div>
+                                <div class="text-[10px] text-slate-400">
+                                    กำลังรวมทั้งสิ้น (<span id="calc-member-count">0</span> คน): <span id="res-total-capacity" class="text-emerald-400 font-bold">0</span> Mandays
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Workload Distribution Matrix Table -->
+                        <div class="lg:col-span-7 glass-card p-4 flex flex-col justify-between">
+                            <div class="flex items-center justify-between pb-2 border-b border-white/10">
+                                <h3 class="text-sm font-bold text-emerald-300 flex items-center gap-2">
+                                    <i class="fa-solid fa-table-cells text-emerald-400"></i>
+                                    <span>จัดสรรภาระงานตรวจสอบประจำปี 2570 (Matrix Workload Table)</span>
+                                </h3>
+                                <button onclick="openAddProjectModal()" class="text-xs bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 px-2.5 py-1 rounded-lg border border-emerald-400/30 flex items-center gap-1 transition">
+                                    <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
+                                </button>
+                            </div>
+
+                            <div class="my-2 max-h-56 overflow-y-auto custom-scrollbar pr-1">
+                                <table class="w-full text-left border-collapse text-[11px] border border-white/10">
+                                    <thead>
+                                        <tr class="bg-slate-900/90 text-sky-300 border-b border-white/10 text-[10px] uppercase text-center">
+                                            <th class="py-2 px-2 border-r border-white/10 w-1/5 bg-sky-950/50 text-sky-300">ประเภทงานหลัก</th>
+                                            <th class="py-2 px-1 border-r border-white/10 w-1/5 bg-sky-950/50 text-sky-300">TEAM 1</th>
+                                            <th class="py-2 px-1 border-r border-white/10 w-1/5 bg-sky-950/50 text-sky-300">TEAM 2</th>
+                                            <th class="py-2 px-1 border-r border-white/10 w-1/5 bg-sky-950/50 text-sky-300">TEAM 3</th>
+                                            <th class="py-2 px-1 w-1/5 bg-sky-950/50 text-sky-300">TEAM 4</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="workload-table-body" class="divide-y divide-white/10 text-slate-300">
+                                        <!-- Matrix Rendered Dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Capacity Usage Bar -->
+                            <div class="pt-2 border-t border-white/10">
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-400">สัดส่วนการใช้วันทำงาน (Capacity Utilization):</span>
+                                    <span id="res-utilization-text" class="font-bold text-sky-400">0%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                                    <div id="res-utilization-bar" class="bg-gradient-to-r from-sky-400 to-emerald-400 h-full transition-all duration-500" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-3 flex items-center justify-between text-xs text-slate-300">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb text-amber-400 text-base"></i>
+                            <span>การคำนวณ Manday ช่วยให้การกระจายภาระงานไปยังทั้ง 4 ทีมเกิดความสมดุลสูงสุด</span>
+                        </div>
+                        <button onclick="goToSlide(5)" class="text-sky-400 font-semibold hover:underline flex items-center gap-1">
+                            <span>ไปยังหน้าเปิดตัว 4 ทีมใหม่</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Grand Reveal Slide -->
+            <div class="slide" id="slide-5">
+                <div class="flex flex-col h-full justify-start overflow-y-auto custom-scrollbar pb-2">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-2 shrink-0">
+                        <div>
+                            <div class="inline-flex items-center gap-2 bg-sky-500/20 text-sky-300 px-3 py-0.5 rounded-full text-xs font-semibold mb-0.5"><i class="fa-solid fa-wand-magic-sparkles"></i> The Grand Reveal</div>
+                            <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2">
+                                ประกาศการจัดทีมตรวจสอบใหม่ประจำปี 2026
+                            </h2>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <button onclick="openRosterModal()" class="glass-card hover:bg-sky-500/20 text-sky-300 border border-sky-400/40 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1.5 transition shadow">
+                                <i class="fa-solid fa-user-gear text-xs text-sky-400"></i>
+                                <span>จัดการสมาชิก & รูปถ่าย</span>
+                            </button>
+
+                            <div class="bg-slate-900/90 p-1 rounded-full border border-white/10 flex items-center gap-1 shadow-inner">
+                                <button id="toggle-old-btn" onclick="triggerTeamSwitch('old')" class="px-3.5 py-1 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400">
+                                    <i class="fa-solid fa-users mr-1"></i> โครงสร้างเดิม (3 ทีม)
+                                </button>
+                                <button id="toggle-new-btn" onclick="triggerTeamSwitch('new')" class="btn-glow px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-300 text-white flex items-center gap-1.5">
+                                    <i class="fa-solid fa-rocket animate-pulse text-xs"></i>
+                                    <span>เปิดตัว 4 ทีมใหม่! (CLICK)</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow w-full">
+                        <div id="teams-grid-container" class="w-full">
+                            <!-- Dynamic Team Grid Rendered Here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Team 1 Focus -->
+            <div class="slide" id="slide-6">
+                <div class="flex flex-col h-full justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="inline-flex items-center gap-2 bg-sky-500/20 text-sky-300 px-3 py-1 rounded-full text-xs font-semibold mb-1"><i class="fa-solid fa-shield-heart"></i> Team 01 Focus</div>
+                            <h2 class="text-2xl font-bold text-sky-400">Audit Team 1</h2>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="bg-sky-500/20 border border-sky-400/30 text-sky-300 px-3 py-1 rounded-full text-xs font-semibold">CMU</span>
+                            <button onclick="goToSlide(5)" class="glass-card hover:bg-sky-500/20 text-sky-300 border border-sky-400/40 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span>กลับหน้าสมาชิกทีมใหม่</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6 my-auto">
+                        <div class="glass-card p-5">
+                            <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center justify-between">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-users text-sky-400"></i> รายชื่อสมาชิกในทีม</span>
+                                <button onclick="openRosterModal()" class="text-xs text-sky-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i> แก้ไข</button>
+                            </h3>
+                            <div id="slide6-members-list" class="space-y-2.5"></div>
+                        </div>
+
+                        <div class="glass-card p-5 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-list-check text-sky-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
+                                </h3>
+                                <ul id="slide6-tasks-list" class="space-y-2 text-xs text-slate-300"></ul>
+                            </div>
+                            <div class="mt-4 p-2.5 bg-sky-500/10 border border-sky-400/20 rounded-lg text-xs text-sky-300">
+                                <i class="fa-solid fa-flag mr-1"></i> <strong>Key KPI:</strong> ออกรายงานการเงินถูกต้องแม่นยำ 100%
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Team 2 Focus -->
+            <div class="slide" id="slide-7">
+                <div class="flex flex-col h-full justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-semibold mb-1"><i class="fa-solid fa-sitemap"></i> Team 02 Focus</div>
+                            <h2 class="text-2xl font-bold text-emerald-400">Audit Team 2</h2>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 px-3 py-1 rounded-full text-xs font-semibold">CMU</span>
+                            <button onclick="goToSlide(5)" class="glass-card hover:bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span>กลับหน้าสมาชิกทีมใหม่</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6 my-auto">
+                        <div class="glass-card p-5">
+                            <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center justify-between">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-users text-emerald-400"></i> รายชื่อสมาชิกในทีม</span>
+                                <button onclick="openRosterModal()" class="text-xs text-emerald-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i> แก้ไข</button>
+                            </h3>
+                            <div id="slide7-members-list" class="space-y-2.5"></div>
+                        </div>
+
+                        <div class="glass-card p-5 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-list-check text-emerald-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
+                                </h3>
+                                <ul id="slide7-tasks-list" class="space-y-2 text-xs text-slate-300"></ul>
+                            </div>
+                            <div class="mt-4 p-2.5 bg-emerald-500/10 border border-emerald-400/20 rounded-lg text-xs text-emerald-300">
+                                <i class="fa-solid fa-flag mr-1"></i> <strong>Key KPI:</strong> Zero Non-Compliance Issue
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Slide 8: Team 3 Focus -->
+            <div class="slide" id="slide-8">
+                <div class="flex flex-col h-full justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="inline-flex items-center gap-2 bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-xs font-semibold mb-1"><i class="fa-solid fa-laptop-code"></i> Team 03 Focus</div>
+                            <h2 class="text-2xl font-bold text-purple-400">Audit Team 3</h2>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="bg-purple-500/20 border border-purple-400/30 text-purple-300 px-3 py-1 rounded-full text-xs font-semibold">CMU</span>
+                            <button onclick="goToSlide(5)" class="glass-card hover:bg-purple-500/20 text-purple-300 border border-purple-400/40 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span>กลับหน้าสมาชิกทีมใหม่</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6 my-auto">
+                        <div class="glass-card p-5">
+                            <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center justify-between">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-users text-purple-400"></i> รายชื่อสมาชิกในทีม</span>
+                                <button onclick="openRosterModal()" class="text-xs text-purple-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i> แก้ไข</button>
+                            </h3>
+                            <div id="slide8-members-list" class="space-y-2.5"></div>
+                        </div>
+
+                        <div class="glass-card p-5 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-list-check text-purple-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
+                                </h3>
+                                <ul id="slide8-tasks-list" class="space-y-2 text-xs text-slate-300"></ul>
+                            </div>
+                            <div class="mt-4 p-2.5 bg-purple-500/10 border border-purple-400/20 rounded-lg text-xs text-purple-300">
+                                <i class="fa-solid fa-flag mr-1"></i> <strong>Key KPI:</strong> ตรวจสอบช่องโหว่ระบบสำคัญ 100%
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Slide 9: Team 4 Focus -->
+            <div class="slide" id="slide-9">
+                <div class="flex flex-col h-full justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full text-xs font-semibold mb-1"><i class="fa-solid fa-chart-pie"></i> Team 04 Focus</div>
+                            <h2 class="text-2xl font-bold text-amber-400">Audit Team 4</h2>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="bg-amber-500/20 border border-amber-400/30 text-amber-300 px-3 py-1 rounded-full text-xs font-semibold">CMU</span>
+                            <button onclick="goToSlide(5)" class="glass-card hover:bg-amber-500/20 text-amber-300 border border-amber-400/40 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span>กลับหน้าสมาชิกทีมใหม่</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6 my-auto">
+                        <div class="glass-card p-5">
+                            <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center justify-between">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-users text-amber-400"></i> รายชื่อสมาชิกในทีม</span>
+                                <button onclick="openRosterModal()" class="text-xs text-amber-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i> แก้ไข</button>
+                            </h3>
+                            <div id="slide9-members-list" class="space-y-2.5"></div>
+                        </div>
+
+                        <div class="glass-card p-5 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-list-check text-amber-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
+                                </h3>
+                                <ul id="slide9-tasks-list" class="space-y-2 text-xs text-slate-300"></ul>
+                            </div>
+                            <div class="mt-4 p-2.5 bg-amber-500/10 border border-amber-400/20 rounded-lg text-xs text-amber-300">
+                                <i class="fa-solid fa-flag mr-1"></i> <strong>Key KPI:</strong> รายงานเชิงยุทธศาสตร์เสนอต่อบอร์ดทุกไตรมาส
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Slide 10: Quarterly Operational Plan -->
+            <div class="slide" id="slide-10">
+                <div class="flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-semibold">
+                                <i class="fa-solid fa-calendar-days"></i> Quarterly Execution Plan 2570
+                            </div>
+                            <div class="text-xs text-slate-400">
+                                กำหนดการดำเนินงานตรวจสอบแยกตามไตรมาส
+                            </div>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white">แผนการดำเนินงานรายไตรมาส ประจำปี 2570</h2>
+                    </div>
+
+                    <!-- 4 Quarter Grid Columns -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-auto overflow-y-auto custom-scrollbar max-h-[62vh] p-1">
+                        <!-- Q1 Column -->
+                        <div class="glass-card p-3 border-sky-400/30 bg-slate-900/80 flex flex-col justify-between min-h-[300px]">
+                            <div>
+                                <div class="bg-gradient-to-r from-sky-600 to-blue-600 text-white p-2 rounded-xl text-center shadow mb-3">
+                                    <h3 class="font-extrabold text-sm">QUARTER 1</h3>
+                                    <span class="text-[10px] text-sky-200">ตุลาคม - ธันวาคม</span>
+                                </div>
+                                <div id="quarter-q1-list" class="space-y-2 text-xs">
+                                    <!-- Dynamic Q1 Tasks -->
+                                </div>
+                            </div>
+                            <div class="mt-3 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
+                                <span>รวมภาระงาน Q1:</span>
+                                <span id="q1-manday-sum" class="font-bold text-sky-400">0 Mandays</span>
+                            </div>
+                        </div>
+
+                        <!-- Q2 Column -->
+                        <div class="glass-card p-3 border-emerald-400/30 bg-slate-900/80 flex flex-col justify-between min-h-[300px]">
+                            <div>
+                                <div class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-2 rounded-xl text-center shadow mb-3">
+                                    <h3 class="font-extrabold text-sm">QUARTER 2</h3>
+                                    <span class="text-[10px] text-emerald-200">มกราคม - มีนาคม</span>
+                                </div>
+                                <div id="quarter-q2-list" class="space-y-2 text-xs">
+                                    <!-- Dynamic Q2 Tasks -->
+                                </div>
+                            </div>
+                            <div class="mt-3 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
+                                <span>รวมภาระงาน Q2:</span>
+                                <span id="q2-manday-sum" class="font-bold text-emerald-400">0 Mandays</span>
+                            </div>
+                        </div>
+
+                        <!-- Q3 Column -->
+                        <div class="glass-card p-3 border-purple-400/30 bg-slate-900/80 flex flex-col justify-between min-h-[300px]">
+                            <div>
+                                <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-2 rounded-xl text-center shadow mb-3">
+                                    <h3 class="font-extrabold text-sm">QUARTER 3</h3>
+                                    <span class="text-[10px] text-purple-200">เมษายน - มิถุนายน</span>
+                                </div>
+                                <div id="quarter-q3-list" class="space-y-2 text-xs">
+                                    <!-- Dynamic Q3 Tasks -->
+                                </div>
+                            </div>
+                            <div class="mt-3 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
+                                <span>รวมภาระงาน Q3:</span>
+                                <span id="q3-manday-sum" class="font-bold text-purple-400">0 Mandays</span>
+                            </div>
+                        </div>
+
+                        <!-- Q4 Column -->
+                        <div class="glass-card p-3 border-amber-400/30 bg-slate-900/80 flex flex-col justify-between min-h-[300px]">
+                            <div>
+                                <div class="bg-gradient-to-r from-amber-600 to-orange-600 text-white p-2 rounded-xl text-center shadow mb-3">
+                                    <h3 class="font-extrabold text-sm">QUARTER 4</h3>
+                                    <span class="text-[10px] text-amber-200">กรกฎาคม - กันยายน</span>
+                                </div>
+                                <div id="quarter-q4-list" class="space-y-2 text-xs">
+                                    <!-- Dynamic Q4 Tasks -->
+                                </div>
+                            </div>
+                            <div class="mt-3 pt-2 border-t border-white/10 text-[10px] text-slate-400 flex justify-between">
+                                <span>รวมภาระงาน Q4:</span>
+                                <span id="q4-manday-sum" class="font-bold text-amber-400">0 Mandays</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-3 flex items-center justify-between text-xs text-slate-300">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-comments text-sky-400 text-base"></i>
+                            <span>สอบถามข้อสงสัยเพิ่มเติมเกี่ยวกับการปฏิบัติงานรายไตรมาสและโครงสร้างกลุ่มใหม่</span>
+                        </div>
+                        <button onclick="goToSlide(1)" class="glass-card px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-700/60 rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            <span>กลับไปหน้าแรก</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Slide Navigation Bar -->
+        <div class="w-full px-6 py-3 border-t border-white/10 flex items-center justify-between z-20 bg-slate-900/80 backdrop-blur-md shrink-0">
+            <button onclick="prevSlide()" id="btn-prev" class="glass-card px-4 py-2 text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1.5">
+                <i class="fa-solid fa-chevron-left"></i> ย้อนกลับ
+            </button>
+
+            <div class="flex items-center gap-2" id="slide-dots"></div>
+
+            <button onclick="nextSlide()" id="btn-next" class="btn-glow px-5 py-2 text-xs font-semibold text-white flex items-center gap-1.5 rounded-xl">
+                <span>ถัดไป</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Admin Authentication Modal -->
+    <div id="admin-auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden transition-opacity duration-300">
+        <div class="glass-card w-full max-w-sm bg-slate-900 border border-amber-400/40 rounded-2xl p-6 shadow-2xl text-center">
+            <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto mb-3 text-xl border border-amber-400/30">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-1">เข้าสู่ระบบผู้ดูแล (Admin Login)</h3>
+            <p class="text-xs text-slate-400 mb-4">กรอกรหัสผ่านเพื่อแก้ไข/จัดการข้อมูลสมาชิกและภาระงาน</p>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <input type="password" id="admin-password-input" required placeholder="กรอกรหัสผ่าน..." class="w-full bg-slate-950 text-white text-center text-sm p-2.5 rounded-xl border border-slate-700 focus:border-amber-400 focus:outline-none">
+                <div id="admin-login-error" class="text-xs text-red-400 hidden font-medium">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง</div>
+                <div class="flex gap-2 justify-end">
+                    <button type="button" onclick="closeAdminAuthModal()" class="w-1/2 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs">ยกเลิก</button>
+                    <button type="submit" class="w-1/2 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold rounded-xl text-xs hover:brightness-110">เข้าสู่ระบบ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Roster Management Modal -->
+    <div id="roster-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden transition-opacity duration-300">
+        <div class="glass-card w-full max-w-3xl bg-slate-900 border border-sky-400/30 rounded-2xl p-5 shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-base font-bold">
+                        <i class="fa-solid fa-users-gear"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">ระบบจัดการสมาชิก & รูปถ่ายทีมตรวจสอบ</h3>
+                        <p class="text-xs text-slate-400">เพิ่ม/แก้ไข/ลบ รายชื่อ ตำแหน่ง กลุ่มย้าย และรูปถ่ายสมาชิก (ซิงค์ออนไลน์ทันที)</p>
+                    </div>
+                </div>
+                <button onclick="closeRosterModal()" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-base"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-5 overflow-hidden flex-grow">
+                <div class="md:col-span-5 flex flex-col h-full bg-slate-950/50 p-3 rounded-xl border border-white/5">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider">รายชื่อสมาชิก (<span id="modal-member-count">0</span>)</span>
+                        <button onclick="resetMemberForm()" class="text-xs bg-sky-500/20 text-sky-300 hover:bg-sky-500/30 px-2.5 py-1 rounded-lg border border-sky-400/30 flex items-center gap-1 transition">
+                            <i class="fa-solid fa-user-plus"></i> เพิ่มสมาชิกใหม่
+                        </button>
+                    </div>
+                    <div id="modal-roster-list" class="space-y-2 overflow-y-auto flex-grow pr-1 custom-scrollbar"></div>
+                </div>
+
+                <div class="md:col-span-7 bg-slate-800/40 p-4 rounded-xl border border-white/10 flex flex-col justify-between overflow-y-auto">
+                    <form id="member-editor-form" onsubmit="saveMember(event)" class="space-y-3">
+                        <input type="hidden" id="edit-member-id" value="">
+
+                        <div class="flex items-center gap-4 bg-slate-900/60 p-3 rounded-xl border border-white/5">
+                            <img id="form-photo-preview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" class="w-14 h-14 rounded-full object-cover border-2 border-sky-400 shadow">
+                            <div class="flex-grow">
+                                <label class="block text-xs font-medium text-slate-300 mb-1">รูปถ่ายสมาชิก</label>
+                                <div class="flex gap-2">
+                                    <label class="cursor-pointer bg-slate-700 hover:bg-slate-600 text-sky-300 text-xs px-2.5 py-1 rounded-lg border border-sky-400/30 flex items-center gap-1 transition">
+                                        <i class="fa-solid fa-upload"></i> เลือกรูปไฟล์ภาพ...
+                                        <input type="file" id="form-photo-file" accept="image/*" onchange="handlePhotoFileSelect(event)" class="hidden">
+                                    </label>
+                                </div>
+                                <input type="url" id="form-photo-url" oninput="updatePhotoPreviewFromUrl(this.value)" placeholder="หรือใส่ URL ลิ้งก์รูปภาพ..." class="mt-1.5 w-full bg-slate-900/90 text-white text-xs px-2.5 py-1 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">ชื่อ-นามสกุล / ชื่อเรียก</label>
+                                <input type="text" id="form-name" required placeholder="เช่น คุณสมชาย" class="w-full bg-slate-900 text-white text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">ตำแหน่ง / ความเชี่ยวชาญ</label>
+                                <input type="text" id="form-role" required placeholder="เช่น ผู้เชี่ยวชาญงบการเงิน" class="w-full bg-slate-900 text-white text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">กลุ่มเดิม (3 ทีม)</label>
+                                <select id="form-old-team" class="w-full bg-slate-900 text-white text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
+                                    <option value="old-1">กลุ่มที่ 1 (เดิม)</option>
+                                    <option value="old-2">กลุ่มที่ 2 (เดิม)</option>
+                                    <option value="old-3">กลุ่มที่ 3 (เดิม)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">กลุ่มใหม่ (4 ทีม)</label>
+                                <select id="form-new-team" class="w-full bg-slate-900 text-white text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
+                                    <option value="new-1">Audit Team 1</option>
+                                    <option value="new-2">Audit Team 2</option>
+                                    <option value="new-3">Audit Team 3</option>
+                                    <option value="new-4">Audit Team 4</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg border border-white/5">
+                            <span class="text-xs text-slate-300">เป็นหัวหน้าทีม (Leader) หรือไม่?</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="form-is-leader" class="sr-only peer">
+                                <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-amber-500"></div>
+                            </label>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
+                            <button type="button" id="btn-delete-member" onclick="deleteCurrentMember()" class="bg-red-500/20 text-red-300 hover:bg-red-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold border border-red-400/30 transition hidden">
+                                <i class="fa-solid fa-trash mr-1"></i> ลบสมาชิก
+                            </button>
+                            <button type="submit" class="btn-glow px-4 py-1.5 rounded-lg text-xs font-bold text-white flex items-center gap-1.5">
+                                <i class="fa-solid fa-floppy-disk"></i> บันทึกข้อมูล
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workload Item Add Modal -->
+    <div id="workload-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden">
+        <div class="glass-card w-full max-w-md bg-slate-900 border border-emerald-400/30 rounded-2xl p-5 shadow-2xl">
+            <div class="flex items-center justify-between pb-2 border-b border-white/10 mb-3">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-file-circle-plus text-emerald-400"></i>
+                    <span>เพิ่มโครงการ / ภาระงานตรวจสอบ</span>
+                </h3>
+                <button onclick="closeAddProjectModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form onsubmit="saveWorkloadItem(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-300 mb-1">ประเภทภาระงานหลัก</label>
+                    <select id="wl-category" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700">
+                        <option value="งานตรวจสอบปกติ">1) งานตรวจสอบปกติ</option>
+                        <option value="งานตรวจสอบเฉพาะด้าน">2) งานตรวจสอบเฉพาะด้าน</option>
+                        <option value="งานตรวจสอบงบการเงิน">3) งานตรวจสอบงบการเงิน</option>
+                        <option value="งานอื่นๆ">4) งานอื่นๆ</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 mb-1">ชื่อโครงการ / รายละเอียดงาน</label>
+                    <input type="text" id="wl-title" required placeholder="เช่น ตรวจสอบระบบควบคุมภายในสาขาประจำปี" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700">
+                </div>
+
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-slate-300 mb-1">ทีมรับผิดชอบ</label>
+                        <select id="wl-team" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700">
+                            <option value="new-1">Audit Team 1</option>
+                            <option value="new-2">Audit Team 2</option>
+                            <option value="new-3">Audit Team 3</option>
+                            <option value="new-4">Audit Team 4</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 mb-1">ไตรมาสที่ปฏิบัติงาน</label>
+                        <select id="wl-quarter" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700 font-semibold text-emerald-300">
+                            <option value="Q1">Q1 (ม.ค. - มี.ค.)</option>
+                            <option value="Q2">Q2 (เม.ย. - มิ.ย.)</option>
+                            <option value="Q3">Q3 (ก.ค. - ก.ย.)</option>
+                            <option value="Q4">Q4 (ต.ค. - ธ.ค.)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 mb-1">วันหลักต่อคน (Base Manday)</label>
+                        <input type="number" id="wl-mandays" required min="1" value="20" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
+                    <button type="button" onclick="closeAddProjectModal()" class="px-3 py-1.5 bg-slate-800 text-slate-300 rounded-lg">ยกเลิก</button>
+                    <button type="submit" class="btn-glow px-4 py-1.5 text-white font-bold rounded-lg">บันทึกรายการ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Default initial fallback data
+        const initialMembers = [
+            { id: "m1", name: "คุณสมชาย", role: "ผู้เชี่ยวชาญบัญชีบริหาร", oldTeamId: "old-1", newTeamId: "new-1", isLeader: true, avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=250" },
+            { id: "m2", name: "คุณวิภา", role: "นักวิเคราะห์งบการเงิน", oldTeamId: "old-1", newTeamId: "new-1", isLeader: false, avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=250" },
+            { id: "m3", name: "คุณอนุรักษ์", role: "ผู้ตรวจสอบภายใน", oldTeamId: "old-3", newTeamId: "new-1", isLeader: false, avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=250" },
+            { id: "m4", name: "คุณณิชา", role: "ผู้ช่วยนักตรวจสอบ", oldTeamId: "old-2", newTeamId: "new-1", isLeader: false, avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=250" },
+
+            { id: "m5", name: "คุณกิตติ", role: "ผู้เชี่ยวชาญกฎหมายองค์กร", oldTeamId: "old-2", newTeamId: "new-2", isLeader: true, avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250" },
+            { id: "m6", name: "คุณสุชาดา", role: "เจ้าหน้าที่ Compliance", oldTeamId: "old-2", newTeamId: "new-2", isLeader: false, avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=250" },
+            { id: "m7", name: "คุณปรีชา", role: "นักจัดการกระบวนการทำงาน", oldTeamId: "old-1", newTeamId: "new-2", isLeader: false, avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=250" },
+            { id: "m8", name: "คุณกานดา", role: "ผู้ช่วยนักตรวจสอบ", oldTeamId: "old-2", newTeamId: "new-2", isLeader: false, avatar: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80&w=250" },
+
+            { id: "m9", name: "คุณธีรภัทร", role: "IT Auditor Certified (CISA)", oldTeamId: "old-2", newTeamId: "new-3", isLeader: true, avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" },
+            { id: "m10", name: "คุณนพดล", role: "Cybersecurity Specialist", oldTeamId: "old-3", newTeamId: "new-3", isLeader: false, avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&q=80&w=250" },
+            { id: "m11", name: "คุณมนัส", role: "Database Analyst", oldTeamId: "old-1", newTeamId: "new-3", isLeader: false, avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=250" },
+            { id: "m12", name: "คุณพิมพ์มาดา", role: "ผู้ช่วยตรวจสารสนเทศ", oldTeamId: "old-3", newTeamId: "new-3", isLeader: false, avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=250" },
+
+            { id: "m13", name: "คุณวรวุฒิ", role: "ผู้เชี่ยวชาญบริหารความเสี่ยง", oldTeamId: "old-3", newTeamId: "new-4", isLeader: true, avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=250" },
+            { id: "m14", name: "คุณธนกร", role: "นักวิเคราะห์ยุทธศาสตร์", oldTeamId: "old-3", newTeamId: "new-4", isLeader: false, avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=250" },
+            { id: "m15", name: "คุณศิรินทร์", role: "ที่ปรึกษาโครงการพิเศษ", oldTeamId: "old-3", newTeamId: "new-4", isLeader: false, avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=250" },
+            { id: "m16", name: "คุณอมรเทพ", role: "ผู้ช่วยนักวิเคราะห์", oldTeamId: "old-1", newTeamId: "new-4", isLeader: false, avatar: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&q=80&w=250" }
+        ];
+
+        const initialWorkloads = [
+            { id: "w1", category: "งานตรวจสอบปกติ", title: "ตรวจสอบการปฏิบัติงานและคลังพัสดุสาขา", teamId: "new-2", quarter: "Q1", baseMandays: 20 },
+            { id: "w2", category: "งานตรวจสอบงบการเงิน", title: "ตรวจสอบงบการเงินและลูกหนี้การค้าประจำปี 2570", teamId: "new-1", quarter: "Q2", baseMandays: 20 },
+            { id: "w3", category: "งานตรวจสอบเฉพาะด้าน", title: "Audit ระบบความปลอดภัยไซเบอร์ & PDPA Compliance", teamId: "new-3", quarter: "Q3", baseMandays: 15 },
+            { id: "w4", category: "งานตรวจสอบเฉพาะด้าน", title: "ประเมิน Enterprise Risk Management & โครงการลงทุน", teamId: "new-4", quarter: "Q4", baseMandays: 15 },
+            { id: "w5", category: "งานอื่นๆ", title: "งานสอบทานพิเศษตามคำสั่งคณะกรรมการตรวจสอบ", teamId: "new-1", quarter: "Q1", baseMandays: 10 }
+        ];
+
+        // Direct Embedded Firebase Configuration for GitHub Pages Deployment
+        const embeddedFirebaseConfig = {
+            apiKey: "AIzaSyB9HL8Z7XxAPXJnWuoECbsFP1orftmPQMw",
+            authDomain: "audit-teams.firebaseapp.com",
+            projectId: "audit-teams",
+            storageBucket: "audit-teams.firebasestorage.app",
+            messagingSenderId: "58487574409",
+            appId: "1:58487574409:web:1661499d3c30f42b0bdb58"
+        };
+
+        // Admin Security Config
+        const ADMIN_PASSWORD = "1234";
+        let isAdminLoggedIn = false;
+
+        // Global State Variables
+        let masterMembers = JSON.parse(localStorage.getItem('audit_members')) || initialMembers;
+        let masterWorkloads = JSON.parse(localStorage.getItem('audit_workloads')) || initialWorkloads;
+        let firebaseDb = null;
+        let isFirebaseConnected = false;
+
+        const oldTeamMeta = {
+            "old-1": { name: "กลุ่มที่ 1 (เดิม)", tag: "AUDIT 1", border: "border-sky-900/60", bg: "bg-gradient-to-br from-slate-900 via-sky-950/40 to-slate-950", text: "text-sky-300/80", crownLeaderId: "m1", headerBg: "#c5d8e1", headerText: "#0f172a" },
+            "old-2": { name: "กลุ่มที่ 2 (เดิม)", tag: "AUDIT 2", border: "border-emerald-900/60", bg: "bg-gradient-to-br from-slate-900 via-emerald-950/40 to-slate-950", text: "text-emerald-300/80", crownLeaderId: "m5", headerBg: "#c3d9d1", headerText: "#0f172a" },
+            "old-3": { name: "กลุ่มที่ 3 (เดิม)", tag: "AUDIT 3", border: "border-purple-900/60", bg: "bg-gradient-to-br from-slate-900 via-purple-950/40 to-slate-950", text: "text-purple-300/80", crownLeaderId: "m13", headerBg: "#c8c0d3", headerText: "#0f172a" }
+        };
+
+        const newTeamMeta = {
+            "new-1": { name: "Audit Team 1", title: "AUDIT TEAM 1", motto: "", badgeBg: "from-sky-500 to-blue-600", ringColor: "border-sky-400", slideNum: 6 },
+            "new-2": { name: "Audit Team 2", title: "AUDIT TEAM 2", motto: "", badgeBg: "from-emerald-500 to-teal-600", ringColor: "border-emerald-400", slideNum: 7 },
+            "new-3": { name: "Audit Team 3", title: "AUDIT TEAM 3", motto: "", badgeBg: "from-purple-500 to-indigo-600", ringColor: "border-purple-400", slideNum: 8 },
+            "new-4": { name: "Audit Team 4", title: "AUDIT TEAM 4", motto: "", badgeBg: "from-amber-500 to-orange-500", ringColor: "border-amber-400", slideNum: 9 }
+        };
+
+        let currentSlide = 1;
+        const totalSlides = 10;
+        let currentTeamView = 'old';
+        let audioEnabled = true;
+
+        window.toggleAdminAuthModal = function() {
+            if (isAdminLoggedIn) {
+                if (confirm("ต้องการออกจากระบบผู้ดูแล (Admin Logout) หรือไม่?")) {
+                    isAdminLoggedIn = false;
+                    window.updateAdminAuthUI();
+                }
+            } else {
+                window.openAdminAuthModal();
+            }
+        };
+
+        window.openAdminAuthModal = function() {
+            const modal = document.getElementById('admin-auth-modal');
+            const err = document.getElementById('admin-login-error');
+            const input = document.getElementById('admin-password-input');
+            if (err) err.classList.add('hidden');
+            if (input) input.value = '';
+            if (modal) modal.classList.remove('hidden');
+            setTimeout(() => input?.focus(), 100);
+        };
+
+        window.closeAdminAuthModal = function() {
+            const modal = document.getElementById('admin-auth-modal');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        window.handleAdminLogin = function(event) {
+            event.preventDefault();
+            const pass = document.getElementById('admin-password-input')?.value;
+            const err = document.getElementById('admin-login-error');
+
+            if (pass === ADMIN_PASSWORD) {
+                isAdminLoggedIn = true;
+                window.updateAdminAuthUI();
+                window.closeAdminAuthModal();
+                window.playChime(900, 'sine', 0.2);
+            } else {
+                if (err) err.classList.remove('hidden');
+                window.playChime(200, 'sawtooth', 0.3);
+            }
+        };
+
+        window.updateAdminAuthUI = function() {
+            const badge = document.getElementById('admin-login-badge');
+            const dot = document.getElementById('admin-status-dot');
+            const text = document.getElementById('admin-status-text');
+
+            if (isAdminLoggedIn) {
+                if (badge) badge.className = "bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/50 px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-emerald-300 transition shadow cursor-pointer";
+                if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
+                if (text) text.innerText = "🔓 Admin Mode (ออกจากระบบ)";
+            } else {
+                if (badge) badge.className = "bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-amber-300 transition shadow cursor-pointer";
+                if (dot) dot.className = "w-2 h-2 rounded-full bg-amber-400";
+                if (text) text.innerText = "🔒 Guest Mode (เข้าสู่ระบบ)";
+            }
+        };
+
+        window.initFirebase = function(configObj) {
+            try {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(configObj);
+                }
+                firebaseDb = firebase.firestore();
+                isFirebaseConnected = true;
+
+                // Update UI Status
+                const dot = document.getElementById('cloud-status-dot');
+                const txt = document.getElementById('cloud-status-text');
+                if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
+                if (txt) txt.innerText = "🟢 Cloud Sync Active (Firebase)";
+
+                // Realtime Listener for Members
+                firebaseDb.collection('members').onSnapshot(snapshot => {
+                    if (!snapshot.empty) {
+                        let members = [];
+                        snapshot.forEach(doc => members.push(doc.data()));
+                        masterMembers = members;
+                        localStorage.setItem('audit_members', JSON.stringify(masterMembers));
+                        window.refreshAllViews();
+                    }
+                });
+
+                // Realtime Listener for Workloads
+                firebaseDb.collection('workloads').onSnapshot(snapshot => {
+                    if (!snapshot.empty) {
+                        let workloads = [];
+                        snapshot.forEach(doc => workloads.push(doc.data()));
+                        masterWorkloads = workloads;
+                        localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
+                        window.refreshAllViews();
+                    }
+                });
+
+                window.playChime(800, 'sine', 0.2);
+            } catch(e) {
+                console.error("Firebase Init Error:", e);
+            }
+        };
+
+        window.syncStateToCloudOrLocal = function() {
+            localStorage.setItem('audit_members', JSON.stringify(masterMembers));
+            localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
+
+            if (isFirebaseConnected && firebaseDb) {
+                const batch = firebaseDb.batch();
+                masterMembers.forEach(m => {
+                    const ref = firebaseDb.collection('members').doc(m.id);
+                    batch.set(ref, m);
+                });
+                masterWorkloads.forEach(w => {
+                    const ref = firebaseDb.collection('workloads').doc(w.id);
+                    batch.set(ref, w);
+                });
+                batch.commit().catch(err => console.error("Cloud Push Error:", err));
+            }
+
+            window.refreshAllViews();
+        };
+
+        window.refreshAllViews = function() {
+            window.calculateMandays();
+            window.triggerTeamSwitch(currentTeamView);
+            window.renderModalRosterList();
+            window.renderQuarterlyPlan();
+        };
+
+        window.goToSlide = function(slideNum) {
+            if (slideNum < 1 || slideNum > totalSlides) return;
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(`slide-${slideNum}`);
+            if (target) {
+                target.classList.add('active');
+                currentSlide = slideNum;
+                window.updateSlideUI();
+                window.playChime(400 + slideNum * 30, 'sine', 0.1);
+            }
+        };
+
+        window.nextSlide = function() {
+            if (currentSlide < totalSlides) window.goToSlide(currentSlide + 1);
+        };
+
+        window.prevSlide = function() {
+            if (currentSlide > 1) window.goToSlide(currentSlide - 1);
+        };
+
+        window.updateSlideUI = function() {
+            const currEl = document.getElementById('slide-num-current');
+            const totEl = document.getElementById('slide-num-total');
+            if (currEl) currEl.innerText = currentSlide;
+            if (totEl) totEl.innerText = totalSlides;
+
+            const dotsContainer = document.getElementById('slide-dots');
+            if (dotsContainer) {
+                dotsContainer.innerHTML = '';
+                for (let i = 1; i <= totalSlides; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `w-2.5 h-2.5 rounded-full transition-all ${i === currentSlide ? 'bg-sky-400 w-6' : 'bg-slate-700 hover:bg-slate-500'}`;
+                    dot.onclick = () => window.goToSlide(i);
+                    dotsContainer.appendChild(dot);
+                }
+            }
+
+            const prevBtn = document.getElementById('btn-prev');
+            const nextBtn = document.getElementById('btn-next');
+            if (prevBtn) prevBtn.style.opacity = currentSlide === 1 ? '0.4' : '1';
+            if (nextBtn) nextBtn.style.opacity = currentSlide === totalSlides ? '0.4' : '1';
+        };
+
+        window.getOldTeamName = function(id) { return oldTeamMeta[id]?.name || id; };
+        window.getNewTeamName = function(id) { return newTeamMeta[id]?.name || id; };
+
+        window.triggerTeamSwitch = function(view) {
+            currentTeamView = view;
+            const oldBtn = document.getElementById('toggle-old-btn');
+            const newBtn = document.getElementById('toggle-new-btn');
+
+            if (view === 'old') {
+                if (oldBtn) oldBtn.className = 'btn-glow px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-300 text-white';
+                if (newBtn) newBtn.className = 'px-3.5 py-1 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white';
+                window.renderOldTeams();
+                window.playChime(350, 'sine', 0.15);
+            } else {
+                if (newBtn) newBtn.className = 'btn-glow px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-300 text-white';
+                if (oldBtn) oldBtn.className = 'px-3.5 py-1 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white';
+                window.renderNewTeams();
+                window.playFanfare();
+
+                if (typeof confetti === 'function') {
+                    confetti({ particleCount: 120, spread: 100, origin: { x: 0.2, y: 0.4 } });
+                    confetti({ particleCount: 120, spread: 100, origin: { x: 0.8, y: 0.4 } });
+                    setTimeout(() => {
+                        confetti({ particleCount: 150, spread: 120, origin: { x: 0.5, y: 0.3 } });
+                    }, 200);
+                }
+            }
+        };
+
+        window.renderOldTeams = function() {
+            const container = document.getElementById('teams-grid-container');
+            if (!container) return;
+
+            container.className = 'w-full p-3 transition-all duration-500 theme-old-container grid grid-cols-1 lg:grid-cols-3 gap-4';
+
+            const team1Members = masterMembers.filter(m => m.oldTeamId === "old-1");
+            const team2Members = masterMembers.filter(m => m.oldTeamId === "old-2");
+            const team3Members = masterMembers.filter(m => m.oldTeamId === "old-3");
+
+            function renderOldCard(oldId, teamMembers) {
+                const meta = oldTeamMeta[oldId];
+                teamMembers.sort((a, b) => (a.id === meta.crownLeaderId ? -1 : b.id === meta.crownLeaderId ? 1 : 0));
+
+                return `
+                    <div class="old-team-row p-3 flex flex-col justify-between gap-3 transition-all duration-300 ${meta.bg} ${meta.border} rounded-2xl h-full">
+                        <div class="w-full flex items-center justify-between p-2.5 rounded-xl shadow-md text-left shrink-0" style="background-color: ${meta.headerBg}; color: ${meta.headerText};">
+                            <div>
+                                <h3 class="font-black text-lg uppercase tracking-wider my-0.5">${meta.tag}</h3>
+                                <p class="text-[11px] font-medium opacity-90">${meta.name} (${teamMembers.length} ท่าน)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow grid grid-cols-2 sm:grid-cols-3 gap-2 items-stretch">
+                            ${teamMembers.map((m, idx) => {
+                                const isLeader = idx === 0;
+                                return `
+                                    <div class="old-member-card p-2 rounded-xl text-center relative flex flex-col items-center justify-between h-full group bg-slate-900/80 border border-slate-700/50">
+                                        ${isLeader ? '<div class="absolute -top-2 left-2 z-20 text-amber-400 text-sm drop-shadow"><i class="fa-solid fa-crown"></i></div>' : ''}
+                                        <div class="w-full aspect-square rounded-lg overflow-hidden border border-slate-700/60 bg-slate-900 mb-1">
+                                            <img src="${m.avatar}" onerror="this.src='https://placehold.co/120x120/1e293b/94a3b8?text=${encodeURIComponent(m.name.charAt(0))}'" class="old-member-photo w-full h-full object-cover">
+                                        </div>
+                                        <div class="font-bold text-slate-200 text-xs truncate w-full">${m.name}</div>
+                                        <span class="text-[9px] text-slate-400 bg-slate-950/80 border border-slate-700/60 px-1 py-0.5 rounded-full w-full truncate mt-1">
+                                            ย้ายไป: ${window.getNewTeamName(m.newTeamId).split(':')[0]}
+                                        </span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                ${renderOldCard("old-1", team1Members)}
+                ${renderOldCard("old-2", team2Members)}
+                ${renderOldCard("old-3", team3Members)}
+            `;
+        };
+
+        window.renderNewTeams = function() {
+            const container = document.getElementById('teams-grid-container');
+            if (!container) return;
+
+            container.className = 'w-full p-3 grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-500 theme-new-container';
+
+            const newGroupIds = ["new-1", "new-2", "new-3", "new-4"];
+
+            newGroupIds.forEach((newId, idx) => {
+                const slideMembersEl = document.getElementById(`slide${idx + 6}-members-list`);
+                const slideTasksEl = document.getElementById(`slide${idx + 6}-tasks-list`);
+                const teamMembers = masterMembers.filter(m => m.newTeamId === newId);
+                const memberCount = teamMembers.length || 1;
+
+                if (slideMembersEl) {
+                    let sortedMembers = [...teamMembers].sort((a, b) => (a.isLeader ? -1 : b.isLeader ? 1 : 0));
+                    slideMembersEl.innerHTML = sortedMembers.map(m => `
+                        <div class="flex items-center gap-3 p-2 bg-slate-900/60 rounded-xl border border-white/5">
+                            <img src="${m.avatar}" class="w-8 h-8 rounded-full object-cover border border-sky-400/40">
+                            <div class="flex-grow">
+                                <div class="text-xs font-bold text-white flex items-center gap-1.5">
+                                    ${m.name}
+                                    ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-xs"></i>' : ''}
+                                </div>
+                                <div class="text-[10px] text-slate-400">มาจาก: ${window.getOldTeamName(m.oldTeamId).split(' ')[0]}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                if (slideTasksEl) {
+                    const teamTasks = masterWorkloads.filter(w => w.teamId === newId);
+                    if (teamTasks.length > 0) {
+                        slideTasksEl.innerHTML = teamTasks.map(t => {
+                            const totMandays = (t.baseMandays || 20) * memberCount;
+                            return `
+                                <li class="flex items-start justify-between gap-2 bg-slate-900/50 p-2.5 rounded-xl border border-white/5">
+                                    <div class="flex items-start gap-2">
+                                        <i class="fa-solid fa-circle-check text-sky-400 mt-0.5"></i>
+                                        <div>
+                                            <span class="font-semibold text-white block text-xs">${t.title}</span>
+                                            <span class="text-[10px] text-slate-400">หมวดหมู่: ${t.category} (${t.quarter || 'Q1'})</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-emerald-400 font-bold text-xs shrink-0">${totMandays} Mandays</span>
+                                </li>
+                            `;
+                        }).join('');
+                    } else {
+                        slideTasksEl.innerHTML = `<li class="text-xs text-slate-500 italic p-2">ยังไม่มีโครงการจัดสรรในทีมนี้</li>`;
+                    }
+                }
+            });
+
+            container.innerHTML = newGroupIds.map((newId) => {
+                const meta = newTeamMeta[newId];
+                let teamMembers = masterMembers.filter(m => m.newTeamId === newId);
+                teamMembers.sort((a, b) => (a.isLeader ? -1 : b.isLeader ? 1 : 0));
+
+                return `
+                    <div class="new-team-row p-3 flex flex-col justify-between gap-3 transition-all duration-300">
+                        <div class="w-full bg-gradient-to-r ${meta.badgeBg} text-white px-3.5 py-2.5 rounded-xl shadow-md flex items-center justify-between shrink-0">
+                            <div class="flex items-center gap-2.5">
+                                <h3 class="text-base font-black tracking-tight leading-none">${meta.name}</h3>
+                                <span class="text-xs opacity-90">(${teamMembers.length} ท่าน)</span>
+                            </div>
+                            <button onclick="goToSlide(${meta.slideNum})" class="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-sm shrink-0">
+                                <i class="fa-solid fa-circle-info text-xs"></i>
+                                <span>รายละเอียดงาน</span>
+                            </button>
+                        </div>
+
+                        <div class="flex-grow grid grid-cols-2 sm:grid-cols-4 gap-2.5 items-stretch">
+                            ${teamMembers.map((m, idx) => {
+                                const isLeader = idx === 0 && m.isLeader;
+                                return `
+                                    <div class="bg-slate-50 border border-slate-200 hover:border-sky-400 p-2.5 rounded-xl text-center relative flex flex-col items-center justify-between h-full group hover:shadow-md pt-4">
+                                        <div class="relative my-auto shrink-0 flex justify-center">
+                                            ${isLeader ? '<div class="absolute -top-4 z-20 text-amber-500 text-base drop-shadow animate-bounce"><i class="fa-solid fa-crown"></i></div>' : ''}
+                                            <div class="w-20 h-20 sm:w-22 sm:h-22 md:w-24 md:h-24 rounded-full p-1 bg-white shadow-md border-2 ${meta.ringColor} overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                                                <img src="${m.avatar}" onerror="this.src='https://placehold.co/150x150/0284c7/ffffff?text=${encodeURIComponent(m.name.charAt(0))}'" class="w-full h-full rounded-full object-cover">
+                                            </div>
+                                        </div>
+                                        <div class="font-bold text-slate-800 text-xs sm:text-sm truncate w-full mt-2">${m.name}</div>
+                                        <span class="text-[10px] text-slate-600 bg-slate-200/80 border border-slate-300 px-2 py-0.5 rounded-full w-full truncate mt-1">
+                                            มาจาก: ${window.getOldTeamName(m.oldTeamId).split(' ')[0]}
+                                        </span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        };
+
+        window.calculateMandays = function() {
+            const total = parseInt(document.getElementById('calc-total-days')?.value) || 365;
+            const holidays = parseInt(document.getElementById('calc-holidays')?.value) || 0;
+            const leaves = parseInt(document.getElementById('calc-leaves')?.value) || 0;
+            const trainings = parseInt(document.getElementById('calc-trainings')?.value) || 0;
+
+            const netPerAuditor = Math.max(0, total - holidays - leaves - trainings);
+            const totalMembers = masterMembers ? masterMembers.length : 0;
+            const totalCapacity = netPerAuditor * totalMembers;
+
+            const netEl = document.getElementById('res-net-manday');
+            const capEl = document.getElementById('res-total-capacity');
+            const cntEl = document.getElementById('calc-member-count');
+
+            if (netEl) netEl.innerText = netPerAuditor;
+            if (capEl) capEl.innerText = totalCapacity.toLocaleString();
+            if (cntEl) cntEl.innerText = totalMembers;
+
+            window.renderWorkloadTable(totalCapacity);
+        };
+
+        window.renderWorkloadTable = function(totalCapacity) {
+            const tbody = document.getElementById('workload-table-body');
+            if (!tbody) return;
+
+            let usedMandays = 0;
+            const categories = ["งานตรวจสอบปกติ", "งานตรวจสอบเฉพาะด้าน", "งานตรวจสอบงบการเงิน", "งานอื่นๆ"];
+            const teamIds = ["new-1", "new-2", "new-3", "new-4"];
+
+            tbody.innerHTML = categories.map(cat => {
+                let cellsHtml = teamIds.map(tId => {
+                    const teamMembers = masterMembers.filter(m => m.newTeamId === tId);
+                    const memberCount = teamMembers.length || 1;
+                    const items = masterWorkloads.filter(w => w.category === cat && w.teamId === tId);
+
+                    if (items.length === 0) {
+                        return `<td class="p-1.5 border-r border-white/10 text-center text-slate-600 text-[10px] align-top">-</td>`;
+                    }
+
+                    const itemsCellHtml = items.map(item => {
+                        const totalItemMandays = (item.baseMandays || 20) * memberCount;
+                        usedMandays += totalItemMandays;
+                        return `
+                            <div class="bg-slate-900/90 p-1.5 rounded-lg border border-white/10 mb-1.5 text-[10px] relative group hover:border-sky-400 transition">
+                                <div class="font-semibold text-white leading-tight mb-1 pr-3">${item.title}</div>
+                                <div class="flex items-center justify-between text-[9px] text-slate-400 pt-1 border-t border-white/5">
+                                    <span class="text-sky-300 font-bold">${item.quarter || 'Q1'}</span>
+                                    <span class="font-bold text-emerald-400">${totalItemMandays.toLocaleString()} Mandays</span>
+                                </div>
+                                <button onclick="deleteWorkloadItem('${item.id}')" class="absolute top-1 right-1 text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition p-0.5" title="ลบรายการ">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        `;
+                    }).join('');
+
+                    return `<td class="p-1.5 border-r border-white/10 align-top">${itemsCellHtml}</td>`;
+                }).join('');
+
+                return `
+                    <tr class="hover:bg-slate-800/30">
+                        <td class="p-2 border-r border-white/10 font-bold text-sky-300 bg-slate-900/60 align-middle text-[11px]">${cat}</td>
+                        ${cellsHtml}
+                    </tr>
+                `;
+            }).join('');
+
+            const utilPercent = totalCapacity > 0 ? Math.min(100, Math.round((usedMandays / totalCapacity) * 100)) : 0;
+            const utilTextEl = document.getElementById('res-utilization-text');
+            const utilBarEl = document.getElementById('res-utilization-bar');
+            if (utilTextEl) utilTextEl.innerText = `${utilPercent}% (${usedMandays.toLocaleString()} / ${totalCapacity.toLocaleString()} Mandays)`;
+            if (utilBarEl) utilBarEl.style.width = `${utilPercent}%`;
+        };
+
+        window.renderQuarterlyPlan = function() {
+            const quarters = ["Q1", "Q2", "Q3", "Q4"];
+
+            quarters.forEach(q => {
+                const listEl = document.getElementById(`quarter-${q.toLowerCase()}-list`);
+                const sumEl = document.getElementById(`${q.toLowerCase()}-manday-sum`);
+                if (!listEl) return;
+
+                const qWorkloads = masterWorkloads.filter(w => (w.quarter || "Q1") === q);
+                let qTotalMandays = 0;
+
+                if (qWorkloads.length === 0) {
+                    listEl.innerHTML = `<div class="p-3 text-center text-slate-500 italic text-[11px]">ไม่มีภาระงานในไตรมาสนี้</div>`;
+                } else {
+                    listEl.innerHTML = qWorkloads.map(w => {
+                        const teamMembers = masterMembers.filter(m => m.newTeamId === w.teamId);
+                        const mCount = teamMembers.length || 1;
+                        const itemTotal = (w.baseMandays || 20) * mCount;
+                        qTotalMandays += itemTotal;
+
+                        const teamName = window.getNewTeamName(w.teamId);
+
+                        return `
+                            <div class="bg-slate-950/70 p-2.5 rounded-xl border border-white/10 relative group hover:border-sky-400/50 transition">
+                                <div class="font-bold text-white mb-1 leading-snug">${w.title}</div>
+                                <div class="flex items-center justify-between text-[10px] text-slate-400 mt-1.5 pt-1.5 border-t border-white/5">
+                                    <span class="bg-sky-500/20 text-sky-300 px-1.5 py-0.5 rounded border border-sky-400/30 text-[9px] font-semibold">${teamName}</span>
+                                    <span class="font-bold text-emerald-400">${itemTotal} Mandays</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                if (sumEl) sumEl.innerText = `${qTotalMandays.toLocaleString()} Mandays`;
+            });
+        };
+
+        // Modal Action Handlers with Authorization Check
+        window.openAddProjectModal = function() {
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            const el = document.getElementById('workload-modal');
+            if (el) el.classList.remove('hidden');
+        };
+
+        window.closeAddProjectModal = function() {
+            const el = document.getElementById('workload-modal');
+            if (el) el.classList.add('hidden');
+        };
+
+        window.saveWorkloadItem = function(event) {
+            event.preventDefault();
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            const category = document.getElementById('wl-category').value;
+            const title = document.getElementById('wl-title').value;
+            const teamId = document.getElementById('wl-team').value;
+            const quarter = document.getElementById('wl-quarter').value;
+            const baseMandays = parseInt(document.getElementById('wl-mandays').value) || 0;
+
+            masterWorkloads.push({ id: 'w_' + Date.now(), category, title, teamId, quarter, baseMandays });
+            window.closeAddProjectModal();
+            window.syncStateToCloudOrLocal();
+            window.playChime(600, 'sine', 0.1);
+        };
+
+        window.deleteWorkloadItem = function(id) {
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            masterWorkloads = masterWorkloads.filter(w => w.id !== id);
+            window.syncStateToCloudOrLocal();
+        };
+
+        window.openRosterModal = function() {
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            const el = document.getElementById('roster-modal');
+            if (el) el.classList.remove('hidden');
+            window.renderModalRosterList();
+            window.resetMemberForm();
+        };
+
+        window.closeRosterModal = function() {
+            const el = document.getElementById('roster-modal');
+            if (el) el.classList.add('hidden');
+        };
+
+        window.renderModalRosterList = function() {
+            const listEl = document.getElementById('modal-roster-list');
+            const countEl = document.getElementById('modal-member-count');
+            if (countEl) countEl.innerText = masterMembers.length;
+
+            if (listEl) {
+                listEl.innerHTML = masterMembers.map(m => `
+                    <div onclick="editMember('${m.id}')" class="p-2 bg-slate-900 hover:bg-slate-800 rounded-xl border border-white/5 cursor-pointer flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <img src="${m.avatar}" class="w-7 h-7 rounded-full object-cover">
+                            <div>
+                                <div class="text-xs font-semibold text-white flex items-center gap-1">
+                                    ${m.name}
+                                    ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-[9px]"></i>' : ''}
+                                </div>
+                                <div class="text-[9px] text-slate-400">${window.getNewTeamName(m.newTeamId).split(':')[0]}</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-slate-600"></i>
+                    </div>
+                `).join('');
+            }
+        };
+
+        window.resetMemberForm = function() {
+            if (document.getElementById('edit-member-id')) document.getElementById('edit-member-id').value = '';
+            if (document.getElementById('form-name')) document.getElementById('form-name').value = '';
+            if (document.getElementById('form-role')) document.getElementById('form-role').value = '';
+            if (document.getElementById('form-old-team')) document.getElementById('form-old-team').value = 'old-1';
+            if (document.getElementById('form-new-team')) document.getElementById('form-new-team').value = 'new-1';
+            if (document.getElementById('form-is-leader')) document.getElementById('form-is-leader').checked = false;
+            if (document.getElementById('form-photo-url')) document.getElementById('form-photo-url').value = '';
+            if (document.getElementById('form-photo-file')) document.getElementById('form-photo-file').value = '';
+            if (document.getElementById('form-photo-preview')) document.getElementById('form-photo-preview').src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250';
+            if (document.getElementById('btn-delete-member')) document.getElementById('btn-delete-member').classList.add('hidden');
+        };
+
+        window.editMember = function(id) {
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            const member = masterMembers.find(m => m.id === id);
+            if (!member) return;
+
+            document.getElementById('edit-member-id').value = member.id;
+            document.getElementById('form-name').value = member.name;
+            document.getElementById('form-role').value = member.role;
+            document.getElementById('form-old-team').value = member.oldTeamId;
+            document.getElementById('form-new-team').value = member.newTeamId;
+            document.getElementById('form-is-leader').checked = member.isLeader;
+            document.getElementById('form-photo-url').value = member.avatar.startsWith('data:') ? '' : member.avatar;
+            document.getElementById('form-photo-preview').src = member.avatar;
+            document.getElementById('btn-delete-member').classList.remove('hidden');
+        };
+
+        window.handlePhotoFileSelect = function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('form-photo-preview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.updatePhotoPreviewFromUrl = function(url) {
+            if (url && url.trim() !== '') document.getElementById('form-photo-preview').src = url;
+        };
+
+        window.saveMember = function(event) {
+            event.preventDefault();
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            const editId = document.getElementById('edit-member-id').value;
+            const name = document.getElementById('form-name').value;
+            const role = document.getElementById('form-role').value;
+            const oldTeamId = document.getElementById('form-old-team').value;
+            const newTeamId = document.getElementById('form-new-team').value;
+            const isLeader = document.getElementById('form-is-leader').checked;
+            const photoPreviewSrc = document.getElementById('form-photo-preview').src;
+
+            if (editId) {
+                const member = masterMembers.find(m => m.id === editId);
+                if (member) {
+                    member.name = name; member.role = role;
+                    member.oldTeamId = oldTeamId; member.newTeamId = newTeamId;
+                    member.isLeader = isLeader; member.avatar = photoPreviewSrc;
+                }
+            } else {
+                masterMembers.push({ id: 'm_' + Date.now(), name, role, oldTeamId, newTeamId, isLeader, avatar: photoPreviewSrc });
+            }
+
+            window.syncStateToCloudOrLocal();
+            window.resetMemberForm();
+        };
+
+        window.deleteCurrentMember = function() {
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            const editId = document.getElementById('edit-member-id').value;
+            if (!editId) return;
+            masterMembers = masterMembers.filter(m => m.id !== editId);
+            window.syncStateToCloudOrLocal();
+            window.resetMemberForm();
+        };
+
+        window.playChime = function(freq = 500, type = 'sine', duration = 0.1) {
+            if (!audioEnabled) return;
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        };
+
+        window.playFanfare = function() {
+            if (!audioEnabled) return;
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                setTimeout(() => window.playChime(f, 'triangle', 0.25), i * 90);
+            });
+        };
+
+        window.toggleAudio = function() {
+            audioEnabled = !audioEnabled;
+            const btn = document.getElementById('btn-audio');
+            if (btn) {
+                btn.innerHTML = audioEnabled ? '<i class="fa-solid fa-volume-high text-sm"></i>' : '<i class="fa-solid fa-volume-xmark text-sm text-red-400"></i>';
+            }
+        };
+
+        window.toggleFullscreen = function() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        };
+
+        // Keyboard navigation
+        window.addEventListener('keydown', (e) => {
+            if (!document.getElementById('roster-modal')?.classList.contains('hidden')) return;
+            if (!document.getElementById('admin-auth-modal')?.classList.contains('hidden')) return;
+            if (e.key === 'ArrowRight' || e.key === 'Space') window.nextSlide();
+            else if (e.key === 'ArrowLeft') window.prevSlide();
+        });
+
+        // Background floating particles
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas ? canvas.getContext('2d') : null;
+        let particles = [];
+
+        function resizeCanvas() {
+            if (!canvas) return;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * (canvas ? canvas.width : 1000);
+                this.y = Math.random() * (canvas ? canvas.height : 800);
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                if (!canvas) return;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                if (!ctx) return;
+                ctx.fillStyle = `rgba(56, 189, 248, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        if (canvas) {
+            for (let i = 0; i < 40; i++) particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            if (ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Window Load Handler
+        window.onload = function() {
+            window.updateSlideUI();
+            window.updateAdminAuthUI();
+            window.initFirebase(embeddedFirebaseConfig);
+            window.refreshAllViews();
+            animateParticles();
+        };
+    </script>
+</body>
+</html>
