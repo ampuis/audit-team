@@ -539,8 +539,8 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-6 my-auto">
-                        <div class="glass-card p-5">
+                    <div class="grid grid-cols-12 gap-6 my-auto">
+                        <div class="col-span-12 md:col-span-4 glass-card p-5">
                             <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center justify-between">
                                 <span class="flex items-center gap-2"><i class="fa-solid fa-users text-sky-400"></i> รายชื่อสมาชิกในทีม</span>
                                 <button onclick="openRosterModal()" class="text-xs text-sky-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i> แก้ไข</button>
@@ -548,15 +548,149 @@
                             <div id="slide6-members-list" class="space-y-2.5"></div>
                         </div>
 
-                        <div class="glass-card p-5 flex flex-col justify-between">
+                        <div class="col-span-12 md:col-span-8 glass-card p-5 flex flex-col justify-between">
                             <div>
-                                <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center gap-2">
-                                    <i class="fa-solid fa-list-check text-sky-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
-                                </h3>
+                                <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                        <i class="fa-solid fa-list-check text-sky-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
+                                    </h3>
+                                    <button onclick="openAddProjectModalForTeam('new-1')" class="text-xs bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 px-2.5 py-1 rounded-lg border border-emerald-400/30 flex items-center gap-1 transition">
+                                        <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
+                                    </button>
+                                </div>
                                 <ul id="slide6-tasks-list" class="space-y-2 text-xs text-slate-300"></ul>
                             </div>
-                            <div class="mt-4 p-2.5 bg-sky-500/10 border border-sky-400/20 rounded-lg text-xs text-sky-300">
-                                <i class="fa-solid fa-flag mr-1"></i> <strong>Key KPI:</strong> ออกรายงานการเงินถูกต้องแม่นยำ 100%
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Team 2 Focus -->
+            <div class="slide" id="slide-7">
+                <div class="flex flex-col h-full justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-semibold mb-1"><i class="fa-solid fa-sitemap"></i> Team 02 Focus</div>
+                            <h2 class="text-2xl font-bold text-emerald-400">Audit Team 2</h2>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 px-3 py-1 rounded-full text-xs font-semibold">CMU</span>
+                            <button onclick="goToSlide(5)" class="glass-card hover:bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span>กลับหน้าสมาชิกทีมใหม่</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-6 my-auto">
+                        <div class="col-span-12 md:col-span-4 glass-card p-5">
+                            <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center justify-between">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-users text-emerald-400"></i> รายชื่อสมาชิกในทีม</span>
+                                <button onclick="openRosterModal()" class="text-xs text-emerald-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i> แก้ไข</button>
+                            </h3>
+                            <div id="slide7-members-list" class="space-y-2.5"></div>
+                        </div>
+
+                        <div class="col-span-12 md:col-span-8 glass-card p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                        <i class="fa-solid fa-list-check text-emerald-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
+                                    </h3>
+                                    <button onclick="openAddProjectModalForTeam('new-2')" class="text-xs bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 px-2.5 py-1 rounded-lg border border-emerald-400/30 flex items-center gap-1 transition">
+                                        <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
+                                    </button>
+                                </div>
+                                <ul id="slide7-tasks-list" class="space-y-2 text-xs text-slate-300"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Slide 8: Team 3 Focus -->
+            <div class="slide" id="slide-8">
+                <div class="flex flex-col h-full justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="inline-flex items-center gap-2 bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-xs font-semibold mb-1"><i class="fa-solid fa-laptop-code"></i> Team 03 Focus</div>
+                            <h2 class="text-2xl font-bold text-purple-400">Audit Team 3</h2>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="bg-purple-500/20 border border-purple-400/30 text-purple-300 px-3 py-1 rounded-full text-xs font-semibold">CMU</span>
+                            <button onclick="goToSlide(5)" class="glass-card hover:bg-purple-500/20 text-purple-300 border border-purple-400/40 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span>กลับหน้าสมาชิกทีมใหม่</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-6 my-auto">
+                        <div class="col-span-12 md:col-span-4 glass-card p-5">
+                            <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center justify-between">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-users text-purple-400"></i> รายชื่อสมาชิกในทีม</span>
+                                <button onclick="openRosterModal()" class="text-xs text-purple-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i> แก้ไข</button>
+                            </h3>
+                            <div id="slide8-members-list" class="space-y-2.5"></div>
+                        </div>
+
+                        <div class="col-span-12 md:col-span-8 glass-card p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                        <i class="fa-solid fa-list-check text-purple-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
+                                    </h3>
+                                    <button onclick="openAddProjectModalForTeam('new-3')" class="text-xs bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 px-2.5 py-1 rounded-lg border border-emerald-400/30 flex items-center gap-1 transition">
+                                        <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
+                                    </button>
+                                </div>
+                                <ul id="slide8-tasks-list" class="space-y-2 text-xs text-slate-300"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Slide 9: Team 4 Focus -->
+            <div class="slide" id="slide-9">
+                <div class="flex flex-col h-full justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full text-xs font-semibold mb-1"><i class="fa-solid fa-chart-pie"></i> Team 04 Focus</div>
+                            <h2 class="text-2xl font-bold text-amber-400">Audit Team 4</h2>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="bg-amber-500/20 border border-amber-400/30 text-amber-300 px-3 py-1 rounded-full text-xs font-semibold">CMU</span>
+                            <button onclick="goToSlide(5)" class="glass-card hover:bg-amber-500/20 text-amber-300 border border-amber-400/40 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span>กลับหน้าสมาชิกทีมใหม่</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-12 gap-6 my-auto">
+                        <div class="col-span-12 md:col-span-4 glass-card p-5">
+                            <h3 class="text-base font-bold text-white mb-3 border-b border-white/10 pb-2 flex items-center justify-between">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-users text-amber-400"></i> รายชื่อสมาชิกในทีม</span>
+                                <button onclick="openRosterModal()" class="text-xs text-amber-400 hover:underline"><i class="fa-solid fa-pen mr-1"></i> แก้ไข</button>
+                            </h3>
+                            <div id="slide9-members-list" class="space-y-2.5"></div>
+                        </div>
+
+                        <div class="col-span-12 md:col-span-8 glass-card p-5 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3 border-b border-white/10 pb-2">
+                                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                        <i class="fa-solid fa-list-check text-amber-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
+                                    </h3>
+                                    <button onclick="openAddProjectModalForTeam('new-4')" class="text-xs bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 px-2.5 py-1 rounded-lg border border-emerald-400/30 flex items-center gap-1 transition">
+                                        <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
+                                    </button>
+                                </div>
+                                <ul id="slide9-tasks-list" class="space-y-2 text-xs text-slate-300"></ul>
                             </div>
                         </div>
                     </div>
@@ -1117,6 +1251,136 @@
         let currentTeamView = 'old';
         let audioEnabled = true;
 
+        window.goToSlide = function(slideNum) {
+            if (slideNum < 1 || slideNum > totalSlides) return;
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(`slide-${slideNum}`);
+            if (target) {
+                target.classList.add('active');
+                currentSlide = slideNum;
+                window.updateSlideUI();
+                window.playChime(400 + slideNum * 30, 'sine', 0.1);
+            }
+        };
+
+        window.nextSlide = function() {
+            if (currentSlide < totalSlides) window.goToSlide(currentSlide + 1);
+        };
+
+        window.prevSlide = function() {
+            if (currentSlide > 1) window.goToSlide(currentSlide - 1);
+        };
+
+        window.updateSlideUI = function() {
+            const currEl = document.getElementById('slide-num-current');
+            const totEl = document.getElementById('slide-num-total');
+            if (currEl) currEl.innerText = currentSlide;
+            if (totEl) totEl.innerText = totalSlides;
+
+            const dotsContainer = document.getElementById('slide-dots');
+            if (dotsContainer) {
+                dotsContainer.innerHTML = '';
+                for (let i = 1; i <= totalSlides; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `w-2.5 h-2.5 rounded-full transition-all ${i === currentSlide ? 'bg-sky-400 w-6' : 'bg-slate-700 hover:bg-slate-500'}`;
+                    dot.onclick = () => window.goToSlide(i);
+                    dotsContainer.appendChild(dot);
+                }
+            }
+
+            const prevBtn = document.getElementById('btn-prev');
+            const nextBtn = document.getElementById('btn-next');
+            if (prevBtn) prevBtn.style.opacity = currentSlide === 1 ? '0.4' : '1';
+            if (nextBtn) nextBtn.style.opacity = currentSlide === totalSlides ? '0.4' : '1';
+        };
+
+        window.getOldTeamName = function(id) { return oldTeamMeta[id]?.name || id; };
+        window.getNewTeamName = function(id) { return newTeamMeta[id]?.name || id; };
+
+        window.triggerTeamSwitch = function(view) {
+            currentTeamView = view;
+            const oldBtn = document.getElementById('toggle-old-btn');
+            const newBtn = document.getElementById('toggle-new-btn');
+
+            if (view === 'old') {
+                if (oldBtn) oldBtn.className = 'btn-glow px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-300 text-white';
+                if (newBtn) newBtn.className = 'px-3.5 py-1 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white';
+                window.renderOldTeams();
+                window.playChime(350, 'sine', 0.15);
+            } else {
+                if (newBtn) newBtn.className = 'btn-glow px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-300 text-white';
+                if (oldBtn) oldBtn.className = 'px-3.5 py-1 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white';
+                window.renderNewTeams();
+                window.playFanfare();
+
+                if (typeof confetti === 'function') {
+                    confetti({ particleCount: 120, spread: 100, origin: { x: 0.2, y: 0.4 } });
+                    confetti({ particleCount: 120, spread: 100, origin: { x: 0.8, y: 0.4 } });
+                    setTimeout(() => {
+                        confetti({ particleCount: 150, spread: 120, origin: { x: 0.5, y: 0.3 } });
+                    }, 200);
+                }
+            }
+        };
+
+        window.renderOldTeams = function() {
+            const container = document.getElementById('teams-grid-container');
+            if (!container) return;
+
+            container.className = 'w-full p-3 transition-all duration-500 theme-old-container grid grid-cols-1 lg:grid-cols-3 gap-4';
+
+            const team1Members = masterMembers.filter(m => m.oldTeamId === "old-1");
+            const team2Members = masterMembers.filter(m => m.oldTeamId === "old-2");
+            const team3Members = masterMembers.filter(m => m.oldTeamId === "old-3");
+
+            function renderOldCard(oldId, teamMembers) {
+                const meta = oldTeamMeta[oldId];
+                teamMembers.sort((a, b) => (a.id === meta.crownLeaderId ? -1 : b.id === meta.crownLeaderId ? 1 : 0));
+
+                return `
+                    <div class="old-team-row p-3 flex flex-col justify-between gap-3 transition-all duration-300 ${meta.bg} ${meta.border} rounded-2xl h-full">
+                        <div class="w-full flex items-center justify-between p-2.5 rounded-xl shadow-md text-left shrink-0" style="background-color: ${meta.headerBg}; color: ${meta.headerText};">
+                            <div>
+                                <h3 class="font-black text-lg uppercase tracking-wider my-0.5">${meta.tag}</h3>
+                                <p class="text-[11px] font-medium opacity-90">${meta.name} (${teamMembers.length} ท่าน)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow grid grid-cols-2 sm:grid-cols-3 gap-2 items-stretch">
+                            ${teamMembers.map((m, idx) => {
+                                const isLeader = idx === 0;
+                                return `
+                                    <div class="old-member-card p-2 rounded-xl text-center relative flex flex-col items-center justify-between h-full group bg-slate-900/80 border border-slate-700/50">
+                                        ${isLeader ? '<div class="absolute -top-2 left-2 z-20 text-amber-400 text-sm drop-shadow"><i class="fa-solid fa-crown"></i></div>' : ''}
+                                        <div class="w-full aspect-square rounded-lg overflow-hidden border border-slate-700/60 bg-slate-900 mb-1">
+                                            <img src="${m.avatar}" onerror="this.src='https://placehold.co/120x120/1e293b/94a3b8?text=${encodeURIComponent(m.name.charAt(0))}'" class="old-member-photo w-full h-full object-cover">
+                                        </div>
+                                        <div class="font-bold text-slate-200 text-xs truncate w-full">${m.name}</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                ${renderOldCard("old-1", team1Members)}
+                ${renderOldCard("old-2", team2Members)}
+                ${renderOldCard("old-3", team3Members)}
+            `;
+        };
+
+        window.openAddProjectModalForTeam = function(teamId) {
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            const teamSelect = document.getElementById('wl-team');
+            if (teamSelect) teamSelect.value = teamId;
+            window.openAddProjectModal();
+        };
+
         window.toggleAdminAuthModal = function() {
             if (isAdminLoggedIn) {
                 if (confirm("ต้องการออกจากระบบผู้ดูแล (Admin Logout) หรือไม่?")) {
@@ -1232,140 +1496,13 @@
 
         window.refreshAllViews = function() {
             window.calculateMandays();
+            window.updateTeamFocusSlides();
             window.triggerTeamSwitch(currentTeamView);
             window.renderModalRosterList();
             window.renderSlide10Matrix();
         };
 
-        window.goToSlide = function(slideNum) {
-            if (slideNum < 1 || slideNum > totalSlides) return;
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById(`slide-${slideNum}`);
-            if (target) {
-                target.classList.add('active');
-                currentSlide = slideNum;
-                window.updateSlideUI();
-                window.playChime(400 + slideNum * 30, 'sine', 0.1);
-            }
-        };
-
-        window.nextSlide = function() {
-            if (currentSlide < totalSlides) window.goToSlide(currentSlide + 1);
-        };
-
-        window.prevSlide = function() {
-            if (currentSlide > 1) window.goToSlide(currentSlide - 1);
-        };
-
-        window.updateSlideUI = function() {
-            const currEl = document.getElementById('slide-num-current');
-            const totEl = document.getElementById('slide-num-total');
-            if (currEl) currEl.innerText = currentSlide;
-            if (totEl) totEl.innerText = totalSlides;
-
-            const dotsContainer = document.getElementById('slide-dots');
-            if (dotsContainer) {
-                dotsContainer.innerHTML = '';
-                for (let i = 1; i <= totalSlides; i++) {
-                    const dot = document.createElement('button');
-                    dot.className = `w-2.5 h-2.5 rounded-full transition-all ${i === currentSlide ? 'bg-sky-400 w-6' : 'bg-slate-700 hover:bg-slate-500'}`;
-                    dot.onclick = () => window.goToSlide(i);
-                    dotsContainer.appendChild(dot);
-                }
-            }
-
-            const prevBtn = document.getElementById('btn-prev');
-            const nextBtn = document.getElementById('btn-next');
-            if (prevBtn) prevBtn.style.opacity = currentSlide === 1 ? '0.4' : '1';
-            if (nextBtn) nextBtn.style.opacity = currentSlide === totalSlides ? '0.4' : '1';
-        };
-
-        window.getOldTeamName = function(id) { return oldTeamMeta[id]?.name || id; };
-        window.getNewTeamName = function(id) { return newTeamMeta[id]?.name || id; };
-
-        window.triggerTeamSwitch = function(view) {
-            currentTeamView = view;
-            const oldBtn = document.getElementById('toggle-old-btn');
-            const newBtn = document.getElementById('toggle-new-btn');
-
-            if (view === 'old') {
-                if (oldBtn) oldBtn.className = 'btn-glow px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-300 text-white';
-                if (newBtn) newBtn.className = 'px-3.5 py-1 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white';
-                window.renderOldTeams();
-                window.playChime(350, 'sine', 0.15);
-            } else {
-                if (newBtn) newBtn.className = 'btn-glow px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-300 text-white';
-                if (oldBtn) oldBtn.className = 'px-3.5 py-1 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white';
-                window.renderNewTeams();
-                window.playFanfare();
-
-                if (typeof confetti === 'function') {
-                    confetti({ particleCount: 120, spread: 100, origin: { x: 0.2, y: 0.4 } });
-                    confetti({ particleCount: 120, spread: 100, origin: { x: 0.8, y: 0.4 } });
-                    setTimeout(() => {
-                        confetti({ particleCount: 150, spread: 120, origin: { x: 0.5, y: 0.3 } });
-                    }, 200);
-                }
-            }
-        };
-
-        window.renderOldTeams = function() {
-            const container = document.getElementById('teams-grid-container');
-            if (!container) return;
-
-            container.className = 'w-full p-3 transition-all duration-500 theme-old-container grid grid-cols-1 lg:grid-cols-3 gap-4';
-
-            const team1Members = masterMembers.filter(m => m.oldTeamId === "old-1");
-            const team2Members = masterMembers.filter(m => m.oldTeamId === "old-2");
-            const team3Members = masterMembers.filter(m => m.oldTeamId === "old-3");
-
-            function renderOldCard(oldId, teamMembers) {
-                const meta = oldTeamMeta[oldId];
-                teamMembers.sort((a, b) => (a.id === meta.crownLeaderId ? -1 : b.id === meta.crownLeaderId ? 1 : 0));
-
-                return `
-                    <div class="old-team-row p-3 flex flex-col justify-between gap-3 transition-all duration-300 ${meta.bg} ${meta.border} rounded-2xl h-full">
-                        <div class="w-full flex items-center justify-between p-2.5 rounded-xl shadow-md text-left shrink-0" style="background-color: ${meta.headerBg}; color: ${meta.headerText};">
-                            <div>
-                                <h3 class="font-black text-lg uppercase tracking-wider my-0.5">${meta.tag}</h3>
-                                <p class="text-[11px] font-medium opacity-90">${meta.name} (${teamMembers.length} ท่าน)</p>
-                            </div>
-                        </div>
-
-                        <div class="flex-grow grid grid-cols-2 sm:grid-cols-3 gap-2 items-stretch">
-                            ${teamMembers.map((m, idx) => {
-                                const isLeader = idx === 0;
-                                return `
-                                    <div class="old-member-card p-2 rounded-xl text-center relative flex flex-col items-center justify-between h-full group bg-slate-900/80 border border-slate-700/50">
-                                        ${isLeader ? '<div class="absolute -top-2 left-2 z-20 text-amber-400 text-sm drop-shadow"><i class="fa-solid fa-crown"></i></div>' : ''}
-                                        <div class="w-full aspect-square rounded-lg overflow-hidden border border-slate-700/60 bg-slate-900 mb-1">
-                                            <img src="${m.avatar}" onerror="this.src='https://placehold.co/120x120/1e293b/94a3b8?text=${encodeURIComponent(m.name.charAt(0))}'" class="old-member-photo w-full h-full object-cover">
-                                        </div>
-                                        <div class="font-bold text-slate-200 text-xs truncate w-full">${m.name}</div>
-                                        <span class="text-[9px] text-slate-400 bg-slate-950/80 border border-slate-700/60 px-1 py-0.5 rounded-full w-full truncate mt-1">
-                                            ย้ายไป: ${window.getNewTeamName(m.newTeamId).split(':')[0]}
-                                        </span>
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            container.innerHTML = `
-                ${renderOldCard("old-1", team1Members)}
-                ${renderOldCard("old-2", team2Members)}
-                ${renderOldCard("old-3", team3Members)}
-            `;
-        };
-
-        window.renderNewTeams = function() {
-            const container = document.getElementById('teams-grid-container');
-            if (!container) return;
-
-            container.className = 'w-full p-3 grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-500 theme-new-container';
-
+        window.updateTeamFocusSlides = function() {
             const newGroupIds = ["new-1", "new-2", "new-3", "new-4"];
 
             newGroupIds.forEach((newId, idx) => {
@@ -1375,19 +1512,22 @@
                 const memberCount = teamMembers.length || 1;
 
                 if (slideMembersEl) {
-                    let sortedMembers = [...teamMembers].sort((a, b) => (a.isLeader ? -1 : b.isLeader ? 1 : 0));
-                    slideMembersEl.innerHTML = sortedMembers.map(m => `
-                        <div class="flex items-center gap-3 p-2 bg-slate-900/60 rounded-xl border border-white/5">
-                            <img src="${m.avatar}" class="w-8 h-8 rounded-full object-cover border border-sky-400/40">
-                            <div class="flex-grow">
-                                <div class="text-xs font-bold text-white flex items-center gap-1.5">
-                                    ${m.name}
-                                    ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-xs"></i>' : ''}
+                    if (teamMembers.length > 0) {
+                        let sortedMembers = [...teamMembers].sort((a, b) => (a.isLeader ? -1 : b.isLeader ? 1 : 0));
+                        slideMembersEl.innerHTML = sortedMembers.map(m => `
+                            <div class="flex items-center gap-3 p-2 bg-slate-900/60 rounded-xl border border-white/5">
+                                <img src="${m.avatar}" onerror="this.src='https://placehold.co/100x100/0284c7/ffffff?text=${encodeURIComponent(m.name.charAt(0))}'" class="w-8 h-8 rounded-full object-cover border border-sky-400/40">
+                                <div class="flex-grow">
+                                    <div class="text-xs font-bold text-white flex items-center gap-1.5">
+                                        ${m.name}
+                                        ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-xs"></i>' : ''}
+                                    </div>
                                 </div>
-                                <div class="text-[10px] text-slate-400">มาจาก: ${window.getOldTeamName(m.oldTeamId).split(' ')[0]}</div>
                             </div>
-                        </div>
-                    `).join('');
+                        `).join('');
+                    } else {
+                        slideMembersEl.innerHTML = `<div class="text-xs text-slate-500 italic p-2">ไม่มีสมาชิกในทีมนี้</div>`;
+                    }
                 }
 
                 if (slideTasksEl) {
@@ -1401,7 +1541,7 @@
                                         <i class="fa-solid fa-circle-check text-sky-400 mt-0.5"></i>
                                         <div>
                                             <span class="font-semibold text-white block text-xs">${t.title}</span>
-                                            <span class="text-[10px] text-slate-400">หมวดหมู่: ${t.category} (${t.baseMandays} วัน x ${memberCount} คน)</span>
+                                            <span class="text-[10px] text-slate-400">หมวดหมู่: ${t.category} (${t.quarter || 'Q1'}) | ${t.baseMandays} วัน x ${memberCount} คน</span>
                                         </div>
                                     </div>
                                     <span class="text-emerald-400 font-bold text-xs shrink-0">${totMandays} Mandays</span>
@@ -1413,6 +1553,17 @@
                     }
                 }
             });
+        };
+
+        window.renderNewTeams = function() {
+            const container = document.getElementById('teams-grid-container');
+            if (!container) return;
+
+            container.className = 'w-full p-3 grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-500 theme-new-container';
+
+            window.updateTeamFocusSlides();
+
+            const newGroupIds = ["new-1", "new-2", "new-3", "new-4"];
 
             container.innerHTML = newGroupIds.map((newId) => {
                 const meta = newTeamMeta[newId];
@@ -1432,12 +1583,12 @@
                             </button>
                         </div>
 
-                        <!-- Fixed height uniform cards -->
+                        <!-- Fixed height uniform cards without "มาจาก: กลุ่มที่" -->
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 items-start">
                             ${teamMembers.map((m, idx) => {
                                 const isLeader = idx === 0 && m.isLeader;
                                 return `
-                                    <div class="bg-slate-50 border border-slate-200 hover:border-sky-400 p-2.5 rounded-xl text-center relative flex flex-col items-center justify-center min-h-[140px] group hover:shadow-md pt-4">
+                                    <div class="bg-slate-50 border border-slate-200 hover:border-sky-400 p-2.5 rounded-xl text-center relative flex flex-col items-center justify-center min-h-[130px] group hover:shadow-md pt-4">
                                         <div class="relative shrink-0 flex justify-center mb-1">
                                             ${isLeader ? '<div class="absolute -top-4 z-20 text-amber-500 text-base drop-shadow animate-bounce"><i class="fa-solid fa-crown"></i></div>' : ''}
                                             <div class="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-full p-1 bg-white shadow-md border-2 ${meta.border} overflow-hidden transition-transform duration-300 group-hover:scale-105">
@@ -1445,9 +1596,6 @@
                                             </div>
                                         </div>
                                         <div class="font-bold text-slate-800 text-xs sm:text-sm truncate w-full mt-1">${m.name}</div>
-                                        <span class="text-[10px] text-slate-600 bg-slate-200/80 border border-slate-300 px-2 py-0.5 rounded-full w-full truncate mt-1">
-                                            มาจาก: ${window.getOldTeamName(m.oldTeamId).split(' ')[0]}
-                                        </span>
                                     </div>
                                 `;
                             }).join('')}
