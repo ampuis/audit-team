@@ -731,9 +731,9 @@
                                 <tr class="text-sky-300 text-center text-[11px] font-bold">
                                     <th class="py-3 px-3 w-2/6 text-left bg-slate-900/90 rounded-l-xl border-y border-l border-sky-500/30">ภาระงานหลัก / รายละเอียดงาน</th>
                                     <th class="py-3 px-2 w-1/6 bg-sky-950/90 text-sky-300 border-y border-sky-500/30">ไตรมาส 1<br><span class="text-[9px] font-normal text-slate-400">(ตุลาคม - ธันวาคม)</span></th>
-                                    <th class="py-3 px-2 w-1/6 bg-emerald-950/90 text-emerald-300 border-y border-emerald-500/30">ไตรมาส 2<br><span class="text-[9px] font-normal text-slate-400">(มกราคม - มีนาคม)</span></th>
-                                    <th class="py-3 px-2 w-1/6 bg-purple-950/90 text-purple-300 border-y border-purple-500/30">ไตรมาส 3<br><span class="text-[9px] font-normal text-slate-400">(เมษายน - มิถุนายน)</span></th>
-                                    <th class="py-3 px-2 w-1/6 bg-amber-950/90 text-amber-300 rounded-r-xl border-y border-r border-amber-500/30">ไตรมาส 4<br><span class="text-[9px] font-normal text-slate-400">(กรกฎาคม - กันยายน)</span></th>
+                                    <th class="py-3 px-2 w-1/6 bg-sky-950/90 text-sky-300 border-y border-sky-500/30">ไตรมาส 2<br><span class="text-[9px] font-normal text-slate-400">(มกราคม - มีนาคม)</span></th>
+                                    <th class="py-3 px-2 w-1/6 bg-sky-950/90 text-sky-300 border-y border-sky-500/30">ไตรมาส 3<br><span class="text-[9px] font-normal text-slate-400">(เมษายน - มิถุนายน)</span></th>
+                                    <th class="py-3 px-2 w-1/6 bg-sky-950/90 text-sky-300 rounded-r-xl border-y border-r border-sky-500/30">ไตรมาส 4<br><span class="text-[9px] font-normal text-slate-400">(กรกฎาคม - กันยายน)</span></th>
                                 </tr>
                             </thead>
                             <tbody id="slide10-matrix-tbody" class="text-slate-300">
@@ -845,9 +845,9 @@
             </div>
 
             <!-- Table Container -->
-            <div class="flex-grow overflow-y-auto custom-scrollbar border border-white/10 rounded-xl bg-slate-950/40">
+            <div class="flex-grow overflow-y-auto max-h-[55vh] custom-scrollbar border border-white/10 rounded-xl bg-slate-950/40">
                 <table class="w-full text-left border-collapse text-xs">
-                    <thead class="sticky top-0 bg-slate-900 border-b border-white/10 text-sky-300 font-bold">
+                    <thead class="sticky top-0 bg-slate-900 border-b border-white/10 text-sky-300 font-bold z-10">
                         <tr>
                             <th class="p-3 border-r border-white/10 w-2/5">1) รายละเอียดงาน / โครงการ</th>
                             <th class="p-3 border-r border-white/10 w-1/5">2) ประเภทภาระงานหลัก</th>
@@ -1761,6 +1761,11 @@
                 return;
             }
             masterWorkloads = masterWorkloads.filter(w => w.id !== id);
+
+            if (isFirebaseConnected && firebaseDb && id) {
+                firebaseDb.collection('workloads').doc(id).delete().catch(err => console.error("Cloud delete workload error:", err));
+            }
+
             window.syncStateToCloudOrLocal();
         };
 
@@ -1887,7 +1892,13 @@
             }
             const editId = document.getElementById('edit-member-id').value;
             if (!editId) return;
+
             masterMembers = masterMembers.filter(m => m.id !== editId);
+
+            if (isFirebaseConnected && firebaseDb && editId) {
+                firebaseDb.collection('members').doc(editId).delete().catch(err => console.error("Cloud delete member error:", err));
+            }
+
             window.syncStateToCloudOrLocal();
             window.resetMemberForm();
         };
