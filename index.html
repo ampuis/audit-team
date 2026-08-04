@@ -62,7 +62,7 @@
             pointer-events: none;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: scale(0.98);
-            padding: 1rem 1.5rem;
+            padding: 0.75rem 1.5rem;
             display: flex;
             flex-direction: column;
         }
@@ -162,29 +162,29 @@
     <div class="presentation-wrapper">
 
         <!-- Top Header Controls Bar -->
-        <div class="w-full px-3 sm:px-6 py-2 border-b border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 z-20 bg-slate-900/90 backdrop-blur-md shrink-0">
-            <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        <div class="w-full px-4 sm:px-8 py-2.5 border-b border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 z-20 bg-slate-900/90 backdrop-blur-md shrink-0">
+            <div class="flex flex-wrap items-center gap-2 sm:gap-4">
                 <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-ping"></span>
                     <span class="font-bold text-white tracking-wider uppercase text-[11px] sm:text-xs">Internal Audit 2026</span>
                 </div>
                 
                 <!-- Cloud Status Indicator -->
-                <div id="cloud-status-badge" class="bg-slate-800 border border-slate-700 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-medium flex items-center gap-1.5 shadow-sm">
+                <div id="cloud-status-badge" class="bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-medium flex items-center gap-1.5 shadow-sm">
                     <span id="cloud-status-dot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span id="cloud-status-text" class="text-emerald-300">🟢 Cloud Sync Active</span>
                 </div>
 
                 <!-- Admin Auth Status Button -->
-                <button onclick="toggleAdminAuthModal()" id="admin-login-badge" class="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-amber-300 transition shadow cursor-pointer">
+                <button onclick="toggleAdminAuthModal()" id="admin-login-badge" class="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-amber-300 transition shadow cursor-pointer">
                     <span id="admin-status-dot" class="w-2 h-2 rounded-full bg-amber-400"></span>
                     <span id="admin-status-text">🔒 Guest Mode (เข้าสู่ระบบ)</span>
                 </button>
             </div>
             
-            <div class="flex items-center gap-3 sm:gap-5 ml-auto">
+            <div class="flex items-center gap-4 sm:gap-6 ml-auto">
                 <div class="flex items-center gap-1.5 sm:gap-2">
-                    <span id="slide-num-current" class="text-sky-400 font-bold text-sm">1</span>
+                    <span id="slide-num-current" class="text-sky-400 font-bold text-base">1</span>
                     <span>/</span>
                     <span id="slide-num-total" class="font-medium">10</span>
                 </div>
@@ -199,30 +199,30 @@
         </div>
 
         <!-- Slide Content Viewport -->
-        <div class="relative flex-grow w-full overflow-hidden">
+        <div class="relative flex-grow w-full overflow-hidden p-2 sm:p-4">
 
             <!-- Slide 1: Welcome -->
             <div class="slide active" id="slide-1">
-                <div class="h-full flex flex-col justify-center items-center text-center max-w-4xl mx-auto my-auto">
-                    <div class="inline-flex items-center gap-2 bg-sky-500/20 border border-sky-400/30 text-sky-300 px-4 py-1.5 rounded-full text-xs font-semibold mb-6 animate-bounce">
+                <div class="h-full flex flex-col justify-center items-center text-center w-full max-w-5xl mx-auto my-auto py-8">
+                    <div class="inline-flex items-center gap-2 bg-sky-500/20 border border-sky-400/30 text-sky-300 px-5 py-2 rounded-full text-xs sm:text-sm font-semibold mb-6 animate-bounce">
                         <i class="fa-solid fa-sparkles"></i> Annual Seminar 2026
                     </div>
                     
-                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-sky-200 to-sky-400 leading-tight">
+                    <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-sky-200 to-sky-400 leading-tight">
                         แผนการตรวจสอบ<br>ประจำปี 2570
                     </h1>
                     
-                    <p class="text-base md:text-lg text-slate-300 font-light mb-8 max-w-2xl leading-relaxed">
+                    <p class="text-base md:text-xl text-slate-300 font-light mb-10 max-w-3xl leading-relaxed">
                         ยกระดับประสิทธิภาพการทำงาน ปรับเปลี่ยนโครงสร้างอย่างเป็นระบบ<br>
                         การตรวจสอบที่ครอบคลุม <span class="text-sky-400 font-semibold">100%</span> 
                     </p>
 
-                    <div class="flex items-center gap-4">
-                        <button onclick="nextSlide()" class="btn-glow text-white font-semibold px-8 py-3.5 rounded-xl text-base flex items-center gap-3 cursor-pointer">
+                    <div class="flex flex-wrap items-center justify-center gap-5">
+                        <button onclick="nextSlide()" class="btn-glow text-white font-semibold px-9 py-4 rounded-xl text-base flex items-center gap-3 cursor-pointer">
                             <span>เริ่มการนำเสนอ</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
-                        <button onclick="goToSlide(5)" class="glass-card hover:bg-slate-700/50 text-sky-400 font-medium px-6 py-3.5 rounded-xl text-sm flex items-center gap-2 border border-sky-400/30 cursor-pointer">
+                        <button onclick="goToSlide(5)" class="glass-card hover:bg-slate-700/50 text-sky-400 font-medium px-7 py-4 rounded-xl text-sm flex items-center gap-2 border border-sky-400/30 cursor-pointer">
                             <i class="fa-solid fa-wand-magic-sparkles"></i>
                             <span>ข้ามไปหน้าเปิดตัวทีมใหม่</span>
                         </button>
@@ -232,39 +232,39 @@
 
             <!-- Slide 2: Objectives -->
             <div class="slide" id="slide-2">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-4">
-                    <div class="text-center">
-                        <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">วัตถุประสงค์การปรับโครงสร้างทีม</h2>
-                        <p class="text-xs md:text-sm text-slate-400">เพื่อเพิ่มความคล่องตัว กระจายภาระงานอย่างย่อมธรรม และรองรับภารกิจใหม่ปี 2570</p>
+                <div class="h-full flex flex-col justify-between w-full max-w-[1400px] mx-auto py-4">
+                    <div class="text-center shrink-0 mb-4">
+                        <h2 class="text-2xl md:text-4xl font-extrabold text-white mb-2">วัตถุประสงค์การปรับโครงสร้างทีม</h2>
+                        <p class="text-sm md:text-base text-slate-400">เพื่อเพิ่มความคล่องตัว กระจายภาระงานอย่างย่อมธรรม และรองรับภารกิจใหม่ปี 2570</p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
-                        <div class="glass-card p-6 flex flex-col items-center text-center hover:border-sky-400/50 transition">
-                            <div class="w-14 h-14 rounded-2xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-2xl mb-4 border border-sky-400/30">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-auto flex-grow items-center">
+                        <div class="glass-card p-8 flex flex-col items-center text-center hover:border-sky-400/50 transition h-full justify-center">
+                            <div class="w-16 h-16 rounded-2xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-3xl mb-6 border border-sky-400/30">
                                 <i class="fa-solid fa-scale-balanced"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-white mb-2">กระจาย Workload</h3>
-                            <p class="text-xs text-slate-300 leading-relaxed">ปรับสมดุลภาระงาน Manday ของสมาชิกทุกท่านให้ใกล้เคียงกัน ลดปัญหาการทำงานล้นมือในบางทีม</p>
+                            <h3 class="text-xl font-bold text-white mb-3">กระจาย Workload</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed">ปรับสมดุลภาระงาน Manday ของสมาชิกทุกท่านให้ใกล้เคียงกัน ลดปัญหาการทำงานล้นมือในบางทีม</p>
                         </div>
 
-                        <div class="glass-card p-6 flex flex-col items-center text-center hover:border-sky-400/50 transition">
-                            <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4 border border-emerald-400/30">
+                        <div class="glass-card p-8 flex flex-col items-center text-center hover:border-sky-400/50 transition h-full justify-center">
+                            <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-3xl mb-6 border border-emerald-400/30">
                                 <i class="fa-solid fa-bullseye"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-white mb-2">เพิ่มความเชี่ยวชาญ</h3>
-                            <p class="text-xs text-slate-300 leading-relaxed">จัดสรรบุคลากรตามความเชี่ยวชาญเฉพาะด้าน เช่น IT Audit, Risk Management และ Compliance</p>
+                            <h3 class="text-xl font-bold text-white mb-3">เพิ่มความเชี่ยวชาญ</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed">จัดสรรบุคลากรตามความเชี่ยวชาญเฉพาะด้าน เช่น IT Audit, Risk Management และ Compliance</p>
                         </div>
 
-                        <div class="glass-card p-6 flex flex-col items-center text-center hover:border-sky-400/50 transition">
-                            <div class="w-14 h-14 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-2xl mb-4 border border-purple-400/30">
+                        <div class="glass-card p-8 flex flex-col items-center text-center hover:border-sky-400/50 transition h-full justify-center">
+                            <div class="w-16 h-16 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-3xl mb-6 border border-purple-400/30">
                                 <i class="fa-solid fa-bolt"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-white mb-2">เพิ่มความคล่องตัว</h3>
-                            <p class="text-xs text-slate-300 leading-relaxed">ปรับขนาดทีมจาก 3 ทีมเป็น 4 ทีมย่อย เพื่อให้สามารถตอบสนองต่อภารกิจเร่งด่วนได้อย่างมีประสิทธิภาพ</p>
+                            <h3 class="text-xl font-bold text-white mb-3">เพิ่มความคล่องตัว</h3>
+                            <p class="text-sm text-slate-300 leading-relaxed">ปรับขนาดทีมจาก 3 ทีมเป็น 4 ทีมย่อย เพื่อให้สามารถตอบสนองต่อภารกิจเร่งด่วนได้อย่างมีประสิทธิภาพ</p>
                         </div>
                     </div>
 
-                    <div class="flex justify-between items-center text-xs text-slate-400 pt-4 border-t border-white/10">
+                    <div class="flex justify-between items-center text-xs text-slate-400 pt-4 border-t border-white/10 shrink-0">
                         <span>Internal Audit Restructuring 2026</span>
                         <button onclick="nextSlide()" class="text-sky-400 hover:underline flex items-center gap-1 cursor-pointer">ถัดไป <i class="fa-solid fa-chevron-right text-[10px]"></i></button>
                     </div>
@@ -273,44 +273,44 @@
 
             <!-- Slide 3: Manday Calculator -->
             <div class="slide" id="slide-3">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-2">
-                    <div class="text-center shrink-0">
-                        <h2 class="text-xl md:text-2xl font-extrabold text-white">คำนวณกำลังคนและวันทำงาน (Capacity Mandays)</h2>
-                        <p class="text-xs text-slate-400">ประเมินวันทำงานสุทธิรวมต่อคนต่อปี เพื่อใช้วางแผนการตรวจ</p>
+                <div class="h-full flex flex-col justify-between w-full max-w-[1400px] mx-auto py-2">
+                    <div class="text-center shrink-0 mb-4">
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white">คำนวณกำลังคนและวันทำงาน (Capacity Mandays)</h2>
+                        <p class="text-xs sm:text-sm text-slate-400">ประเมินวันทำงานสุทธิรวมต่อคนต่อปี เพื่อใช้วางแผนการตรวจ</p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto items-center">
-                        <div class="md:col-span-5 glass-card p-4 space-y-3 text-xs">
-                            <h3 class="font-bold text-sky-300 border-b border-white/10 pb-2 flex items-center gap-2">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 my-auto items-center flex-grow">
+                        <div class="md:col-span-5 glass-card p-6 space-y-4 text-xs sm:text-sm">
+                            <h3 class="font-bold text-sky-300 border-b border-white/10 pb-3 flex items-center gap-2 text-base">
                                 <i class="fa-solid fa-calculator"></i> ตัวแปรการคำนวณ (ต่อคน/ปี)
                             </h3>
                             <div class="flex justify-between items-center">
                                 <label class="text-slate-300">วันทำการรวมทั้งปี:</label>
-                                <input type="number" id="calc-total-days" value="365" onchange="calculateMandays()" class="w-20 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-right text-white focus:border-sky-400">
+                                <input type="number" id="calc-total-days" value="365" onchange="calculateMandays()" class="w-24 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-right text-white focus:border-sky-400 font-bold">
                             </div>
                             <div class="flex justify-between items-center">
                                 <label class="text-slate-300">หัก วันหยุดประจำปี/เสาร์-อาทิตย์:</label>
-                                <input type="number" id="calc-holidays" value="120" onchange="calculateMandays()" class="w-20 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-right text-white focus:border-sky-400">
+                                <input type="number" id="calc-holidays" value="120" onchange="calculateMandays()" class="w-24 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-right text-white focus:border-sky-400 font-bold">
                             </div>
                             <div class="flex justify-between items-center">
                                 <label class="text-slate-300">หัก วันลาตามสิทธิเฉลี่ย:</label>
-                                <input type="number" id="calc-leaves" value="15" onchange="calculateMandays()" class="w-20 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-right text-white focus:border-sky-400">
+                                <input type="number" id="calc-leaves" value="15" onchange="calculateMandays()" class="w-24 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-right text-white focus:border-sky-400 font-bold">
                             </div>
                             <div class="flex justify-between items-center">
                                 <label class="text-slate-300">หัก การอบรม/ประชุมสถาบัน:</label>
-                                <input type="number" id="calc-trainings" value="10" onchange="calculateMandays()" class="w-20 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-right text-white focus:border-sky-400">
+                                <input type="number" id="calc-trainings" value="10" onchange="calculateMandays()" class="w-24 bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-right text-white focus:border-sky-400 font-bold">
                             </div>
                         </div>
 
-                        <div class="md:col-span-7 space-y-3">
-                            <div class="glass-card p-4 bg-gradient-to-br from-slate-900 via-sky-950/30 to-slate-900 border border-sky-500/30">
-                                <div class="text-xs text-sky-300 uppercase tracking-wider font-semibold mb-1">วันทำงานสุทธิสุทธิต่อคน/ปี</div>
-                                <div class="text-3xl font-black text-white"><span id="res-net-manday">220</span> <span class="text-sm font-normal text-slate-400">Mandays / Person</span></div>
+                        <div class="md:col-span-7 space-y-4">
+                            <div class="glass-card p-6 bg-gradient-to-br from-slate-900 via-sky-950/30 to-slate-900 border border-sky-500/30">
+                                <div class="text-xs sm:text-sm text-sky-300 uppercase tracking-wider font-semibold mb-2">วันทำงานสุทธิสุทธิต่อคน/ปี</div>
+                                <div class="text-4xl sm:text-5xl font-black text-white"><span id="res-net-manday">220</span> <span class="text-base font-normal text-slate-400">Mandays / Person</span></div>
                             </div>
 
-                            <div class="glass-card p-4 bg-gradient-to-br from-slate-900 via-emerald-950/30 to-slate-900 border border-emerald-500/30">
-                                <div class="text-xs text-emerald-300 uppercase tracking-wider font-semibold mb-1">รวมกำลังคนทั้งหมด (<span id="calc-member-count">16</span> ท่าน)</div>
-                                <div class="text-3xl font-black text-emerald-400"><span id="res-total-capacity">3,520</span> <span class="text-sm font-normal text-slate-400">Total Mandays Capacity</span></div>
+                            <div class="glass-card p-6 bg-gradient-to-br from-slate-900 via-emerald-950/30 to-slate-900 border border-emerald-500/30">
+                                <div class="text-xs sm:text-sm text-emerald-300 uppercase tracking-wider font-semibold mb-2">รวมกำลังคนทั้งหมด (<span id="calc-member-count">16</span> ท่าน)</div>
+                                <div class="text-4xl sm:text-5xl font-black text-emerald-400"><span id="res-total-capacity">3,520</span> <span class="text-base font-normal text-slate-400">Total Mandays Capacity</span></div>
                             </div>
                         </div>
                     </div>
@@ -324,35 +324,35 @@
 
             <!-- Slide 4: Workload Matrix Summary -->
             <div class="slide" id="slide-4">
-                <div class="h-full flex flex-col justify-between max-w-6xl mx-auto py-2">
-                    <div class="flex items-center justify-between shrink-0 mb-2">
+                <div class="h-full flex flex-col justify-between w-full max-w-[1500px] mx-auto py-2">
+                    <div class="flex flex-wrap items-center justify-between shrink-0 mb-3 gap-2">
                         <div>
-                            <h2 class="text-xl font-extrabold text-white flex items-center gap-2">
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
                                 <i class="fa-solid fa-table-cells text-sky-400"></i>
                                 <span>ตารางจัดสรรภาระงานตรวจสอบประจำปี 2570</span>
                             </h2>
-                            <p class="text-xs text-slate-400">สรุปการจัดสรรโครงการแยกตามประเภทภาระงานหลักและทีมรับผิดชอบ</p>
+                            <p class="text-xs sm:text-sm text-slate-400">สรุปการจัดสรรโครงการแยกตามประเภทภาระงานหลักและทีมรับผิดชอบ</p>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="openWorkloadDetailModal()" class="bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-400/40 text-xs px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer">
+                            <button onclick="openWorkloadDetailModal()" class="bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-400/40 text-xs px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer">
                                 <i class="fa-solid fa-list"></i> คลิกดูรายละเอียด
                             </button>
-                            <button onclick="openAddProjectModal()" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-xs px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer">
+                            <button onclick="openAddProjectModal()" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-xs px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer">
                                 <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
                             </button>
                         </div>
                     </div>
 
                     <!-- Matrix Table -->
-                    <div class="flex-grow overflow-y-auto custom-scrollbar border border-white/10 rounded-xl glass-card p-2 mb-2">
-                        <table class="w-full text-left border-collapse text-xs">
+                    <div class="flex-grow overflow-y-auto custom-scrollbar border border-white/10 rounded-2xl glass-card p-3 mb-3">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
                             <thead class="bg-slate-900/90 text-sky-300 sticky top-0 z-10 border-b border-white/10">
                                 <tr>
-                                    <th class="p-2 border-r border-white/10 w-1/5">ประเภทงานหลัก</th>
-                                    <th class="p-2 border-r border-white/10 text-center">Audit Team 1</th>
-                                    <th class="p-2 border-r border-white/10 text-center">Audit Team 2</th>
-                                    <th class="p-2 border-r border-white/10 text-center">Audit Team 3</th>
-                                    <th class="p-2 text-center">Audit Team 4</th>
+                                    <th class="p-3 border-r border-white/10 w-1/5 font-bold">ประเภทงานหลัก</th>
+                                    <th class="p-3 border-r border-white/10 text-center font-bold">Audit Team 1</th>
+                                    <th class="p-3 border-r border-white/10 text-center font-bold">Audit Team 2</th>
+                                    <th class="p-3 border-r border-white/10 text-center font-bold">Audit Team 3</th>
+                                    <th class="p-3 text-center font-bold">Audit Team 4</th>
                                 </tr>
                             </thead>
                             <tbody id="workload-table-body" class="divide-y divide-white/10 text-slate-300">
@@ -362,9 +362,9 @@
                     </div>
 
                     <!-- Utilization Bar -->
-                    <div class="glass-card p-3 shrink-0 flex items-center justify-between text-xs">
+                    <div class="glass-card p-3.5 shrink-0 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
                         <span class="font-bold text-slate-300">สัดส่วนการใช้วันทำงาน (Capacity Utilization):</span>
-                        <div class="flex-grow mx-4 bg-slate-800 rounded-full h-3 overflow-hidden border border-white/10">
+                        <div class="flex-grow mx-2 min-w-[200px] bg-slate-800 rounded-full h-3.5 overflow-hidden border border-white/10">
                             <div id="res-utilization-bar" class="bg-gradient-to-r from-sky-400 to-emerald-400 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
                         </div>
                         <span id="res-utilization-text" class="font-bold text-emerald-400">0% (0 / 0 Mandays)</span>
@@ -374,24 +374,24 @@
 
             <!-- Slide 5: The Reveal (Old vs New Teams) -->
             <div class="slide" id="slide-5">
-                <div class="h-full flex flex-col justify-between max-w-6xl mx-auto py-2">
-                    <div class="flex flex-wrap items-center justify-between gap-2 shrink-0 mb-2">
+                <div class="h-full flex flex-col justify-between w-full max-w-[1500px] mx-auto py-1">
+                    <div class="flex flex-wrap items-center justify-between gap-3 shrink-0 mb-3">
                         <div>
                             <div class="inline-flex items-center gap-1.5 text-sky-400 text-xs font-bold uppercase tracking-wider">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i> The Grand Reveal
                             </div>
-                            <h2 class="text-xl md:text-2xl font-extrabold text-white">ประกาศการจัดทีมตรวจสอบใหม่ประจำปี 2570</h2>
+                            <h2 class="text-xl sm:text-3xl font-extrabold text-white">ประกาศการจัดทีมตรวจสอบใหม่ประจำปี 2570</h2>
                         </div>
 
-                        <div class="flex items-center gap-2">
-                            <button onclick="openRosterModal()" class="glass-card hover:bg-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 border border-white/10 transition cursor-pointer">
+                        <div class="flex flex-wrap items-center gap-3">
+                            <button onclick="openRosterModal()" class="glass-card hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5 border border-white/10 transition cursor-pointer">
                                 <i class="fa-solid fa-users-gear text-sky-400"></i> จัดการสมาชิก & รูปถ่าย
                             </button>
                             <div class="bg-slate-900/90 p-1 rounded-full border border-white/10 flex items-center">
-                                <button id="toggle-old-btn" onclick="triggerTeamSwitch('old')" class="btn-glow px-3.5 py-1 rounded-full text-xs font-bold text-white transition-all cursor-pointer">
+                                <button id="toggle-old-btn" onclick="triggerTeamSwitch('old')" class="btn-glow px-4 py-1.5 rounded-full text-xs font-bold text-white transition-all cursor-pointer">
                                     โครงสร้างเดิม (3 ทีม)
                                 </button>
-                                <button id="toggle-new-btn" onclick="triggerTeamSwitch('new')" class="px-3.5 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all cursor-pointer">
+                                <button id="toggle-new-btn" onclick="triggerTeamSwitch('new')" class="px-4 py-1.5 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all cursor-pointer">
                                     🚀 เปิดตัว 4 ทีมใหม่ (CLICK)
                                 </button>
                             </div>
@@ -399,7 +399,7 @@
                     </div>
 
                     <!-- Teams Container Grid -->
-                    <div id="teams-grid-container" class="flex-grow overflow-y-auto custom-scrollbar">
+                    <div id="teams-grid-container" class="flex-grow overflow-y-auto custom-scrollbar w-full">
                         <!-- Dynamic rendered -->
                     </div>
                 </div>
@@ -407,34 +407,34 @@
 
             <!-- Slide 6: Team 1 Focus -->
             <div class="slide" id="slide-6">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-2">
+                <div class="h-full flex flex-col justify-between w-full max-w-[1500px] mx-auto py-2">
                     <div class="flex items-center justify-between shrink-0 mb-3 border-b border-sky-500/30 pb-2">
                         <div class="flex items-center gap-3">
-                            <span class="px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 text-xs font-bold border border-sky-400/40">Team 01 Focus</span>
-                            <h2 class="text-2xl font-extrabold text-white">Audit Team 1</h2>
+                            <span class="px-3.5 py-1 rounded-full bg-sky-500/20 text-sky-400 text-xs sm:text-sm font-bold border border-sky-400/40">Team 01 Focus</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Audit Team 1</h2>
                         </div>
-                        <button onclick="goToSlide(5)" class="text-xs text-slate-400 hover:text-sky-300 flex items-center gap-1 cursor-pointer"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
+                        <button onclick="goToSlide(5)" class="text-xs sm:text-sm text-slate-400 hover:text-sky-300 flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto flex-grow items-start overflow-hidden">
-                        <div class="md:col-span-4 glass-card p-4 flex flex-col h-full bg-gradient-to-b from-slate-900 via-sky-950/20 to-slate-900 border-sky-500/30">
-                            <h3 class="text-xs font-bold text-sky-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
-                                <span><i class="fa-solid fa-users text-sky-400 mr-1.5"></i> รายชื่อสมาชิกในทีม</span>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 my-auto flex-grow items-start overflow-hidden">
+                        <div class="md:col-span-4 glass-card p-5 flex flex-col h-full bg-gradient-to-b from-slate-900 via-sky-950/20 to-slate-900 border-sky-500/30">
+                            <h3 class="text-xs sm:text-sm font-bold text-sky-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
+                                <span><i class="fa-solid fa-users text-sky-400 mr-2"></i> รายชื่อสมาชิกในทีม</span>
                             </h3>
-                            <div id="slide6-members-list" class="space-y-2 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
+                            <div id="slide6-members-list" class="space-y-2.5 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
                         </div>
 
-                        <div class="md:col-span-8 glass-card p-4 flex flex-col h-full justify-between">
+                        <div class="md:col-span-8 glass-card p-5 flex flex-col h-full justify-between">
                             <div>
-                                <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-                                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                                <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                                    <h3 class="text-xs sm:text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
                                         <i class="fa-solid fa-list-check text-sky-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
                                     </h3>
-                                    <button onclick="openAddProjectModalForTeam('new-1')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[11px] px-2.5 py-1 rounded-lg font-bold transition flex items-center gap-1 cursor-pointer">
+                                    <button onclick="openAddProjectModalForTeam('new-1')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-xs px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 cursor-pointer">
                                         <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
                                     </button>
                                 </div>
-                                <ul id="slide6-tasks-list" class="space-y-2 text-xs text-slate-300 overflow-y-auto max-h-[45vh] custom-scrollbar pr-1"></ul>
+                                <ul id="slide6-tasks-list" class="space-y-2.5 text-xs sm:text-sm text-slate-300 overflow-y-auto max-h-[55vh] custom-scrollbar pr-1"></ul>
                             </div>
                         </div>
                     </div>
@@ -443,34 +443,34 @@
 
             <!-- Slide 7: Team 2 Focus -->
             <div class="slide" id="slide-7">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-2">
+                <div class="h-full flex flex-col justify-between w-full max-w-[1500px] mx-auto py-2">
                     <div class="flex items-center justify-between shrink-0 mb-3 border-b border-emerald-500/30 pb-2">
                         <div class="flex items-center gap-3">
-                            <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-400/40">Team 02 Focus</span>
-                            <h2 class="text-2xl font-extrabold text-white">Audit Team 2</h2>
+                            <span class="px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs sm:text-sm font-bold border border-emerald-400/40">Team 02 Focus</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Audit Team 2</h2>
                         </div>
-                        <button onclick="goToSlide(5)" class="text-xs text-slate-400 hover:text-emerald-300 flex items-center gap-1 cursor-pointer"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
+                        <button onclick="goToSlide(5)" class="text-xs sm:text-sm text-slate-400 hover:text-emerald-300 flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto flex-grow items-start overflow-hidden">
-                        <div class="md:col-span-4 glass-card p-4 flex flex-col h-full bg-gradient-to-b from-slate-900 via-emerald-950/20 to-slate-900 border-emerald-500/30">
-                            <h3 class="text-xs font-bold text-emerald-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
-                                <span><i class="fa-solid fa-users text-emerald-400 mr-1.5"></i> รายชื่อสมาชิกในทีม</span>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 my-auto flex-grow items-start overflow-hidden">
+                        <div class="md:col-span-4 glass-card p-5 flex flex-col h-full bg-gradient-to-b from-slate-900 via-emerald-950/20 to-slate-900 border-emerald-500/30">
+                            <h3 class="text-xs sm:text-sm font-bold text-emerald-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
+                                <span><i class="fa-solid fa-users text-emerald-400 mr-2"></i> รายชื่อสมาชิกในทีม</span>
                             </h3>
-                            <div id="slide7-members-list" class="space-y-2 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
+                            <div id="slide7-members-list" class="space-y-2.5 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
                         </div>
 
-                        <div class="md:col-span-8 glass-card p-4 flex flex-col h-full justify-between">
+                        <div class="md:col-span-8 glass-card p-5 flex flex-col h-full justify-between">
                             <div>
-                                <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-                                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                                <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                                    <h3 class="text-xs sm:text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
                                         <i class="fa-solid fa-list-check text-emerald-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
                                     </h3>
-                                    <button onclick="openAddProjectModalForTeam('new-2')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[11px] px-2.5 py-1 rounded-lg font-bold transition flex items-center gap-1 cursor-pointer">
+                                    <button onclick="openAddProjectModalForTeam('new-2')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-xs px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 cursor-pointer">
                                         <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
                                     </button>
                                 </div>
-                                <ul id="slide7-tasks-list" class="space-y-2 text-xs text-slate-300 overflow-y-auto max-h-[45vh] custom-scrollbar pr-1"></ul>
+                                <ul id="slide7-tasks-list" class="space-y-2.5 text-xs sm:text-sm text-slate-300 overflow-y-auto max-h-[55vh] custom-scrollbar pr-1"></ul>
                             </div>
                         </div>
                     </div>
@@ -479,34 +479,34 @@
 
             <!-- Slide 8: Team 3 Focus -->
             <div class="slide" id="slide-8">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-2">
+                <div class="h-full flex flex-col justify-between w-full max-w-[1500px] mx-auto py-2">
                     <div class="flex items-center justify-between shrink-0 mb-3 border-b border-purple-500/30 pb-2">
                         <div class="flex items-center gap-3">
-                            <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold border border-purple-400/40">Team 03 Focus</span>
-                            <h2 class="text-2xl font-extrabold text-white">Audit Team 3</h2>
+                            <span class="px-3.5 py-1 rounded-full bg-purple-500/20 text-purple-400 text-xs sm:text-sm font-bold border border-purple-400/40">Team 03 Focus</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Audit Team 3</h2>
                         </div>
-                        <button onclick="goToSlide(5)" class="text-xs text-slate-400 hover:text-purple-300 flex items-center gap-1 cursor-pointer"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
+                        <button onclick="goToSlide(5)" class="text-xs sm:text-sm text-slate-400 hover:text-purple-300 flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto flex-grow items-start overflow-hidden">
-                        <div class="md:col-span-4 glass-card p-4 flex flex-col h-full bg-gradient-to-b from-slate-900 via-purple-950/20 to-slate-900 border-purple-500/30">
-                            <h3 class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
-                                <span><i class="fa-solid fa-users text-purple-400 mr-1.5"></i> รายชื่อสมาชิกในทีม</span>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 my-auto flex-grow items-start overflow-hidden">
+                        <div class="md:col-span-4 glass-card p-5 flex flex-col h-full bg-gradient-to-b from-slate-900 via-purple-950/20 to-slate-900 border-purple-500/30">
+                            <h3 class="text-xs sm:text-sm font-bold text-purple-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
+                                <span><i class="fa-solid fa-users text-purple-400 mr-2"></i> รายชื่อสมาชิกในทีม</span>
                             </h3>
-                            <div id="slide8-members-list" class="space-y-2 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
+                            <div id="slide8-members-list" class="space-y-2.5 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
                         </div>
 
-                        <div class="md:col-span-8 glass-card p-4 flex flex-col h-full justify-between">
+                        <div class="md:col-span-8 glass-card p-5 flex flex-col h-full justify-between">
                             <div>
-                                <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-                                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                                <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                                    <h3 class="text-xs sm:text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
                                         <i class="fa-solid fa-list-check text-purple-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
                                     </h3>
-                                    <button onclick="openAddProjectModalForTeam('new-3')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[11px] px-2.5 py-1 rounded-lg font-bold transition flex items-center gap-1 cursor-pointer">
+                                    <button onclick="openAddProjectModalForTeam('new-3')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-xs px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 cursor-pointer">
                                         <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
                                     </button>
                                 </div>
-                                <ul id="slide8-tasks-list" class="space-y-2 text-xs text-slate-300 overflow-y-auto max-h-[45vh] custom-scrollbar pr-1"></ul>
+                                <ul id="slide8-tasks-list" class="space-y-2.5 text-xs sm:text-sm text-slate-300 overflow-y-auto max-h-[55vh] custom-scrollbar pr-1"></ul>
                             </div>
                         </div>
                     </div>
@@ -515,34 +515,34 @@
 
             <!-- Slide 9: Team 4 Focus -->
             <div class="slide" id="slide-9">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-2">
+                <div class="h-full flex flex-col justify-between w-full max-w-[1500px] mx-auto py-2">
                     <div class="flex items-center justify-between shrink-0 mb-3 border-b border-amber-500/30 pb-2">
                         <div class="flex items-center gap-3">
-                            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold border border-amber-400/40">Team 04 Focus</span>
-                            <h2 class="text-2xl font-extrabold text-white">Audit Team 4</h2>
+                            <span class="px-3.5 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs sm:text-sm font-bold border border-amber-400/40">Team 04 Focus</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Audit Team 4</h2>
                         </div>
-                        <button onclick="goToSlide(5)" class="text-xs text-slate-400 hover:text-amber-300 flex items-center gap-1 cursor-pointer"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
+                        <button onclick="goToSlide(5)" class="text-xs sm:text-sm text-slate-400 hover:text-amber-300 flex items-center gap-1.5 cursor-pointer"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto flex-grow items-start overflow-hidden">
-                        <div class="md:col-span-4 glass-card p-4 flex flex-col h-full bg-gradient-to-b from-slate-900 via-amber-950/20 to-slate-900 border-amber-500/30">
-                            <h3 class="text-xs font-bold text-amber-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
-                                <span><i class="fa-solid fa-users text-amber-400 mr-1.5"></i> รายชื่อสมาชิกในทีม</span>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 my-auto flex-grow items-start overflow-hidden">
+                        <div class="md:col-span-4 glass-card p-5 flex flex-col h-full bg-gradient-to-b from-slate-900 via-amber-950/20 to-slate-900 border-amber-500/30">
+                            <h3 class="text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
+                                <span><i class="fa-solid fa-users text-amber-400 mr-2"></i> รายชื่อสมาชิกในทีม</span>
                             </h3>
-                            <div id="slide9-members-list" class="space-y-2 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
+                            <div id="slide9-members-list" class="space-y-2.5 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
                         </div>
 
-                        <div class="md:col-span-8 glass-card p-4 flex flex-col h-full justify-between">
+                        <div class="md:col-span-8 glass-card p-5 flex flex-col h-full justify-between">
                             <div>
-                                <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-                                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                                <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                                    <h3 class="text-xs sm:text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
                                         <i class="fa-solid fa-list-check text-amber-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
                                     </h3>
-                                    <button onclick="openAddProjectModalForTeam('new-4')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[11px] px-2.5 py-1 rounded-lg font-bold transition flex items-center gap-1 cursor-pointer">
+                                    <button onclick="openAddProjectModalForTeam('new-4')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-xs px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 cursor-pointer">
                                         <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
                                     </button>
                                 </div>
-                                <ul id="slide9-tasks-list" class="space-y-2 text-xs text-slate-300 overflow-y-auto max-h-[45vh] custom-scrollbar pr-1"></ul>
+                                <ul id="slide9-tasks-list" class="space-y-2.5 text-xs sm:text-sm text-slate-300 overflow-y-auto max-h-[55vh] custom-scrollbar pr-1"></ul>
                             </div>
                         </div>
                     </div>
@@ -551,39 +551,39 @@
 
             <!-- Slide 10: Quarterly Operational Plan (Matrix View) -->
             <div class="slide" id="slide-10">
-                <div class="h-full flex flex-col justify-between max-w-6xl mx-auto py-2">
-                    <div class="flex items-center justify-between shrink-0 mb-2">
+                <div class="h-full flex flex-col justify-between w-full max-w-[1500px] mx-auto py-2">
+                    <div class="flex flex-wrap items-center justify-between shrink-0 mb-3 gap-3">
                         <div>
                             <div class="inline-flex items-center gap-1.5 text-sky-400 text-xs font-bold uppercase tracking-wider">
                                 <i class="fa-solid fa-calendar-check"></i> Operational Matrix Plan 2027
                             </div>
-                            <h2 class="text-xl md:text-2xl font-extrabold text-white">แผนการดำเนินงานรายไตรมาส (Matrix Workload View)</h2>
+                            <h2 class="text-xl sm:text-3xl font-extrabold text-white">แผนการดำเนินงานรายไตรมาส (Matrix Workload View)</h2>
                         </div>
                         
-                        <div class="flex items-center gap-2">
-                            <select id="matrix-filter-team" onchange="renderSlide10Matrix()" class="bg-slate-900 text-sky-300 text-xs p-1.5 rounded-lg border border-sky-500/30 focus:outline-none">
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <select id="matrix-filter-team" onchange="renderSlide10Matrix()" class="bg-slate-900 text-sky-300 text-xs sm:text-sm p-2 rounded-xl border border-sky-500/30 focus:outline-none">
                                 <option value="ALL">แสดงทั้งหมดทุกทีม</option>
                                 <option value="new-1">Audit Team 1</option>
                                 <option value="new-2">Audit Team 2</option>
                                 <option value="new-3">Audit Team 3</option>
                                 <option value="new-4">Audit Team 4</option>
                             </select>
-                            <select id="matrix-filter-category" onchange="renderSlide10Matrix()" class="bg-slate-900 text-sky-300 text-xs p-1.5 rounded-lg border border-sky-500/30 focus:outline-none">
+                            <select id="matrix-filter-category" onchange="renderSlide10Matrix()" class="bg-slate-900 text-sky-300 text-xs sm:text-sm p-2 rounded-xl border border-sky-500/30 focus:outline-none">
                                 <option value="ALL">แสดงทั้งหมดทุกหมวดหมู่</option>
                                 <option value="งานตรวจสอบปกติ">งานตรวจสอบปกติ</option>
                                 <option value="งานตรวจสอบเฉพาะด้าน">งานตรวจสอบเฉพาะด้าน</option>
                                 <option value="งานตรวจสอบงบการเงิน">งานตรวจสอบงบการเงิน</option>
                                 <option value="งานอื่นๆ">งานอื่นๆ</option>
                             </select>
-                            <button onclick="toggleAllMatrixCategories()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg border border-white/10 transition cursor-pointer">
+                            <button onclick="toggleAllMatrixCategories()" class="text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-xl border border-white/10 transition cursor-pointer">
                                 <i class="fa-solid fa-arrows-up-down mr-1"></i> ย่อ/ขยายทั้งหมด
                             </button>
                         </div>
                     </div>
 
                     <!-- Matrix Plan Table -->
-                    <div class="flex-grow overflow-y-auto custom-scrollbar border border-white/10 rounded-2xl glass-card p-3 mb-2">
-                        <table class="w-full text-left border-separate border-spacing-y-2 text-xs">
+                    <div class="flex-grow overflow-y-auto custom-scrollbar border border-white/10 rounded-2xl glass-card p-3.5 mb-2">
+                        <table class="w-full text-left border-separate border-spacing-y-2 text-xs sm:text-sm">
                             <thead>
                                 <tr class="text-sky-300 font-bold">
                                     <th class="p-3 bg-sky-950/90 rounded-l-xl border-l border-y border-sky-500/30 w-[36%]">ภาระงานหลัก / รายละเอียดงาน</th>
@@ -621,16 +621,16 @@
         </div>
 
         <!-- Bottom Floating Controls -->
-        <div class="w-full px-6 py-2 border-t border-white/10 flex items-center justify-between z-20 bg-slate-900/90 backdrop-blur-md shrink-0">
-            <button id="btn-prev" onclick="prevSlide()" class="glass-card hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition cursor-pointer">
+        <div class="w-full px-6 py-2.5 border-t border-white/10 flex items-center justify-between z-20 bg-slate-900/90 backdrop-blur-md shrink-0">
+            <button id="btn-prev" onclick="prevSlide()" class="glass-card hover:bg-slate-800 text-slate-300 hover:text-white px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition cursor-pointer">
                 <i class="fa-solid fa-chevron-left text-xs"></i>
                 <span>ย้อนกลับ</span>
             </button>
 
             <!-- Dots Indicator -->
-            <div id="slide-dots" class="flex items-center gap-1.5"></div>
+            <div id="slide-dots" class="flex items-center gap-2"></div>
 
-            <button id="btn-next" onclick="nextSlide()" class="btn-glow text-white px-5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 cursor-pointer">
+            <button id="btn-next" onclick="nextSlide()" class="btn-glow text-white px-6 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 cursor-pointer">
                 <span>ถัดไป</span>
                 <i class="fa-solid fa-chevron-right text-xs"></i>
             </button>
@@ -665,14 +665,14 @@
 
     <!-- 5 Column Workload Detail Modal -->
     <div id="workload-detail-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md hidden transition-opacity duration-300 p-4">
-        <div class="glass-card w-full max-w-4xl bg-slate-900 border border-sky-400/40 rounded-2xl p-5 shadow-2xl max-h-[90vh] flex flex-col">
-            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-3 shrink-0">
+        <div class="glass-card w-full max-w-5xl bg-slate-900 border border-sky-400/40 rounded-2xl p-6 shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4 shrink-0">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-base font-bold">
+                    <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-lg font-bold">
                         <i class="fa-solid fa-list-check"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-white">ตารางรายละเอียดการจัดสรรภาระงานตรวจสอบปี 2570</h3>
+                        <h3 class="text-xl font-bold text-white">ตารางรายละเอียดการจัดสรรภาระงานตรวจสอบปี 2570</h3>
                         <p class="text-xs text-slate-400">แสดงรายการภาระงานทั้งหมดอย่างรายละเอียด พร้อมตัวกรองหมวดหมู่ ทีม และไตรมาส</p>
                     </div>
                 </div>
@@ -682,7 +682,7 @@
             </div>
 
             <!-- Filters Bar -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-slate-950/60 rounded-xl border border-white/5 mb-3 text-xs shrink-0">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 bg-slate-950/60 rounded-xl border border-white/5 mb-4 text-xs sm:text-sm shrink-0">
                 <div>
                     <label class="block text-slate-400 mb-1">กรองตามภาระงานหลัก</label>
                     <select id="detail-filter-category" onchange="renderWorkloadDetailTable()" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700 focus:border-sky-400">
@@ -717,7 +717,7 @@
 
             <!-- Table Container -->
             <div class="flex-grow overflow-y-auto max-h-[55vh] custom-scrollbar border border-white/10 rounded-xl bg-slate-950/40">
-                <table class="w-full text-left border-collapse text-xs">
+                <table class="w-full text-left border-collapse text-xs sm:text-sm">
                     <thead class="sticky top-0 bg-slate-900 border-b border-white/10 text-sky-300 font-bold z-10">
                         <tr>
                             <th class="p-3 border-r border-white/10 w-[30%]">รายละเอียดงาน / โครงการ</th>
@@ -733,23 +733,23 @@
                 </table>
             </div>
 
-            <div class="pt-3 border-t border-white/10 flex justify-between items-center text-xs text-slate-400 shrink-0 mt-2">
+            <div class="pt-3 border-t border-white/10 flex justify-between items-center text-xs text-slate-400 shrink-0 mt-3">
                 <span>จำนวนรายการที่พบ: <strong id="detail-item-count" class="text-sky-400">0</strong> รายการ</span>
-                <button onclick="closeWorkloadDetailModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg cursor-pointer">ปิดหน้าต่าง</button>
+                <button onclick="closeWorkloadDetailModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl cursor-pointer">ปิดหน้าต่าง</button>
             </div>
         </div>
     </div>
 
     <!-- Roster Management Modal -->
     <div id="roster-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden transition-opacity duration-300 p-4">
-        <div class="glass-card w-full max-w-3xl bg-slate-900 border border-sky-400/30 rounded-2xl p-5 shadow-2xl max-h-[90vh] flex flex-col">
-            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-3 shrink-0">
+        <div class="glass-card w-full max-w-4xl bg-slate-900 border border-sky-400/30 rounded-2xl p-6 shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4 shrink-0">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-base font-bold">
+                    <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-lg font-bold">
                         <i class="fa-solid fa-users-gear"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-white">ระบบจัดการสมาชิก & รูปถ่ายทีมตรวจสอบ</h3>
+                        <h3 class="text-xl font-bold text-white">ระบบจัดการสมาชิก & รูปถ่ายทีมตรวจสอบ</h3>
                         <p class="text-xs text-slate-400">เพิ่ม/แก้ไข/ลบ รายชื่อ ตำแหน่ง กลุ่มย้าย และรูปถ่ายสมาชิก (รองรับรูปทีมเก่า/ทีมใหม่)</p>
                     </div>
                 </div>
@@ -758,48 +758,48 @@
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-5 overflow-hidden flex-grow">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 overflow-hidden flex-grow">
                 <!-- Member Roster List -->
-                <div class="md:col-span-5 flex flex-col h-full bg-slate-950/50 p-3 rounded-xl border border-white/5 overflow-hidden">
-                    <div class="flex items-center justify-between mb-2 shrink-0">
+                <div class="md:col-span-5 flex flex-col h-full bg-slate-950/50 p-3.5 rounded-xl border border-white/5 overflow-hidden">
+                    <div class="flex items-center justify-between mb-3 shrink-0">
                         <span class="text-xs font-semibold text-slate-300 uppercase tracking-wider">รายชื่อสมาชิก (<span id="modal-member-count">0</span>)</span>
-                        <button onclick="resetMemberForm()" class="text-xs bg-sky-500/20 text-sky-300 hover:bg-sky-500/30 px-2.5 py-1 rounded-lg border border-sky-400/30 flex items-center gap-1 transition cursor-pointer">
+                        <button onclick="resetMemberForm()" class="text-xs bg-sky-500/20 text-sky-300 hover:bg-sky-500/30 px-3 py-1.5 rounded-lg border border-sky-400/30 flex items-center gap-1.5 transition cursor-pointer">
                             <i class="fa-solid fa-user-plus"></i> เพิ่มสมาชิกใหม่
                         </button>
                     </div>
                     <div id="modal-roster-list" class="space-y-2 overflow-y-auto max-h-[55vh] pr-1.5 custom-scrollbar flex-grow"></div>
                 </div>
 
-                <div class="md:col-span-7 bg-slate-800/40 p-4 rounded-xl border border-white/10 flex flex-col justify-between overflow-y-auto">
-                    <form id="member-editor-form" onsubmit="saveMember(event)" class="space-y-3">
+                <div class="md:col-span-7 bg-slate-800/40 p-5 rounded-xl border border-white/10 flex flex-col justify-between overflow-y-auto">
+                    <form id="member-editor-form" onsubmit="saveMember(event)" class="space-y-4">
                         <input type="hidden" id="edit-member-id" value="">
 
                         <!-- Photo Section: New Team (Happy) -->
-                        <div class="flex items-center gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-sky-500/20">
-                            <img id="form-photo-preview" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250" class="w-12 h-12 rounded-full object-cover border-2 border-sky-400 shadow">
+                        <div class="flex items-center gap-3 bg-slate-900/60 p-3 rounded-xl border border-sky-500/20">
+                            <img id="form-photo-preview" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250" class="w-14 h-14 rounded-full object-cover border-2 border-sky-400 shadow">
                             <div class="flex-grow text-xs">
-                                <label class="block font-semibold text-sky-300 mb-0.5">📸 รูปถ่ายทีมใหม่ (หน้ายิ้มแย้มสดใส)</label>
-                                <div class="flex gap-1.5">
-                                    <label class="cursor-pointer bg-slate-700 hover:bg-slate-600 text-sky-300 text-[11px] px-2 py-0.5 rounded-lg border border-sky-400/30 flex items-center gap-1 transition">
+                                <label class="block font-semibold text-sky-300 mb-1">📸 รูปถ่ายทีมใหม่ (หน้ายิ้มแย้มสดใส)</label>
+                                <div class="flex gap-2">
+                                    <label class="cursor-pointer bg-slate-700 hover:bg-slate-600 text-sky-300 text-xs px-2.5 py-1 rounded-lg border border-sky-400/30 flex items-center gap-1 transition">
                                         <i class="fa-solid fa-upload"></i> อัปโหลด...
                                         <input type="file" id="form-photo-file" accept="image/*" onchange="handlePhotoFileSelect(event, 'new')" class="hidden">
                                     </label>
-                                    <input type="url" id="form-photo-url" oninput="updatePhotoPreviewFromUrl(this.value, 'new')" placeholder="หรือใส่ URL รูปภาพ..." class="flex-grow bg-slate-950 text-white text-[11px] px-2 py-0.5 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
+                                    <input type="url" id="form-photo-url" oninput="updatePhotoPreviewFromUrl(this.value, 'new')" placeholder="หรือใส่ URL รูปภาพ..." class="flex-grow bg-slate-950 text-white text-xs px-2.5 py-1 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Photo Section: Old Team (Serious) -->
-                        <div class="flex items-center gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/60">
-                            <img id="form-old-photo-preview" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=250" class="w-12 h-12 rounded-full object-cover border-2 border-slate-500 shadow sepia grayscale">
+                        <div class="flex items-center gap-3 bg-slate-900/60 p-3 rounded-xl border border-slate-700/60">
+                            <img id="form-old-photo-preview" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=250" class="w-14 h-14 rounded-full object-cover border-2 border-slate-500 shadow sepia grayscale">
                             <div class="flex-grow text-xs">
-                                <label class="block font-semibold text-slate-300 mb-0.5">📸 รูปถ่ายทีมเดิม (หน้าจริงจัง/เคร่งเครียด)</label>
-                                <div class="flex gap-1.5">
-                                    <label class="cursor-pointer bg-slate-700 hover:bg-slate-600 text-slate-300 text-[11px] px-2 py-0.5 rounded-lg border border-slate-500/30 flex items-center gap-1 transition">
+                                <label class="block font-semibold text-slate-300 mb-1">📸 รูปถ่ายทีมเดิม (หน้าจริงจัง/เคร่งเครียด)</label>
+                                <div class="flex gap-2">
+                                    <label class="cursor-pointer bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs px-2.5 py-1 rounded-lg border border-slate-500/30 flex items-center gap-1 transition">
                                         <i class="fa-solid fa-upload"></i> อัปโหลด...
                                         <input type="file" id="form-old-photo-file" accept="image/*" onchange="handlePhotoFileSelect(event, 'old')" class="hidden">
                                     </label>
-                                    <input type="url" id="form-old-photo-url" oninput="updatePhotoPreviewFromUrl(this.value, 'old')" placeholder="หรือใส่ URL รูปภาพ..." class="flex-grow bg-slate-950 text-white text-[11px] px-2 py-0.5 rounded-lg border border-slate-700 focus:border-amber-400 focus:outline-none">
+                                    <input type="url" id="form-old-photo-url" oninput="updatePhotoPreviewFromUrl(this.value, 'old')" placeholder="หรือใส่ URL รูปภาพ..." class="flex-grow bg-slate-950 text-white text-xs px-2.5 py-1 rounded-lg border border-slate-700 focus:border-amber-400 focus:outline-none">
                                 </div>
                             </div>
                         </div>
@@ -807,18 +807,18 @@
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs font-medium text-slate-300 mb-1">ชื่อ-นามสกุล / ชื่อเรียก</label>
-                                <input type="text" id="form-name" required placeholder="เช่น คุณสมชาย" class="w-full bg-slate-900 text-white text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
+                                <input type="text" id="form-name" required placeholder="เช่น คุณสมชาย" class="w-full bg-slate-900 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-slate-300 mb-1">ตำแหน่ง / ความเชี่ยวชาญ</label>
-                                <input type="text" id="form-role" required placeholder="เช่น ผู้เชี่ยวชาญงบการเงิน" class="w-full bg-slate-900 text-white text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
+                                <input type="text" id="form-role" required placeholder="เช่น ผู้เชี่ยวชาญงบการเงิน" class="w-full bg-slate-900 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs font-medium text-slate-300 mb-1">กลุ่มเดิม (3 ทีม)</label>
-                                <select id="form-old-team" class="w-full bg-slate-900 text-white text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
+                                <select id="form-old-team" class="w-full bg-slate-900 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
                                     <option value="old-1">กลุ่มที่ 1 (เดิม)</option>
                                     <option value="old-2">กลุ่มที่ 2 (เดิม)</option>
                                     <option value="old-3">กลุ่มที่ 3 (เดิม)</option>
@@ -826,7 +826,7 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-slate-300 mb-1">กลุ่มใหม่ (4 ทีม)</label>
-                                <select id="form-new-team" class="w-full bg-slate-900 text-white text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
+                                <select id="form-new-team" class="w-full bg-slate-900 text-white text-xs px-3 py-2 rounded-lg border border-slate-700 focus:border-sky-400 focus:outline-none">
                                     <option value="new-1">Audit Team 1</option>
                                     <option value="new-2">Audit Team 2</option>
                                     <option value="new-3">Audit Team 3</option>
@@ -835,19 +835,19 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg border border-white/5">
+                        <div class="flex items-center justify-between p-2.5 bg-slate-900/50 rounded-lg border border-white/5">
                             <span class="text-xs text-slate-300">เป็นหัวหน้าทีม (Leader) หรือไม่?</span>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="form-is-leader" class="sr-only peer">
-                                <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-amber-500"></div>
+                                <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-500"></div>
                             </label>
                         </div>
 
-                        <div class="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
-                            <button type="button" id="btn-delete-member" onclick="deleteCurrentMember()" class="bg-red-500/20 text-red-300 hover:bg-red-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold border border-red-400/30 transition hidden cursor-pointer">
-                                <i class="fa-solid fa-trash mr-1"></i> ลบสมาชิก
+                        <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-white/10">
+                            <button type="button" id="btn-delete-member" onclick="deleteCurrentMember()" class="bg-red-500/20 text-red-300 hover:bg-red-500/30 px-3.5 py-2 rounded-lg text-xs font-semibold border border-red-400/30 transition hidden cursor-pointer">
+                                <i class="fa-solid fa-trash mr-1.5"></i> ลบสมาชิก
                             </button>
-                            <button type="submit" class="btn-glow px-4 py-1.5 rounded-lg text-xs font-bold text-white flex items-center gap-1.5 cursor-pointer">
+                            <button type="submit" class="btn-glow px-5 py-2 rounded-lg text-xs font-bold text-white flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-floppy-disk"></i> บันทึกข้อมูล
                             </button>
                         </div>
@@ -859,19 +859,19 @@
 
     <!-- Workload Item Add Modal -->
     <div id="workload-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden">
-        <div class="glass-card w-full max-w-md bg-slate-900 border border-emerald-400/30 rounded-2xl p-5 shadow-2xl">
-            <div class="flex items-center justify-between pb-2 border-b border-white/10 mb-3">
-                <h3 class="text-base font-bold text-white flex items-center gap-2">
+        <div class="glass-card w-full max-w-lg bg-slate-900 border border-emerald-400/30 rounded-2xl p-6 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-file-circle-plus text-emerald-400"></i>
                     <span>เพิ่มโครงการ / ภาระงานตรวจสอบ</span>
                 </h3>
-                <button onclick="closeAddProjectModal()" class="text-slate-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeAddProjectModal()" class="text-slate-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
-            <form onsubmit="saveWorkloadItem(event)" class="space-y-3 text-xs">
+            <form onsubmit="saveWorkloadItem(event)" class="space-y-4 text-xs sm:text-sm">
                 <div>
-                    <label class="block text-slate-300 mb-1">ประเภทภาระงานหลัก</label>
-                    <select id="wl-category" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700">
+                    <label class="block text-slate-300 mb-1.5">ประเภทภาระงานหลัก</label>
+                    <select id="wl-category" class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700">
                         <option value="งานตรวจสอบปกติ">1) งานตรวจสอบปกติ</option>
                         <option value="งานตรวจสอบเฉพาะด้าน">2) งานตรวจสอบเฉพาะด้าน</option>
                         <option value="งานตรวจสอบงบการเงิน">3) งานตรวจสอบงบการเงิน</option>
@@ -880,14 +880,14 @@
                 </div>
 
                 <div>
-                    <label class="block text-slate-300 mb-1">ชื่อโครงการ / รายละเอียดงาน</label>
-                    <input type="text" id="wl-title" required placeholder="เช่น คณะแพทยศาสตร์, IT Audit..." class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700">
+                    <label class="block text-slate-300 mb-1.5">ชื่อโครงการ / รายละเอียดงาน</label>
+                    <input type="text" id="wl-title" required placeholder="เช่น คณะแพทยศาสตร์, IT Audit..." class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700">
                 </div>
 
-                <div class="grid grid-cols-3 gap-2">
+                <div class="grid grid-cols-3 gap-3">
                     <div>
-                        <label class="block text-slate-300 mb-1">ทีมรับผิดชอบ</label>
-                        <select id="wl-team" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700">
+                        <label class="block text-slate-300 mb-1.5">ทีมรับผิดชอบ</label>
+                        <select id="wl-team" class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700">
                             <option value="new-1">Audit Team 1</option>
                             <option value="new-2">Audit Team 2</option>
                             <option value="new-3">Audit Team 3</option>
@@ -896,8 +896,8 @@
                     </div>
 
                     <div>
-                        <label class="block text-slate-300 mb-1">ไตรมาสที่ปฏิบัติงาน</label>
-                        <select id="wl-quarter" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700 font-semibold text-emerald-300">
+                        <label class="block text-slate-300 mb-1.5">ไตรมาสที่ปฏิบัติงาน</label>
+                        <select id="wl-quarter" class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700 font-semibold text-emerald-300">
                             <option value="Q1">Q1 (ต.ค. - ธ.ค.)</option>
                             <option value="Q2">Q2 (ม.ค. - มี.ค.)</option>
                             <option value="Q3">Q3 (เม.ย. - มิ.ย.)</option>
@@ -906,14 +906,14 @@
                     </div>
 
                     <div>
-                        <label class="block text-slate-300 mb-1">วันหลักต่อคน (Base Manday)</label>
-                        <input type="number" id="wl-mandays" required min="1" value="20" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700">
+                        <label class="block text-slate-300 mb-1.5">วันหลักต่อคน (Base Manday)</label>
+                        <input type="number" id="wl-mandays" required min="1" value="20" class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700">
                     </div>
                 </div>
 
-                <div class="flex items-center justify-end gap-2 pt-2 border-t border-white/10">
-                    <button type="button" onclick="closeAddProjectModal()" class="px-3 py-1.5 bg-slate-800 text-slate-300 rounded-lg cursor-pointer">ยกเลิก</button>
-                    <button type="submit" class="btn-glow px-4 py-1.5 text-white font-bold rounded-lg cursor-pointer">บันทึกรายการ</button>
+                <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-white/10">
+                    <button type="button" onclick="closeAddProjectModal()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl cursor-pointer">ยกเลิก</button>
+                    <button type="submit" class="btn-glow px-5 py-2 text-white font-bold rounded-xl cursor-pointer">บันทึกรายการ</button>
                 </div>
             </form>
         </div>
@@ -957,7 +957,7 @@
             { id: "w11", category: "งานอื่นๆ", title: "ประกันคุณภาพ", teamId: "new-3", quarter: "Q3", baseMandays: 10 }
         ];
 
-        // Direct Embedded Firebase Config
+        // Embedded Firebase Config
         const embeddedFirebaseConfig = {
             apiKey: "AIzaSyB9HL8Z7XxAPXJnWuoECbsFP1orftmPQMw",
             authDomain: "audit-teams.firebaseapp.com",
@@ -967,11 +967,11 @@
             appId: "1:58487574409:web:1661499d3c30f42b0bdb58"
         };
 
-        // Admin Auth Configuration
+        // Admin Auth Config
         const ADMIN_PASSWORD = "1234";
         let isAdminLoggedIn = false;
 
-        // Global State Variables safely retrieved
+        // Global State Variables
         let masterMembers = initialMembers;
         try {
             const savedMembers = localStorage.getItem('audit_members');
@@ -1063,11 +1063,11 @@
             if (isAdminLoggedIn) {
                 if (statusText) statusText.innerText = '🔓 Admin Mode (คลิกเพื่อออก)';
                 if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-emerald-400';
-                if (badge) badge.className = 'bg-emerald-500/20 border border-emerald-400/50 px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-emerald-300 transition shadow cursor-pointer';
+                if (badge) badge.className = 'bg-emerald-500/20 border border-emerald-400/50 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-emerald-300 transition shadow cursor-pointer';
             } else {
                 if (statusText) statusText.innerText = '🔒 Guest Mode (เข้าสู่ระบบ)';
                 if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-amber-400';
-                if (badge) badge.className = 'bg-amber-500/20 border border-amber-400/50 px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-amber-300 transition shadow cursor-pointer';
+                if (badge) badge.className = 'bg-amber-500/20 border border-amber-400/50 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-amber-300 transition shadow cursor-pointer';
             }
         }
         window.updateAdminAuthUI = updateAdminAuthUI;
@@ -1131,13 +1131,13 @@
             const newBtn = document.getElementById('toggle-new-btn');
 
             if (view === 'old') {
-                if (oldBtn) oldBtn.className = 'btn-glow px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-300 text-white cursor-pointer';
-                if (newBtn) newBtn.className = 'px-3.5 py-1 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white cursor-pointer';
+                if (oldBtn) oldBtn.className = 'btn-glow px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 text-white cursor-pointer';
+                if (newBtn) newBtn.className = 'px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white cursor-pointer';
                 renderOldTeams();
                 playChime(350, 'sine', 0.15);
             } else {
-                if (newBtn) newBtn.className = 'btn-glow px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-300 text-white cursor-pointer';
-                if (oldBtn) oldBtn.className = 'px-3.5 py-1 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white cursor-pointer';
+                if (newBtn) newBtn.className = 'btn-glow px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 text-white cursor-pointer';
+                if (oldBtn) oldBtn.className = 'px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white cursor-pointer';
                 renderNewTeams();
                 playFanfare();
 
@@ -1156,7 +1156,7 @@
             const container = document.getElementById('teams-grid-container');
             if (!container) return;
 
-            container.className = 'w-full p-3 transition-all duration-500 theme-old-container grid grid-cols-1 lg:grid-cols-3 gap-4';
+            container.className = 'w-full p-4 transition-all duration-500 theme-old-container grid grid-cols-1 lg:grid-cols-3 gap-5';
 
             const team1Members = masterMembers.filter(m => m.oldTeamId === "old-1");
             const team2Members = masterMembers.filter(m => m.oldTeamId === "old-2");
@@ -1167,25 +1167,25 @@
                 teamMembers.sort((a, b) => (a.id === meta.crownLeaderId ? -1 : b.id === meta.crownLeaderId ? 1 : 0));
 
                 return `
-                    <div class="old-team-row p-3 flex flex-col justify-between gap-3 transition-all duration-300 ${meta.bg} ${meta.border} rounded-2xl h-full">
-                        <div class="w-full flex items-center justify-between p-2.5 rounded-xl shadow-md text-left shrink-0" style="background-color: ${meta.headerBg}; color: ${meta.headerText};">
+                    <div class="old-team-row p-4 flex flex-col justify-between gap-4 transition-all duration-300 ${meta.bg} ${meta.border} rounded-2xl h-full">
+                        <div class="w-full flex items-center justify-between p-3 rounded-xl shadow-md text-left shrink-0" style="background-color: ${meta.headerBg}; color: ${meta.headerText};">
                             <div>
                                 <h3 class="font-black text-lg uppercase tracking-wider my-0.5">${meta.tag}</h3>
-                                <p class="text-[11px] font-medium opacity-90">${meta.name} (${teamMembers.length} ท่าน)</p>
+                                <p class="text-xs font-medium opacity-90">${meta.name} (${teamMembers.length} ท่าน)</p>
                             </div>
                         </div>
 
-                        <div class="flex-grow grid grid-cols-2 sm:grid-cols-3 gap-2 items-stretch">
+                        <div class="flex-grow grid grid-cols-2 sm:grid-cols-3 gap-3 items-stretch">
                             ${teamMembers.map((m, idx) => {
                                 const isLeader = idx === 0;
                                 const oldImg = m.oldAvatar || m.avatar;
                                 return `
-                                    <div class="old-member-card p-2 rounded-xl text-center relative flex flex-col items-center justify-between h-full group bg-slate-900/80 border border-slate-700/50">
+                                    <div class="old-member-card p-2.5 rounded-xl text-center relative flex flex-col items-center justify-between h-full group bg-slate-900/80 border border-slate-700/50">
                                         ${isLeader ? '<div class="absolute -top-2 left-2 z-20 text-amber-400 text-sm drop-shadow"><i class="fa-solid fa-crown"></i></div>' : ''}
-                                        <div class="w-full aspect-square rounded-lg overflow-hidden border border-slate-700/60 bg-slate-900 mb-1">
+                                        <div class="w-full aspect-square rounded-lg overflow-hidden border border-slate-700/60 bg-slate-900 mb-2">
                                             <img src="${oldImg}" onerror="this.src='https://placehold.co/120x120/1e293b/94a3b8?text=${encodeURIComponent(m.name.charAt(0))}'" class="old-member-photo w-full h-full object-cover">
                                         </div>
-                                        <div class="font-bold text-slate-200 text-xs truncate w-full">${m.name}</div>
+                                        <div class="font-bold text-slate-200 text-xs sm:text-sm truncate w-full">${m.name}</div>
                                     </div>
                                 `;
                             }).join('')}
@@ -1206,7 +1206,7 @@
             const container = document.getElementById('teams-grid-container');
             if (!container) return;
 
-            container.className = 'w-full p-3 transition-all duration-500 theme-new-container grid grid-cols-1 md:grid-cols-2 gap-4';
+            container.className = 'w-full p-4 transition-all duration-500 theme-new-container grid grid-cols-1 md:grid-cols-2 gap-5';
 
             const teamIds = ["new-1", "new-2", "new-3", "new-4"];
 
@@ -1215,24 +1215,24 @@
                 const teamMembers = masterMembers.filter(m => m.newTeamId === tId);
 
                 return `
-                    <div class="new-team-row p-3 flex flex-col justify-between gap-2.5 transition-all duration-300">
-                        <div class="flex items-center justify-between p-2 rounded-xl bg-gradient-to-r ${meta.badgeBg} text-white shadow">
+                    <div class="new-team-row p-4 flex flex-col justify-between gap-3 transition-all duration-300">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r ${meta.badgeBg} text-white shadow-md">
                             <div class="flex items-center gap-2">
-                                <span class="font-extrabold text-sm sm:text-base tracking-wide">${meta.name}</span>
-                                <span class="text-xs opacity-90">(${teamMembers.length} ท่าน)</span>
+                                <span class="font-extrabold text-base sm:text-lg tracking-wide">${meta.name}</span>
+                                <span class="text-xs sm:text-sm opacity-90">(${teamMembers.length} ท่าน)</span>
                             </div>
-                            <button onclick="goToSlide(${meta.slideNum})" class="text-[11px] bg-white/20 hover:bg-white/30 text-white font-semibold px-2.5 py-1 rounded-lg transition flex items-center gap-1 cursor-pointer">
+                            <button onclick="goToSlide(${meta.slideNum})" class="text-xs bg-white/20 hover:bg-white/30 text-white font-semibold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 cursor-pointer">
                                 <i class="fa-solid fa-circle-info"></i> รายละเอียดงาน
                             </button>
                         </div>
 
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 items-start">
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 items-start">
                             ${teamMembers.map((m, idx) => {
                                 const isLeader = idx === 0 && m.isLeader;
                                 return `
-                                    <div class="bg-slate-50 border border-slate-200 hover:border-sky-400 p-2.5 rounded-xl text-center relative flex flex-col items-center justify-center min-h-[140px] group hover:shadow-md pt-3">
-                                        <div class="relative shrink-0 flex justify-center mb-1">
-                                            ${isLeader ? '<div class="absolute -top-4 z-20 text-amber-500 text-lg drop-shadow animate-bounce"><i class="fa-solid fa-crown"></i></div>' : ''}
+                                    <div class="bg-slate-50 border border-slate-200 hover:border-sky-400 p-3 rounded-xl text-center relative flex flex-col items-center justify-center min-h-[150px] group hover:shadow-md pt-3">
+                                        <div class="relative shrink-0 flex justify-center mb-2">
+                                            ${isLeader ? '<div class="absolute -top-4 z-20 text-amber-500 text-xl drop-shadow animate-bounce"><i class="fa-solid fa-crown"></i></div>' : ''}
                                             <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full p-1 bg-white shadow-md border-2 ${meta.border} overflow-hidden transition-transform duration-300 group-hover:scale-105">
                                                 <img src="${m.avatar}" onerror="this.src='https://placehold.co/150x150/0284c7/ffffff?text=${encodeURIComponent(m.name.charAt(0))}'" class="w-full h-full rounded-full object-cover">
                                             </div>
@@ -1259,14 +1259,14 @@
                 if (membersContainer) {
                     const members = masterMembers.filter(m => m.newTeamId === tId);
                     membersContainer.innerHTML = members.map(m => `
-                        <div class="flex items-center gap-3 p-2 bg-slate-900/60 rounded-xl border border-white/5">
-                            <img src="${m.avatar}" class="w-10 h-10 rounded-full object-cover border border-sky-400 shadow">
+                        <div class="flex items-center gap-3 p-2.5 bg-slate-900/60 rounded-xl border border-white/5">
+                            <img src="${m.avatar}" class="w-11 h-11 rounded-full object-cover border border-sky-400 shadow">
                             <div class="truncate">
-                                <div class="text-xs font-bold text-white flex items-center gap-1">
+                                <div class="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
                                     ${m.name}
-                                    ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-[10px]"></i>' : ''}
+                                    ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-xs"></i>' : ''}
                                 </div>
-                                <div class="text-[10px] text-slate-400 truncate">${m.role}</div>
+                                <div class="text-xs text-slate-400 truncate">${m.role}</div>
                             </div>
                         </div>
                     `).join('');
@@ -1277,20 +1277,20 @@
                     const teamMembersCount = masterMembers.filter(m => m.newTeamId === tId).length || 1;
 
                     if (tasks.length === 0) {
-                        tasksContainer.innerHTML = `<li class="text-slate-500 italic p-3 text-center">ยังไม่มีภาระงานบันทึกไว้ในทีมนี้</li>`;
+                        tasksContainer.innerHTML = `<li class="text-slate-500 italic p-4 text-center text-sm">ยังไม่มีภาระงานบันทึกไว้ในทีมนี้</li>`;
                     } else {
                         tasksContainer.innerHTML = tasks.map(w => {
                             const totalMandays = (w.baseMandays || 20) * teamMembersCount;
                             return `
-                                <li class="p-2.5 bg-slate-900/80 rounded-xl border border-white/5 flex items-center justify-between">
+                                <li class="p-3 bg-slate-900/80 rounded-xl border border-white/5 flex items-center justify-between">
                                     <div>
-                                        <div class="font-bold text-white flex items-center gap-2">
+                                        <div class="font-bold text-white flex items-center gap-2 text-xs sm:text-sm">
                                             <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
                                             <span>${w.title}</span>
                                         </div>
-                                        <div class="text-[10px] text-slate-400 mt-0.5">หมวดหมู่: ${w.category} (${w.quarter || 'Q1'})</div>
+                                        <div class="text-xs text-slate-400 mt-1">หมวดหมู่: ${w.category} (${w.quarter || 'Q1'})</div>
                                     </div>
-                                    <span class="text-xs font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-lg border border-emerald-500/30">
+                                    <span class="text-xs sm:text-sm font-bold text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-lg border border-emerald-500/30">
                                         ${totalMandays.toLocaleString()} Mandays
                                     </span>
                                 </li>
@@ -1351,32 +1351,32 @@
                     const items = masterWorkloads.filter(w => w.category === cat && w.teamId === tId);
 
                     if (items.length === 0) {
-                        return `<td class="p-1.5 border-r border-white/10 text-center text-slate-600 text-[10px] align-top">-</td>`;
+                        return `<td class="p-2 border-r border-white/10 text-center text-slate-600 text-xs align-top">-</td>`;
                     }
 
                     const itemsCellHtml = items.map(item => {
                         const totalItemMandays = (item.baseMandays || 20) * memberCount;
                         usedMandays += totalItemMandays;
                         return `
-                            <div class="bg-slate-900/90 p-1.5 rounded-lg border border-white/10 mb-1.5 text-[10px] relative group hover:border-sky-400 transition">
-                                <div class="font-semibold text-white leading-tight mb-1 pr-3">${item.title}</div>
-                                <div class="flex items-center justify-between text-[9px] text-slate-400 pt-1 border-t border-white/5">
+                            <div class="bg-slate-900/90 p-2 rounded-xl border border-white/10 mb-2 text-xs relative group hover:border-sky-400 transition">
+                                <div class="font-semibold text-white leading-tight mb-1.5 pr-4">${item.title}</div>
+                                <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1.5 border-t border-white/5">
                                     <span class="text-sky-300 font-bold">${item.quarter || 'Q1'}</span>
                                     <span class="font-bold text-emerald-400">${totalItemMandays.toLocaleString()} Mandays</span>
                                 </div>
-                                <button onclick="deleteWorkloadItem('${item.id}')" class="absolute top-1 right-1 text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition p-0.5 cursor-pointer" title="ลบรายการ">
+                                <button onclick="deleteWorkloadItem('${item.id}')" class="absolute top-1.5 right-1.5 text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition p-0.5 cursor-pointer" title="ลบรายการ">
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
                             </div>
                         `;
                     }).join('');
 
-                    return `<td class="p-1.5 border-r border-white/10 align-top">${itemsCellHtml}</td>`;
+                    return `<td class="p-2 border-r border-white/10 align-top">${itemsCellHtml}</td>`;
                 }).join('');
 
                 return `
                     <tr class="hover:bg-slate-800/30">
-                        <td class="p-2 border-r border-white/10 font-bold text-sky-300 bg-slate-900/60 align-middle text-[11px]">${cat}</td>
+                        <td class="p-3 border-r border-white/10 font-bold text-sky-300 bg-slate-900/60 align-middle text-xs sm:text-sm">${cat}</td>
                         ${cellsHtml}
                     </tr>
                 `;
@@ -1441,13 +1441,13 @@
 
                 return `
                     <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-2.5 border-r border-white/10 font-bold text-white">${w.title}</td>
-                        <td class="p-2.5 border-r border-white/10 text-slate-300">${w.category}</td>
-                        <td class="p-2.5 border-r border-white/10 text-center">
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold border ${teamMeta.bgLight}">${teamMeta.name}</span>
+                        <td class="p-3 border-r border-white/10 font-bold text-white">${w.title}</td>
+                        <td class="p-3 border-r border-white/10 text-slate-300">${w.category}</td>
+                        <td class="p-3 border-r border-white/10 text-center">
+                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold border ${teamMeta.bgLight}">${teamMeta.name}</span>
                         </td>
-                        <td class="p-2.5 border-r border-white/10 text-center font-bold text-sky-300">${quarterLabels[w.quarter || 'Q1']}</td>
-                        <td class="p-2.5 text-right font-bold text-emerald-400">${totalMandays.toLocaleString()} Mandays</td>
+                        <td class="p-3 border-r border-white/10 text-center font-bold text-sky-300">${quarterLabels[w.quarter || 'Q1']}</td>
+                        <td class="p-3 text-right font-bold text-emerald-400">${totalMandays.toLocaleString()} Mandays</td>
                     </tr>
                 `;
             }).join('');
@@ -1495,8 +1495,8 @@
                     const qTasks = catTasks.filter(w => (w.quarter || "Q1") === q);
                     if (qTasks.length > 0) {
                         return `
-                            <td class="p-2 text-center align-middle bg-slate-900/90 border-y border-white/10">
-                                <div class="bg-gradient-to-r from-sky-400/20 to-blue-500/20 text-sky-200 border border-sky-300/40 rounded-xl py-1.5 px-2 text-[11px] font-semibold flex items-center justify-center gap-1.5 shadow-sm">
+                            <td class="p-2.5 text-center align-middle bg-slate-900/90 border-y border-white/10">
+                                <div class="bg-gradient-to-r from-sky-400/20 to-blue-500/20 text-sky-200 border border-sky-300/40 rounded-xl py-1.5 px-2 text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm">
                                     <span class="w-2 h-2 rounded-full bg-sky-300 animate-pulse"></span>
                                     <span>มีการดำเนินงาน (${qTasks.length})</span>
                                 </div>
@@ -1504,7 +1504,7 @@
                         `;
                     } else {
                         return `
-                            <td class="p-2 text-center align-middle bg-slate-900/90 border-y border-white/10 text-slate-600 font-medium">-</td>
+                            <td class="p-2.5 text-center align-middle bg-slate-900/90 border-y border-white/10 text-slate-600 font-medium">-</td>
                         `;
                     }
                 }).join('');
@@ -1516,9 +1516,9 @@
                                 <div class="flex items-center gap-2">
                                     <i class="fa-solid ${isCollapsed ? 'fa-chevron-right' : 'fa-chevron-down'} text-sky-400 text-xs transition-transform"></i>
                                     <span class="text-sm font-bold text-white tracking-wide">${cat}</span>
-                                    <span class="text-[10px] text-slate-400 font-normal bg-slate-800 px-2 py-0.5 rounded-full">(${catTasks.length} งาน)</span>
+                                    <span class="text-xs text-slate-400 font-normal bg-slate-800 px-2 py-0.5 rounded-full">(${catTasks.length} งาน)</span>
                                 </div>
-                                <span class="text-[10px] text-sky-400 font-normal bg-sky-950/80 border border-sky-400/40 px-2.5 py-0.5 rounded-full hover:bg-sky-900 transition">
+                                <span class="text-xs text-sky-400 font-normal bg-sky-950/80 border border-sky-400/40 px-2.5 py-0.5 rounded-full hover:bg-sky-900 transition">
                                     ${isCollapsed ? 'ขยาย [+]' : 'ย่อเก็บ [-]'}
                                 </span>
                             </div>
@@ -1531,11 +1531,11 @@
                     if (catTasks.length === 0) {
                         html += `
                             <tr>
-                                <td class="py-2.5 px-6 text-slate-500 italic text-xs bg-slate-950/40 rounded-l-xl border-l border-y border-white/5">- ไม่มีภาระงานในหมวดนี้ -</td>
-                                <td class="p-2 text-center text-slate-600 bg-slate-950/40 border-y border-white/5">-</td>
-                                <td class="p-2 text-center text-slate-600 bg-slate-950/40 border-y border-white/5">-</td>
-                                <td class="p-2 text-center text-slate-600 bg-slate-950/40 border-y border-white/5">-</td>
-                                <td class="p-2 text-center text-slate-600 bg-slate-950/40 rounded-r-xl border-r border-y border-white/5">-</td>
+                                <td class="py-3 px-6 text-slate-500 italic text-xs sm:text-sm bg-slate-950/40 rounded-l-xl border-l border-y border-white/5">- ไม่มีภาระงานในหมวดนี้ -</td>
+                                <td class="p-3 text-center text-slate-600 bg-slate-950/40 border-y border-white/5">-</td>
+                                <td class="p-3 text-center text-slate-600 bg-slate-950/40 border-y border-white/5">-</td>
+                                <td class="p-3 text-center text-slate-600 bg-slate-950/40 border-y border-white/5">-</td>
+                                <td class="p-3 text-center text-slate-600 bg-slate-950/40 rounded-r-xl border-r border-y border-white/5">-</td>
                             </tr>
                         `;
                     } else {
@@ -1546,14 +1546,14 @@
                                 const colBorder = isLastCol ? 'rounded-r-xl border-r border-y border-white/5' : 'border-y border-white/5';
 
                                 if (!isAssignedToThisQuarter) {
-                                    return `<td class="p-2 text-center text-slate-700/60 align-middle bg-slate-950/30 ${colBorder}">-</td>`;
+                                    return `<td class="p-2.5 text-center text-slate-700/60 align-middle bg-slate-950/30 ${colBorder}">-</td>`;
                                 }
 
                                 const teamMeta = newTeamMeta[task.teamId] || { name: task.teamId, tag: task.teamId, badgeBg: "from-slate-700 to-slate-800" };
 
                                 return `
-                                    <td class="p-2 text-center align-middle bg-slate-950/40 ${colBorder}">
-                                        <div class="w-full bg-gradient-to-r ${teamMeta.badgeBg} text-white font-bold text-xs py-2 px-3 rounded-xl shadow-md border border-white/20 flex items-center justify-center gap-1.5 transition-transform hover:scale-[1.02]">
+                                    <td class="p-2.5 text-center align-middle bg-slate-950/40 ${colBorder}">
+                                        <div class="w-full bg-gradient-to-r ${teamMeta.badgeBg} text-white font-bold text-xs sm:text-sm py-2 px-3 rounded-xl shadow-md border border-white/20 flex items-center justify-center gap-2 transition-transform hover:scale-[1.02]">
                                             <i class="fa-solid fa-users text-xs opacity-90"></i>
                                             <span class="tracking-wide">${teamMeta.name}</span>
                                         </div>
@@ -1563,7 +1563,7 @@
 
                             html += `
                                 <tr class="hover:bg-slate-800/40 transition">
-                                    <td class="py-2.5 pl-8 pr-3 font-medium text-slate-200 text-xs bg-slate-950/40 rounded-l-xl border-l border-y border-white/5">
+                                    <td class="py-3 pl-8 pr-3 font-medium text-slate-200 text-xs sm:text-sm bg-slate-950/40 rounded-l-xl border-l border-y border-white/5">
                                         <div class="flex items-center gap-2">
                                             <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shrink-0"></span>
                                             <span class="truncate">${task.title}</span>
@@ -1660,15 +1660,15 @@
 
             if (listEl) {
                 listEl.innerHTML = masterMembers.map(m => `
-                    <div onclick="editMember('${m.id}')" class="p-2 bg-slate-900 hover:bg-slate-800 rounded-xl border border-white/5 cursor-pointer flex items-center justify-between transition">
-                        <div class="flex items-center gap-2">
-                            <img src="${m.avatar}" class="w-7 h-7 rounded-full object-cover">
+                    <div onclick="editMember('${m.id}')" class="p-2.5 bg-slate-900 hover:bg-slate-800 rounded-xl border border-white/5 cursor-pointer flex items-center justify-between transition">
+                        <div class="flex items-center gap-2.5">
+                            <img src="${m.avatar}" class="w-8 h-8 rounded-full object-cover">
                             <div>
-                                <div class="text-xs font-semibold text-white flex items-center gap-1">
+                                <div class="text-xs font-semibold text-white flex items-center gap-1.5">
                                     ${m.name}
-                                    ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-[9px]"></i>' : ''}
+                                    ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-[10px]"></i>' : ''}
                                 </div>
-                                <div class="text-[9px] text-slate-400">${getNewTeamName(m.newTeamId).split(':')[0]}</div>
+                                <div class="text-[10px] text-slate-400">${getNewTeamName(m.newTeamId).split(':')[0]}</div>
                             </div>
                         </div>
                         <i class="fa-solid fa-chevron-right text-xs text-slate-600"></i>
@@ -2040,7 +2040,7 @@
         }
 
         if (canvas) {
-            for (let i = 0; i < 40; i++) particles.push(new Particle());
+            for (let i = 0; i < 45; i++) particles.push(new Particle());
         }
 
         function animateParticles() {
