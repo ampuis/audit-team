@@ -1806,6 +1806,10 @@
             document.getElementById('form-new-team').value = member.newTeamId;
             document.getElementById('form-is-leader').checked = member.isLeader;
 
+            // Reset file input values so re-selecting the same file triggers onchange
+            if (document.getElementById('form-photo-file')) document.getElementById('form-photo-file').value = '';
+            if (document.getElementById('form-old-photo-file')) document.getElementById('form-old-photo-file').value = '';
+
             const newPhoto = member.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250';
             document.getElementById('form-photo-url').value = newPhoto.startsWith('data:') ? '' : newPhoto;
             document.getElementById('form-photo-preview').src = newPhoto;
@@ -1822,8 +1826,36 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    const targetPreviewId = type === 'old' ? 'form-old-photo-preview' : 'form-photo-preview';
-                    document.getElementById(targetPreviewId).src = e.target.result;
+                    const img = new Image();
+                    img.onload = () => {
+                        // Canvas compression to keep Base64 size well under Firestore 1MB document limit
+                        const canvas = document.createElement('canvas');
+                        const maxDim = 300; // 300x300 max dimensions for clear avatar thumbnail
+                        let width = img.width;
+                        let height = img.height;
+                        if (width > height) {
+                            if (width > maxDim) {
+                                height = Math.round((height * maxDim) / width);
+                                width = maxDim;
+                            }
+                        } else {
+                            if (height > maxDim) {
+                                width = Math.round((width * maxDim) / height);
+                                height = maxDim;
+                            }
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        // Convert to lightweight JPEG data URL (~15-25 KB)
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+                        const targetPreviewId = type === 'old' ? 'form-old-photo-preview' : 'form-photo-preview';
+                        const previewEl = document.getElementById(targetPreviewId);
+                        if (previewEl) previewEl.src = compressedDataUrl;
+                    };
+                    img.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
             }
@@ -1832,7 +1864,8 @@
         window.updatePhotoPreviewFromUrl = function(url, type = 'new') {
             if (url && url.trim() !== '') {
                 const targetPreviewId = type === 'old' ? 'form-old-photo-preview' : 'form-photo-preview';
-                document.getElementById(targetPreviewId).src = url;
+                const previewEl = document.getElementById(targetPreviewId);
+                if (previewEl) previewEl.src = url.trim();
             }
         };
 
@@ -1855,8 +1888,10 @@
             if (editId) {
                 const member = masterMembers.find(m => m.id === editId);
                 if (member) {
-                    member.name = name; member.role = role;
-                    member.oldTeamId = oldTeamId; member.newTeamId = newTeamId;
+                    member.name = name; 
+                    member.role = role;
+                    member.oldTeamId = oldTeamId; 
+                    member.newTeamId = newTeamId;
                     member.isLeader = isLeader;
                     member.avatar = newPhotoSrc;
                     member.oldAvatar = oldPhotoSrc;
