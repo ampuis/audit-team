@@ -376,8 +376,8 @@
 
             <!-- Slide 5: The Reveal (Old vs New Teams) -->
             <div class="slide" id="slide-5">
-                <div class="h-full w-full flex flex-col justify-start gap-3 py-1 px-2 sm:px-6">
-                    <div class="flex flex-wrap items-center justify-between gap-3 shrink-0 w-full">
+                <div class="h-full w-full flex flex-col justify-start gap-2 py-1 px-2 sm:px-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 shrink-0 w-full mb-1">
                         <div>
                             <div class="inline-flex items-center gap-1.5 text-sky-400 text-xs font-bold uppercase tracking-wider">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i> The Grand Reveal
@@ -401,7 +401,7 @@
                     </div>
 
                     <!-- Teams Container Grid -->
-                    <div id="teams-grid-container" class="flex-grow overflow-y-auto custom-scrollbar w-full">
+                    <div id="teams-grid-container" class="flex-grow w-full overflow-y-auto custom-scrollbar">
                         <!-- Dynamic rendered -->
                     </div>
                 </div>
@@ -1161,7 +1161,7 @@
             const container = document.getElementById('teams-grid-container');
             if (!container) return;
 
-            container.className = 'w-full h-full p-4 transition-all duration-500 theme-old-container grid grid-cols-1 lg:grid-cols-3 gap-6 overflow-y-auto custom-scrollbar';
+            container.className = 'w-full flex-grow p-4 transition-all duration-500 theme-old-container grid grid-cols-1 lg:grid-cols-3 gap-6 overflow-y-auto custom-scrollbar';
 
             const team1Members = masterMembers.filter(m => m.oldTeamId === "old-1");
             const team2Members = masterMembers.filter(m => m.oldTeamId === "old-2");
@@ -1212,7 +1212,7 @@
             const container = document.getElementById('teams-grid-container');
             if (!container) return;
 
-            container.className = 'w-full h-full p-4 transition-all duration-500 theme-new-container grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto custom-scrollbar';
+            container.className = 'w-full flex-grow p-4 transition-all duration-500 theme-new-container grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto custom-scrollbar';
 
             const teamIds = ["new-1", "new-2", "new-3", "new-4"];
 
