@@ -155,7 +155,6 @@
 </head>
 <body>
 
-    <!-- Background Animation Canvas -->
     <canvas id="bg-canvas"></canvas>
 
     <div class="presentation-wrapper">
@@ -228,414 +227,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Slide 2: Objectives -->
-            <div class="slide" id="slide-2">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-4">
-                    <div class="text-center">
-                        <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">วัตถุประสงค์การปรับโครงสร้างทีม</h2>
-                        <p class="text-xs md:text-sm text-slate-400">เพื่อเพิ่มความคล่องตัว กระจายภาระงานอย่างย่อมธรรม และรองรับภารกิจใหม่ปี 2570</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
-                        <div class="glass-card p-6 flex flex-col items-center text-center hover:border-sky-400/50 transition">
-                            <div class="w-14 h-14 rounded-2xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-2xl mb-4 border border-sky-400/30">
-                                <i class="fa-solid fa-scale-balanced"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2">กระจาย Workload</h3>
-                            <p class="text-xs text-slate-300 leading-relaxed">ปรับสมดุลภาระงาน Manday ของสมาชิกทุกท่านให้ใกล้เคียงกัน ลดปัญหาการทำงานล้นมือในบางทีม</p>
-                        </div>
-
-                        <div class="glass-card p-6 flex flex-col items-center text-center hover:border-sky-400/50 transition">
-                            <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4 border border-emerald-400/30">
-                                <i class="fa-solid fa-bullseye"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2">เพิ่มความเชี่ยวชาญ</h3>
-                            <p class="text-xs text-slate-300 leading-relaxed">จัดสรรบุคลากรตามความเชี่ยวชาญเฉพาะด้าน เช่น IT Audit, Risk Management และ Compliance</p>
-                        </div>
-
-                        <div class="glass-card p-6 flex flex-col items-center text-center hover:border-sky-400/50 transition">
-                            <div class="w-14 h-14 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-2xl mb-4 border border-purple-400/30">
-                                <i class="fa-solid fa-bolt"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2">เพิ่มความคล่องตัว</h3>
-                            <p class="text-xs text-slate-300 leading-relaxed">ปรับขนาดทีมจาก 3 ทีมเป็น 4 ทีมย่อย เพื่อให้สามารถตอบสนองต่อภารกิจเร่งด่วนได้อย่างมีประสิทธิภาพ</p>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-between items-center text-xs text-slate-400 pt-4 border-t border-white/10">
-                        <span>Internal Audit Restructuring 2026</span>
-                        <button onclick="nextSlide()" class="text-sky-400 hover:underline flex items-center gap-1">ถัดไป <i class="fa-solid fa-chevron-right text-[10px]"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 3: Manday Calculator -->
-            <div class="slide" id="slide-3">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-2">
-                    <div class="text-center shrink-0">
-                        <h2 class="text-xl md:text-2xl font-extrabold text-white">คำนวณกำลังคนและวันทำงาน (Capacity Mandays)</h2>
-                        <p class="text-xs text-slate-400">ประเมินวันทำงานสุทธิรวมต่อคนต่อปี เพื่อใช้วางแผนการตรวจ</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto items-center">
-                        <div class="md:col-span-5 glass-card p-4 space-y-3 text-xs">
-                            <h3 class="font-bold text-sky-300 border-b border-white/10 pb-2 flex items-center gap-2">
-                                <i class="fa-solid fa-calculator"></i> ตัวแปรการคำนวณ (ต่อคน/ปี)
-                            </h3>
-                            <div class="flex justify-between items-center">
-                                <label class="text-slate-300">วันทำการรวมทั้งปี:</label>
-                                <input type="number" id="calc-total-days" value="365" onchange="calculateMandays()" class="w-20 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-right text-white focus:border-sky-400">
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <label class="text-slate-300">หัก วันหยุดประจำปี/เสาร์-อาทิตย์:</label>
-                                <input type="number" id="calc-holidays" value="120" onchange="calculateMandays()" class="w-20 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-right text-white focus:border-sky-400">
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <label class="text-slate-300">หัก วันลาตามสิทธิเฉลี่ย:</label>
-                                <input type="number" id="calc-leaves" value="15" onchange="calculateMandays()" class="w-20 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-right text-white focus:border-sky-400">
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <label class="text-slate-300">หัก การอบรม/ประชุมสถาบัน:</label>
-                                <input type="number" id="calc-trainings" value="10" onchange="calculateMandays()" class="w-20 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-right text-white focus:border-sky-400">
-                            </div>
-                        </div>
-
-                        <div class="md:col-span-7 space-y-3">
-                            <div class="glass-card p-4 bg-gradient-to-br from-slate-900 via-sky-950/30 to-slate-900 border border-sky-500/30">
-                                <div class="text-xs text-sky-300 uppercase tracking-wider font-semibold mb-1">วันทำงานสุทธิสุทธิต่อคน/ปี</div>
-                                <div class="text-3xl font-black text-white"><span id="res-net-manday">220</span> <span class="text-sm font-normal text-slate-400">Mandays / Person</span></div>
-                            </div>
-
-                            <div class="glass-card p-4 bg-gradient-to-br from-slate-900 via-emerald-950/30 to-slate-900 border border-emerald-500/30">
-                                <div class="text-xs text-emerald-300 uppercase tracking-wider font-semibold mb-1">รวมกำลังคนทั้งหมด (<span id="calc-member-count">16</span> ท่าน)</div>
-                                <div class="text-3xl font-black text-emerald-400"><span id="res-total-capacity">3,520</span> <span class="text-sm font-normal text-slate-400">Total Mandays Capacity</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-between items-center text-xs text-slate-400 pt-2 border-t border-white/10 shrink-0">
-                        <span>สไลด์ 3/10</span>
-                        <button onclick="nextSlide()" class="text-sky-400 hover:underline flex items-center gap-1">ถัดไป <i class="fa-solid fa-chevron-right text-[10px]"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 4: Workload Matrix Summary -->
-            <div class="slide" id="slide-4">
-                <div class="h-full flex flex-col justify-between max-w-6xl mx-auto py-2">
-                    <div class="flex items-center justify-between shrink-0 mb-2">
-                        <div>
-                            <h2 class="text-xl font-extrabold text-white flex items-center gap-2">
-                                <i class="fa-solid fa-table-cells text-sky-400"></i>
-                                <span>ตารางจัดสรรภาระงานตรวจสอบประจำปี 2570</span>
-                            </h2>
-                            <p class="text-xs text-slate-400">สรุปการจัดสรรโครงการแยกตามประเภทภาระงานหลักและทีมรับผิดชอบ</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="openWorkloadDetailModal()" class="bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-400/40 text-xs px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 shadow-sm">
-                                <i class="fa-solid fa-list"></i> คลิกดูรายละเอียด
-                            </button>
-                            <button onclick="openAddProjectModal()" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-xs px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 shadow-sm">
-                                <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Matrix Table -->
-                    <div class="flex-grow overflow-y-auto custom-scrollbar border border-white/10 rounded-xl glass-card p-2 mb-2">
-                        <table class="w-full text-left border-collapse text-xs">
-                            <thead class="bg-slate-900/90 text-sky-300 sticky top-0 z-10 border-b border-white/10">
-                                <tr>
-                                    <th class="p-2 border-r border-white/10 w-1/5">ประเภทงานหลัก</th>
-                                    <th class="p-2 border-r border-white/10 text-center">Audit Team 1</th>
-                                    <th class="p-2 border-r border-white/10 text-center">Audit Team 2</th>
-                                    <th class="p-2 border-r border-white/10 text-center">Audit Team 3</th>
-                                    <th class="p-2 text-center">Audit Team 4</th>
-                                </tr>
-                            </thead>
-                            <tbody id="workload-table-body" class="divide-y divide-white/10 text-slate-300">
-                                <!-- Dynamic rendering -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Utilization Bar -->
-                    <div class="glass-card p-3 shrink-0 flex items-center justify-between text-xs">
-                        <span class="font-bold text-slate-300">สัดส่วนการใช้วันทำงาน (Capacity Utilization):</span>
-                        <div class="flex-grow mx-4 bg-slate-800 rounded-full h-3 overflow-hidden border border-white/10">
-                            <div id="res-utilization-bar" class="bg-gradient-to-r from-sky-400 to-emerald-400 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
-                        </div>
-                        <span id="res-utilization-text" class="font-bold text-emerald-400">0% (0 / 0 Mandays)</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 5: The Reveal (Old vs New Teams) -->
-            <div class="slide" id="slide-5">
-                <div class="h-full flex flex-col justify-between max-w-6xl mx-auto py-2">
-                    <div class="flex flex-wrap items-center justify-between gap-2 shrink-0 mb-2">
-                        <div>
-                            <div class="inline-flex items-center gap-1.5 text-sky-400 text-xs font-bold uppercase tracking-wider">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> The Grand Reveal
-                            </div>
-                            <h2 class="text-xl md:text-2xl font-extrabold text-white">ประกาศการจัดทีมตรวจสอบใหม่ประจำปี 2570</h2>
-                        </div>
-
-                        <div class="flex items-center gap-2">
-                            <button onclick="openRosterModal()" class="glass-card hover:bg-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 border border-white/10 transition">
-                                <i class="fa-solid fa-users-gear text-sky-400"></i> จัดการสมาชิก & รูปถ่าย
-                            </button>
-                            <div class="bg-slate-900/90 p-1 rounded-full border border-white/10 flex items-center">
-                                <button id="toggle-old-btn" onclick="triggerTeamSwitch('old')" class="btn-glow px-3.5 py-1 rounded-full text-xs font-bold text-white transition-all">
-                                    โครงสร้างเดิม (3 ทีม)
-                                </button>
-                                <button id="toggle-new-btn" onclick="triggerTeamSwitch('new')" class="px-3.5 py-1 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all">
-                                    🚀 เปิดตัว 4 ทีมใหม่ (CLICK)
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Teams Container Grid -->
-                    <div id="teams-grid-container" class="flex-grow overflow-y-auto custom-scrollbar">
-                        <!-- Dynamic rendered -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 6: Team 1 Focus -->
-            <div class="slide" id="slide-6">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-2">
-                    <div class="flex items-center justify-between shrink-0 mb-3 border-b border-sky-500/30 pb-2">
-                        <div class="flex items-center gap-3">
-                            <span class="px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 text-xs font-bold border border-sky-400/40">Team 01 Focus</span>
-                            <h2 class="text-2xl font-extrabold text-white">Audit Team 1</h2>
-                        </div>
-                        <button onclick="goToSlide(5)" class="text-xs text-slate-400 hover:text-sky-300 flex items-center gap-1"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto flex-grow items-start overflow-hidden">
-                        <div class="md:col-span-4 glass-card p-4 flex flex-col h-full bg-gradient-to-b from-slate-900 via-sky-950/20 to-slate-900 border-sky-500/30">
-                            <h3 class="text-xs font-bold text-sky-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
-                                <span><i class="fa-solid fa-users text-sky-400 mr-1.5"></i> รายชื่อสมาชิกในทีม</span>
-                            </h3>
-                            <div id="slide6-members-list" class="space-y-2 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
-                        </div>
-
-                        <div class="md:col-span-8 glass-card p-4 flex flex-col h-full justify-between">
-                            <div>
-                                <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-                                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="fa-solid fa-list-check text-sky-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
-                                    </h3>
-                                    <button onclick="openAddProjectModalForTeam('new-1')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[11px] px-2.5 py-1 rounded-lg font-bold transition flex items-center gap-1">
-                                        <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
-                                    </button>
-                                </div>
-                                <ul id="slide6-tasks-list" class="space-y-2 text-xs text-slate-300 overflow-y-auto max-h-[45vh] custom-scrollbar pr-1"></ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 7: Team 2 Focus -->
-            <div class="slide" id="slide-7">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-2">
-                    <div class="flex items-center justify-between shrink-0 mb-3 border-b border-emerald-500/30 pb-2">
-                        <div class="flex items-center gap-3">
-                            <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-400/40">Team 02 Focus</span>
-                            <h2 class="text-2xl font-extrabold text-white">Audit Team 2</h2>
-                        </div>
-                        <button onclick="goToSlide(5)" class="text-xs text-slate-400 hover:text-emerald-300 flex items-center gap-1"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto flex-grow items-start overflow-hidden">
-                        <div class="md:col-span-4 glass-card p-4 flex flex-col h-full bg-gradient-to-b from-slate-900 via-emerald-950/20 to-slate-900 border-emerald-500/30">
-                            <h3 class="text-xs font-bold text-emerald-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
-                                <span><i class="fa-solid fa-users text-emerald-400 mr-1.5"></i> รายชื่อสมาชิกในทีม</span>
-                            </h3>
-                            <div id="slide7-members-list" class="space-y-2 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
-                        </div>
-
-                        <div class="md:col-span-8 glass-card p-4 flex flex-col h-full justify-between">
-                            <div>
-                                <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-                                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="fa-solid fa-list-check text-emerald-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
-                                    </h3>
-                                    <button onclick="openAddProjectModalForTeam('new-2')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[11px] px-2.5 py-1 rounded-lg font-bold transition flex items-center gap-1">
-                                        <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
-                                    </button>
-                                </div>
-                                <ul id="slide7-tasks-list" class="space-y-2 text-xs text-slate-300 overflow-y-auto max-h-[45vh] custom-scrollbar pr-1"></ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 8: Team 3 Focus -->
-            <div class="slide" id="slide-8">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-2">
-                    <div class="flex items-center justify-between shrink-0 mb-3 border-b border-purple-500/30 pb-2">
-                        <div class="flex items-center gap-3">
-                            <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold border border-purple-400/40">Team 03 Focus</span>
-                            <h2 class="text-2xl font-extrabold text-white">Audit Team 3</h2>
-                        </div>
-                        <button onclick="goToSlide(5)" class="text-xs text-slate-400 hover:text-purple-300 flex items-center gap-1"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto flex-grow items-start overflow-hidden">
-                        <div class="md:col-span-4 glass-card p-4 flex flex-col h-full bg-gradient-to-b from-slate-900 via-purple-950/20 to-slate-900 border-purple-500/30">
-                            <h3 class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
-                                <span><i class="fa-solid fa-users text-purple-400 mr-1.5"></i> รายชื่อสมาชิกในทีม</span>
-                            </h3>
-                            <div id="slide8-members-list" class="space-y-2 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
-                        </div>
-
-                        <div class="md:col-span-8 glass-card p-4 flex flex-col h-full justify-between">
-                            <div>
-                                <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-                                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="fa-solid fa-list-check text-purple-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
-                                    </h3>
-                                    <button onclick="openAddProjectModalForTeam('new-3')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[11px] px-2.5 py-1 rounded-lg font-bold transition flex items-center gap-1">
-                                        <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
-                                    </button>
-                                </div>
-                                <ul id="slide8-tasks-list" class="space-y-2 text-xs text-slate-300 overflow-y-auto max-h-[45vh] custom-scrollbar pr-1"></ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 9: Team 4 Focus -->
-            <div class="slide" id="slide-9">
-                <div class="h-full flex flex-col justify-between max-w-5xl mx-auto py-2">
-                    <div class="flex items-center justify-between shrink-0 mb-3 border-b border-amber-500/30 pb-2">
-                        <div class="flex items-center gap-3">
-                            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold border border-amber-400/40">Team 04 Focus</span>
-                            <h2 class="text-2xl font-extrabold text-white">Audit Team 4</h2>
-                        </div>
-                        <button onclick="goToSlide(5)" class="text-xs text-slate-400 hover:text-amber-300 flex items-center gap-1"><i class="fa-solid fa-arrow-left"></i> กลับหน้าสมาชิกทีมใหม่</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto flex-grow items-start overflow-hidden">
-                        <div class="md:col-span-4 glass-card p-4 flex flex-col h-full bg-gradient-to-b from-slate-900 via-amber-950/20 to-slate-900 border-amber-500/30">
-                            <h3 class="text-xs font-bold text-amber-300 uppercase tracking-wider mb-3 flex items-center justify-between border-b border-white/10 pb-2">
-                                <span><i class="fa-solid fa-users text-amber-400 mr-1.5"></i> รายชื่อสมาชิกในทีม</span>
-                            </h3>
-                            <div id="slide9-members-list" class="space-y-2 overflow-y-auto custom-scrollbar pr-1 flex-grow"></div>
-                        </div>
-
-                        <div class="md:col-span-8 glass-card p-4 flex flex-col h-full justify-between">
-                            <div>
-                                <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-                                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                                        <i class="fa-solid fa-list-check text-amber-400"></i> ขอบเขตภารกิจตรวจสอบ (ภาระงานปี 2570)
-                                    </h3>
-                                    <button onclick="openAddProjectModalForTeam('new-4')" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[11px] px-2.5 py-1 rounded-lg font-bold transition flex items-center gap-1">
-                                        <i class="fa-solid fa-plus"></i> เพิ่มรายการงาน
-                                    </button>
-                                </div>
-                                <ul id="slide9-tasks-list" class="space-y-2 text-xs text-slate-300 overflow-y-auto max-h-[45vh] custom-scrollbar pr-1"></ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 10: Quarterly Operational Plan (Matrix View) -->
-            <div class="slide" id="slide-10">
-                <div class="h-full flex flex-col justify-between max-w-6xl mx-auto py-2">
-                    <div class="flex items-center justify-between shrink-0 mb-2">
-                        <div>
-                            <div class="inline-flex items-center gap-1.5 text-sky-400 text-xs font-bold uppercase tracking-wider">
-                                <i class="fa-solid fa-calendar-check"></i> Operational Matrix Plan 2027
-                            </div>
-                            <h2 class="text-xl md:text-2xl font-extrabold text-white">แผนการดำเนินงานรายไตรมาส (Matrix Workload View)</h2>
-                        </div>
-                        
-                        <div class="flex items-center gap-2">
-                            <select id="matrix-filter-team" onchange="renderSlide10Matrix()" class="bg-slate-900 text-sky-300 text-xs p-1.5 rounded-lg border border-sky-500/30 focus:outline-none">
-                                <option value="ALL">แสดงทั้งหมดทุกทีม</option>
-                                <option value="new-1">Audit Team 1</option>
-                                <option value="new-2">Audit Team 2</option>
-                                <option value="new-3">Audit Team 3</option>
-                                <option value="new-4">Audit Team 4</option>
-                            </select>
-                            <select id="matrix-filter-category" onchange="renderSlide10Matrix()" class="bg-slate-900 text-sky-300 text-xs p-1.5 rounded-lg border border-sky-500/30 focus:outline-none">
-                                <option value="ALL">แสดงทั้งหมดทุกหมวดหมู่</option>
-                                <option value="งานตรวจสอบปกติ">งานตรวจสอบปกติ</option>
-                                <option value="งานตรวจสอบเฉพาะด้าน">งานตรวจสอบเฉพาะด้าน</option>
-                                <option value="งานตรวจสอบงบการเงิน">งานตรวจสอบงบการเงิน</option>
-                                <option value="งานอื่นๆ">งานอื่นๆ</option>
-                            </select>
-                            <button onclick="toggleAllMatrixCategories()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1.5 rounded-lg border border-white/10 transition">
-                                <i class="fa-solid fa-arrows-up-down mr-1"></i> ย่อ/ขยายทั้งหมด
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Matrix Plan Table -->
-                    <div class="flex-grow overflow-y-auto custom-scrollbar border border-white/10 rounded-2xl glass-card p-3 mb-2">
-                        <table class="w-full text-left border-separate border-spacing-y-2 text-xs">
-                            <thead>
-                                <tr class="text-sky-300 font-bold">
-                                    <th class="p-3 bg-sky-950/90 rounded-l-xl border-l border-y border-sky-500/30 w-[36%]">ภาระงานหลัก / รายละเอียดงาน</th>
-                                    <th class="p-3 bg-sky-950/90 text-center border-y border-sky-500/30 w-[16%]">
-                                        <div>ไตรมาส 1</div>
-                                        <div class="text-[10px] font-normal text-sky-400/80">(ตุลาคม - ธันวาคม)</div>
-                                    </th>
-                                    <th class="p-3 bg-sky-950/90 text-center border-y border-sky-500/30 w-[16%]">
-                                        <div>ไตรมาส 2</div>
-                                        <div class="text-[10px] font-normal text-sky-400/80">(มกราคม - มีนาคม)</div>
-                                    </th>
-                                    <th class="p-3 bg-sky-950/90 text-center border-y border-sky-500/30 w-[16%]">
-                                        <div>ไตรมาส 3</div>
-                                        <div class="text-[10px] font-normal text-sky-400/80">(เมษายน - มิถุนายน)</div>
-                                    </th>
-                                    <th class="p-3 bg-sky-950/90 text-center rounded-r-xl border-r border-y border-sky-500/30 w-[16%]">
-                                        <div>ไตรมาส 4</div>
-                                        <div class="text-[10px] font-normal text-sky-400/80">(กรกฎาคม - กันยายน)</div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="slide10-matrix-tbody" class="text-slate-300">
-                                <!-- Dynamic rendering -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="flex justify-between items-center text-xs text-slate-400 pt-1 shrink-0">
-                        <span>สรุปภาพรวมแผนการดำเนินงานตรวจสอบรายไตรมาส ปี 2570</span>
-                        <span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check"></i> พร้อมปฏิบัติงาน 100%</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Bottom Floating Controls -->
-        <div class="w-full px-6 py-2 border-t border-white/10 flex items-center justify-between z-20 bg-slate-900/90 backdrop-blur-md shrink-0">
-            <button id="btn-prev" onclick="prevSlide()" class="glass-card hover:bg-slate-800 text-slate-300 hover:text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition">
-                <i class="fa-solid fa-chevron-left text-xs"></i>
-                <span>ย้อนกลับ</span>
-            </button>
-
-            <!-- Dots Indicator -->
-            <div id="slide-dots" class="flex items-center gap-1.5"></div>
-
-            <button id="btn-next" onclick="nextSlide()" class="btn-glow text-white px-5 py-2 rounded-xl text-xs font-bold flex items-center gap-2">
-                <span>ถัดไป</span>
-                <i class="fa-solid fa-chevron-right text-xs"></i>
-            </button>
-        </div>
-
-    </div>
 
     <!-- Floating Toast Notification -->
     <div id="toast-notification" class="fixed top-14 right-5 z-50 bg-emerald-500 text-slate-950 font-bold px-4 py-2.5 rounded-xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none transform translate-y-[-10px] flex items-center gap-2 text-xs">
@@ -967,7 +558,7 @@
         };
 
         // Admin Auth Configuration
-        const ADMIN_PASSWORD = "1234";
+        const ADMIN_PASSWORD = "Ia135790";
         let isAdminLoggedIn = false;
 
         // Global State Variables
@@ -1669,6 +1260,7 @@
             document.getElementById('form-new-team').value = member.newTeamId;
             document.getElementById('form-is-leader').checked = member.isLeader;
 
+            // Reset file input values so re-selecting the same file triggers onchange
             if (document.getElementById('form-photo-file')) document.getElementById('form-photo-file').value = '';
             if (document.getElementById('form-old-photo-file')) document.getElementById('form-old-photo-file').value = '';
 
@@ -1690,8 +1282,9 @@
                 reader.onload = (e) => {
                     const img = new Image();
                     img.onload = () => {
+                        // Canvas compression to ultra-lightweight size (~10-15KB)
                         const canvas = document.createElement('canvas');
-                        const maxDim = 200;
+                        const maxDim = 200; // 200x200 max dimensions
                         let width = img.width;
                         let height = img.height;
                         if (width > height) {
@@ -1710,6 +1303,7 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
                         
+                        // Convert to lightweight JPEG data URL
                         const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.70);
                         const targetPreviewId = type === 'old' ? 'form-old-photo-preview' : 'form-photo-preview';
                         const previewEl = document.getElementById(targetPreviewId);
@@ -1718,14 +1312,6 @@
                     img.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
-            }
-        };
-
-        window.updatePhotoPreviewFromUrl = function(url, type = 'new') {
-            if (url && url.trim() !== '') {
-                const targetPreviewId = type === 'old' ? 'form-old-photo-preview' : 'form-photo-preview';
-                const previewEl = document.getElementById(targetPreviewId);
-                if (previewEl) previewEl.src = url.trim();
             }
         };
 
@@ -1782,8 +1368,10 @@
                 masterMembers.push(memberObj);
             }
 
+            // Direct local storage save
             localStorage.setItem('audit_members', JSON.stringify(masterMembers));
 
+            // Direct single document save to Firestore
             if (isFirebaseConnected && firebaseDb && memberObj) {
                 firebaseDb.collection('members').doc(memberObj.id).set(memberObj, { merge: true })
                     .then(() => console.log("Member saved to Firestore successfully:", memberObj.id))
@@ -1816,6 +1404,80 @@
             window.resetMemberForm();
             window.refreshAllViews();
             window.showToast("ลบข้อมูลสมาชิกเรียบร้อยแล้ว");
+        };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.updatePhotoPreviewFromUrl = function(url, type = 'new') {
+            if (url && url.trim() !== '') {
+                const targetPreviewId = type === 'old' ? 'form-old-photo-preview' : 'form-photo-preview';
+                const previewEl = document.getElementById(targetPreviewId);
+                if (previewEl) previewEl.src = url.trim();
+            }
+        };
+
+        window.saveMember = function(event) {
+            event.preventDefault();
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            const editId = document.getElementById('edit-member-id').value;
+            const name = document.getElementById('form-name').value;
+            const role = document.getElementById('form-role').value;
+            const oldTeamId = document.getElementById('form-old-team').value;
+            const newTeamId = document.getElementById('form-new-team').value;
+            const isLeader = document.getElementById('form-is-leader').checked;
+
+            const newPhotoSrc = document.getElementById('form-photo-preview').src;
+            const oldPhotoSrc = document.getElementById('form-old-photo-preview').src;
+
+            if (editId) {
+                const member = masterMembers.find(m => m.id === editId);
+                if (member) {
+                    member.name = name; 
+                    member.role = role;
+                    member.oldTeamId = oldTeamId; 
+                    member.newTeamId = newTeamId;
+                    member.isLeader = isLeader;
+                    member.avatar = newPhotoSrc;
+                    member.oldAvatar = oldPhotoSrc;
+                }
+            } else {
+                masterMembers.push({
+                    id: 'm_' + Date.now(),
+                    name, role, oldTeamId, newTeamId, isLeader,
+                    avatar: newPhotoSrc,
+                    oldAvatar: oldPhotoSrc
+                });
+            }
+
+            window.syncStateToCloudOrLocal();
+            window.resetMemberForm();
+        };
+
+        window.deleteCurrentMember = function() {
+            if (!isAdminLoggedIn) {
+                window.openAdminAuthModal();
+                return;
+            }
+            const editId = document.getElementById('edit-member-id').value;
+            if (!editId) return;
+
+            masterMembers = masterMembers.filter(m => m.id !== editId);
+            localStorage.setItem('audit_members', JSON.stringify(masterMembers));
+
+            if (isFirebaseConnected && firebaseDb && editId) {
+                firebaseDb.collection('members').doc(editId).delete()
+                    .then(() => console.log("Member permanently deleted from Firestore:", editId))
+                    .catch(err => console.error("Cloud delete member error:", err));
+            }
+
+            window.resetMemberForm();
+            window.refreshAllViews();
         };
 
         window.syncStateToCloudOrLocal = function() {
@@ -1931,6 +1593,7 @@
             }
         };
 
+        // Keyboard navigation
         window.addEventListener('keydown', (e) => {
             if (!document.getElementById('roster-modal')?.classList.contains('hidden')) return;
             if (!document.getElementById('admin-auth-modal')?.classList.contains('hidden')) return;
