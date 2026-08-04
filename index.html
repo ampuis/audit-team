@@ -970,7 +970,7 @@
         };
 
         // Admin Auth Config
-        const ADMIN_PASSWORD = "Ia13579";
+        const ADMIN_PASSWORD = "Ia135790";
         let isAdminLoggedIn = false;
 
         // Global State Variables
@@ -1742,7 +1742,7 @@
                     const img = new Image();
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
-                        const maxDim = 180;
+                        const maxDim = 200;
                         let width = img.width;
                         let height = img.height;
                         if (width > height) {
@@ -1761,15 +1761,10 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
                         
-                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.65);
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.70);
                         const targetPreviewId = type === 'old' ? 'form-old-photo-preview' : 'form-photo-preview';
                         const previewEl = document.getElementById(targetPreviewId);
                         if (previewEl) previewEl.src = compressedDataUrl;
-
-                        // Clear URL input field so preview data URL is used on save
-                        const targetUrlInputId = type === 'old' ? 'form-old-photo-url' : 'form-photo-url';
-                        const urlInputEl = document.getElementById(targetUrlInputId);
-                        if (urlInputEl) urlInputEl.value = '';
                     };
                     img.src = e.target.result;
                 };
@@ -1815,11 +1810,8 @@
             const newTeamId = document.getElementById('form-new-team').value;
             const isLeader = document.getElementById('form-is-leader').checked;
 
-            const photoUrlInput = document.getElementById('form-photo-url')?.value?.trim();
-            const oldPhotoUrlInput = document.getElementById('form-old-photo-url')?.value?.trim();
-
-            const newPhotoSrc = photoUrlInput || document.getElementById('form-photo-preview').src;
-            const oldPhotoSrc = oldPhotoUrlInput || document.getElementById('form-old-photo-preview').src;
+            const newPhotoSrc = document.getElementById('form-photo-preview').src;
+            const oldPhotoSrc = document.getElementById('form-old-photo-preview').src;
 
             let memberObj = null;
 
@@ -1844,9 +1836,7 @@
                 masterMembers.push(memberObj);
             }
 
-            // Save locally with update timestamp
             localStorage.setItem('audit_members', JSON.stringify(masterMembers));
-            localStorage.setItem('audit_members_updated_at', Date.now().toString());
 
             if (isFirebaseConnected && firebaseDb && memberObj) {
                 firebaseDb.collection('members').doc(memberObj.id).set(memberObj, { merge: true })
@@ -1871,7 +1861,6 @@
 
             masterMembers = masterMembers.filter(m => m.id !== editId);
             localStorage.setItem('audit_members', JSON.stringify(masterMembers));
-            localStorage.setItem('audit_members_updated_at', Date.now().toString());
 
             if (isFirebaseConnected && firebaseDb && editId) {
                 firebaseDb.collection('members').doc(editId).delete()
@@ -1888,7 +1877,6 @@
         function syncStateToCloudOrLocal() {
             localStorage.setItem('audit_members', JSON.stringify(masterMembers));
             localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
-            localStorage.setItem('audit_members_updated_at', Date.now().toString());
 
             if (isFirebaseConnected && firebaseDb) {
                 const batch = firebaseDb.batch();
@@ -1937,16 +1925,11 @@
 
                 firebaseDb.collection('members').onSnapshot(snapshot => {
                     if (!snapshot.empty) {
-                        const localUpdatedAt = parseInt(localStorage.getItem('audit_members_updated_at') || '0');
-                        const now = Date.now();
-                        // Only overwrite local state from cloud if local hasn't been modified in the last 5 seconds
-                        if (now - localUpdatedAt > 5000) {
-                            const cloudMembers = [];
-                            snapshot.forEach(doc => cloudMembers.push(doc.data()));
-                            masterMembers = cloudMembers;
-                            localStorage.setItem('audit_members', JSON.stringify(masterMembers));
-                            refreshAllViews();
-                        }
+                        const cloudMembers = [];
+                        snapshot.forEach(doc => cloudMembers.push(doc.data()));
+                        masterMembers = cloudMembers;
+                        localStorage.setItem('audit_members', JSON.stringify(masterMembers));
+                        refreshAllViews();
                     }
                 }, err => console.warn("Firestore members listener error:", err));
 
