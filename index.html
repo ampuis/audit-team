@@ -101,6 +101,12 @@
             border-radius: 1.25rem;
         }
 
+        .old-team-row {
+            border-radius: 0.85rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
         .old-member-card {
             background: rgba(15, 23, 42, 0.85);
             border: 1px solid rgba(71, 85, 105, 0.4);
@@ -123,6 +129,13 @@
             border: 1px solid rgba(56, 189, 248, 0.4);
             box-shadow: 0 15px 40px rgba(56, 189, 248, 0.25);
             border-radius: 1.25rem;
+        }
+
+        .new-team-row {
+            background: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: 1rem;
+            box-shadow: 0 8px 25px rgba(148, 163, 184, 0.15);
         }
 
         /* Custom Scrollbars */
@@ -957,284 +970,335 @@
         };
 
         // Admin Auth Config
-        const ADMIN_PASSWORD = "Ia135790";
+        const ADMIN_PASSWORD = "Ia13579";
         let isAdminLoggedIn = false;
 
         // Global State Variables
         let masterMembers = initialMembers;
         try {
             const savedMembers = localStorage.getItem('audit_members');
-            if (savedMembers) {
-                const parsed = JSON.parse(savedMembers);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    masterMembers = parsed;
-                }
-            }
+            if (savedMembers) masterMembers = JSON.parse(savedMembers);
         } catch(e) { console.warn(e); }
 
         let masterWorkloads = initialWorkloads;
         try {
             const savedWl = localStorage.getItem('audit_workloads');
-            if (savedWl) {
-                const parsed = JSON.parse(savedWl);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    masterWorkloads = parsed;
-                }
-            }
+            if (savedWl) masterWorkloads = JSON.parse(savedWl);
         } catch(e) { console.warn(e); }
 
-        // Sanitize any legacy bloated base64 strings in memory to prevent QuotaExceededError
-        masterMembers.forEach(m => {
-            if (m.avatar && m.avatar.length > 150000) {
-                m.avatar = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250';
-            }
-            if (m.oldAvatar && m.oldAvatar.length > 150000) {
-                m.oldAvatar = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=250';
-            }
-        });
-
-        // Application Navigation State
-        let currentSlide = 1;
-        const totalSlides = 10;
-        let activeTeamView = 'new';
-        let isAudioPlaying = false;
-        let audioContext = null;
         let firebaseDb = null;
         let isFirebaseConnected = false;
 
-        const newTeamMeta = {
-            "new-1": { name: "Audit Team 1", color: "#0284c7", badgeBg: "from-sky-500 to-blue-600", bgLight: "bg-sky-500/20 text-sky-300 border-sky-400/30" },
-            "new-2": { name: "Audit Team 2", color: "#10b981", badgeBg: "from-emerald-500 to-teal-600", bgLight: "bg-emerald-500/20 text-emerald-300 border-emerald-400/30" },
-            "new-3": { name: "Audit Team 3", color: "#a855f7", badgeBg: "from-purple-500 to-indigo-600", bgLight: "bg-purple-500/20 text-purple-300 border-purple-400/30" },
-            "new-4": { name: "Audit Team 4", color: "#f59e0b", badgeBg: "from-amber-500 to-orange-600", bgLight: "bg-amber-500/20 text-amber-300 border-amber-400/30" }
-        };
-
-        const oldTeamMeta = {
-            "old-1": { name: "กลุ่มที่ 1 (เดิม)" },
-            "old-2": { name: "กลุ่มที่ 2 (เดิม)" },
-            "old-3": { name: "กลุ่มที่ 3 (เดิม)" }
-        };
-
-        const matrixCategoryCollapsed = {
+        let matrixCategoryCollapsed = {
             "งานตรวจสอบปกติ": false,
             "งานตรวจสอบเฉพาะด้าน": false,
             "งานตรวจสอบงบการเงิน": false,
             "งานอื่นๆ": false
         };
 
-        // Navigation Functions
-        function updateSlideUI() {
-            document.querySelectorAll('.slide').forEach((slide, idx) => {
-                if (idx + 1 === currentSlide) {
-                    slide.classList.add('active');
-                } else {
-                    slide.classList.remove('active');
-                }
-            });
+        const oldTeamMeta = {
+            "old-1": { name: "กลุ่มที่ 1 (เดิม)", tag: "AUDIT 1", border: "border-sky-900/60", bg: "bg-gradient-to-br from-slate-900 via-sky-950/40 to-slate-950", text: "text-sky-300/80", crownLeaderId: "m1", headerBg: "#c5d8e1", headerText: "#0f172a" },
+            "old-2": { name: "กลุ่มที่ 2 (เดิม)", tag: "AUDIT 2", border: "border-emerald-900/60", bg: "bg-gradient-to-br from-slate-900 via-emerald-950/40 to-slate-950", text: "text-emerald-300/80", crownLeaderId: "m5", headerBg: "#c3d9d1", headerText: "#0f172a" },
+            "old-3": { name: "กลุ่มที่ 3 (เดิม)", tag: "AUDIT 3", border: "border-purple-900/60", bg: "bg-gradient-to-br from-slate-900 via-purple-950/40 to-slate-950", text: "text-purple-300/80", crownLeaderId: "m13", headerBg: "#c8c0d3", headerText: "#0f172a" }
+        };
 
-            const currentNumEl = document.getElementById('slide-num-current');
-            if (currentNumEl) currentNumEl.innerText = currentSlide;
+        const newTeamMeta = {
+            "new-1": { name: "Audit Team 1", tag: "ทีม 1", badgeBg: "from-sky-500 to-blue-600", border: "border-sky-400", bgLight: "bg-sky-500/20 text-sky-300 border-sky-400/40", slideNum: 6 },
+            "new-2": { name: "Audit Team 2", tag: "ทีม 2", badgeBg: "from-emerald-500 to-teal-600", border: "border-emerald-400", bgLight: "bg-emerald-500/20 text-emerald-300 border-emerald-400/40", slideNum: 7 },
+            "new-3": { name: "Audit Team 3", tag: "ทีม 3", badgeBg: "from-purple-500 to-indigo-600", border: "border-purple-400", bgLight: "bg-purple-500/20 text-purple-300 border-purple-400/40", slideNum: 8 },
+            "new-4": { name: "Audit Team 4", tag: "ทีม 4", badgeBg: "from-amber-500 to-orange-500", border: "border-amber-400", bgLight: "bg-amber-500/20 text-amber-300 border-amber-400/40", slideNum: 9 }
+        };
 
-            const dotsContainer = document.getElementById('slide-dots');
-            if (dotsContainer) {
-                dotsContainer.innerHTML = Array.from({ length: totalSlides }, (_, i) => `
-                    <span onclick="goToSlide(${i + 1})" class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${i + 1 === currentSlide ? 'bg-sky-400 w-6' : 'bg-slate-700 hover:bg-slate-500'}"></span>
-                `).join('');
+        let currentSlide = 1;
+        const totalSlides = 10;
+        let currentTeamView = 'old';
+        let audioEnabled = true;
+
+        // Admin Auth Handlers
+        function toggleAdminAuthModal() {
+            if (isAdminLoggedIn) {
+                isAdminLoggedIn = false;
+                updateAdminAuthUI();
+                playChime(300, 'sine', 0.1);
+            } else {
+                openAdminAuthModal();
             }
-
-            const btnPrev = document.getElementById('btn-prev');
-            const btnNext = document.getElementById('btn-next');
-            if (btnPrev) btnPrev.style.visibility = currentSlide === 1 ? 'hidden' : 'visible';
-            if (btnNext) btnNext.style.visibility = currentSlide === totalSlides ? 'hidden' : 'visible';
-
-            refreshAllViews();
         }
-        window.updateSlideUI = updateSlideUI;
+        window.toggleAdminAuthModal = toggleAdminAuthModal;
 
-        function goToSlide(n) {
-            if (n >= 1 && n <= totalSlides) {
-                currentSlide = n;
+        function openAdminAuthModal() {
+            const modal = document.getElementById('admin-auth-modal');
+            const err = document.getElementById('admin-login-error');
+            const pwd = document.getElementById('admin-password-input');
+            if (err) err.classList.add('hidden');
+            if (pwd) pwd.value = '';
+            if (modal) modal.classList.remove('hidden');
+        }
+        window.openAdminAuthModal = openAdminAuthModal;
+
+        function closeAdminAuthModal() {
+            const modal = document.getElementById('admin-auth-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+        window.closeAdminAuthModal = closeAdminAuthModal;
+
+        function handleAdminLogin(event) {
+            if (event) event.preventDefault();
+            const inputPwd = document.getElementById('admin-password-input')?.value;
+            if (inputPwd === ADMIN_PASSWORD) {
+                isAdminLoggedIn = true;
+                closeAdminAuthModal();
+                updateAdminAuthUI();
+                showToast("เข้าสู่ระบบผู้ดูแลระบบสำเร็จ! 🔓");
+                playChime(800, 'triangle', 0.15);
+            } else {
+                const err = document.getElementById('admin-login-error');
+                if (err) err.classList.remove('hidden');
+            }
+        }
+        window.handleAdminLogin = handleAdminLogin;
+
+        function updateAdminAuthUI() {
+            const statusText = document.getElementById('admin-status-text');
+            const statusDot = document.getElementById('admin-status-dot');
+            const badge = document.getElementById('admin-login-badge');
+
+            if (isAdminLoggedIn) {
+                if (statusText) statusText.innerText = '🔓 Admin Mode (คลิกเพื่อออก)';
+                if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-emerald-400';
+                if (badge) badge.className = 'bg-emerald-500/20 border border-emerald-400/50 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-emerald-300 transition shadow cursor-pointer';
+            } else {
+                if (statusText) statusText.innerText = '🔒 Guest Mode (เข้าสู่ระบบ)';
+                if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-amber-400';
+                if (badge) badge.className = 'bg-amber-500/20 border border-amber-400/50 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-amber-300 transition shadow cursor-pointer';
+            }
+        }
+        window.updateAdminAuthUI = updateAdminAuthUI;
+
+        // Slide Navigation Functions
+        function goToSlide(slideNum) {
+            if (slideNum < 1 || slideNum > totalSlides) return;
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById('slide-' + slideNum);
+            if (target) {
+                target.classList.add('active');
+                currentSlide = slideNum;
                 updateSlideUI();
-                playChime(440, 'sine', 0.1);
+                playChime(400 + slideNum * 30, 'sine', 0.1);
             }
         }
         window.goToSlide = goToSlide;
 
         function nextSlide() {
-            if (currentSlide < totalSlides) {
-                currentSlide++;
-                updateSlideUI();
-                playChime(520, 'sine', 0.1);
-            }
+            if (currentSlide < totalSlides) goToSlide(currentSlide + 1);
         }
         window.nextSlide = nextSlide;
 
         function prevSlide() {
-            if (currentSlide > 1) {
-                currentSlide--;
-                updateSlideUI();
-                playChime(380, 'sine', 0.1);
-            }
+            if (currentSlide > 1) goToSlide(currentSlide - 1);
         }
         window.prevSlide = prevSlide;
 
-        function refreshAllViews() {
-            calculateMandays();
-            renderTeams();
-            updateTeamFocusSlides();
-            renderSlide10Matrix();
-        }
-        window.refreshAllViews = refreshAllViews;
+        function updateSlideUI() {
+            const currEl = document.getElementById('slide-num-current');
+            const totEl = document.getElementById('slide-num-total');
+            if (currEl) currEl.innerText = currentSlide;
+            if (totEl) totEl.innerText = totalSlides;
 
-        function renderTeams() {
-            if (activeTeamView === 'old') {
-                renderOldTeams();
-            } else {
-                renderNewTeams();
+            const dotsContainer = document.getElementById('slide-dots');
+            if (dotsContainer) {
+                dotsContainer.innerHTML = '';
+                for (let i = 1; i <= totalSlides; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${i === currentSlide ? 'bg-sky-400 w-6' : 'bg-slate-700 hover:bg-slate-500'}`;
+                    dot.onclick = function() { goToSlide(i); };
+                    dotsContainer.appendChild(dot);
+                }
             }
+
+            const prevBtn = document.getElementById('btn-prev');
+            const nextBtn = document.getElementById('btn-next');
+            if (prevBtn) prevBtn.style.opacity = currentSlide === 1 ? '0.4' : '1';
+            if (nextBtn) nextBtn.style.opacity = currentSlide === totalSlides ? '0.4' : '1';
         }
-        window.renderTeams = renderTeams;
+        window.updateSlideUI = updateSlideUI;
+
+        function getOldTeamName(id) { return oldTeamMeta[id]?.name || id; }
+        window.getOldTeamName = getOldTeamName;
+
+        function getNewTeamName(id) { return newTeamMeta[id]?.name || id; }
+        window.getNewTeamName = getNewTeamName;
 
         function triggerTeamSwitch(view) {
-            activeTeamView = view;
-            const btnOld = document.getElementById('toggle-old-btn');
-            const btnNew = document.getElementById('toggle-new-btn');
+            currentTeamView = view;
+            const oldBtn = document.getElementById('toggle-old-btn');
+            const newBtn = document.getElementById('toggle-new-btn');
 
             if (view === 'old') {
-                if (btnOld) { btnOld.className = "btn-glow px-4 py-1.5 rounded-full text-xs font-bold text-white transition-all cursor-pointer"; }
-                if (btnNew) { btnNew.className = "px-4 py-1.5 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all cursor-pointer"; }
+                if (oldBtn) oldBtn.className = 'btn-glow px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 text-white cursor-pointer';
+                if (newBtn) newBtn.className = 'px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white cursor-pointer';
                 renderOldTeams();
+                playChime(350, 'sine', 0.15);
             } else {
-                if (btnNew) { btnNew.className = "btn-glow px-4 py-1.5 rounded-full text-xs font-bold text-white transition-all cursor-pointer"; }
-                if (btnOld) { btnOld.className = "px-4 py-1.5 rounded-full text-xs font-semibold text-slate-400 hover:text-white transition-all cursor-pointer"; }
+                if (newBtn) newBtn.className = 'btn-glow px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 text-white cursor-pointer';
+                if (oldBtn) oldBtn.className = 'px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 text-slate-400 hover:text-white cursor-pointer';
                 renderNewTeams();
-                try { confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } }); } catch(e){}
+                playFanfare();
+
+                if (typeof confetti === 'function') {
+                    confetti({ particleCount: 120, spread: 100, origin: { x: 0.2, y: 0.4 } });
+                    confetti({ particleCount: 120, spread: 100, origin: { x: 0.8, y: 0.4 } });
+                    setTimeout(() => {
+                        confetti({ particleCount: 150, spread: 120, origin: { x: 0.5, y: 0.3 } });
+                    }, 200);
+                }
             }
         }
         window.triggerTeamSwitch = triggerTeamSwitch;
 
+        // Render Old Structure (3 Teams) - Full Widescreen
         function renderOldTeams() {
             const container = document.getElementById('teams-grid-container');
             if (!container) return;
 
-            const oldTeamIds = ["old-1", "old-2", "old-3"];
-            let html = `<div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full h-full align-top">`;
+            container.className = 'w-full flex-grow p-4 transition-all duration-500 theme-old-container grid grid-cols-1 lg:grid-cols-3 gap-6 overflow-y-auto custom-scrollbar';
 
-            oldTeamIds.forEach(tId => {
-                const members = masterMembers.filter(m => m.oldTeamId === tId);
-                const tMeta = oldTeamMeta[tId];
+            const team1Members = masterMembers.filter(m => m.oldTeamId === "old-1");
+            const team2Members = masterMembers.filter(m => m.oldTeamId === "old-2");
+            const team3Members = masterMembers.filter(m => m.oldTeamId === "old-3");
 
-                let membersHtml = members.map(m => `
-                    <div class="old-member-card p-2 rounded-xl flex flex-col items-center text-center relative group">
-                        <img src="${m.oldAvatar || m.avatar}" class="old-member-photo w-14 h-14 rounded-full object-cover mb-1 border border-slate-600">
-                        <span class="text-xs font-bold text-slate-200 truncate w-full">${m.name}</span>
-                    </div>
-                `).join('');
+            function renderOldCard(oldId, teamMembers) {
+                const meta = oldTeamMeta[oldId];
+                teamMembers.sort((a, b) => (a.id === meta.crownLeaderId ? -1 : b.id === meta.crownLeaderId ? 1 : 0));
 
-                html += `
-                    <div class="theme-old-container p-3 flex flex-col justify-start h-full">
-                        <div class="p-2 bg-slate-900/80 rounded-xl mb-3 border border-white/10 flex items-center justify-between">
-                            <h3 class="font-extrabold text-xs sm:text-sm text-slate-300 uppercase tracking-wide">${tMeta.name}</h3>
-                            <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">${members.length} ท่าน</span>
+                return `
+                    <div class="old-team-row p-4 flex flex-col justify-start gap-4 transition-all duration-300 ${meta.bg} ${meta.border} rounded-2xl h-full w-full">
+                        <div class="w-full flex items-center justify-between p-3 rounded-xl shadow-md text-left shrink-0" style="background-color: ${meta.headerBg}; color: ${meta.headerText};">
+                            <div>
+                                <h3 class="font-black text-lg uppercase tracking-wider my-0.5">${meta.tag}</h3>
+                                <p class="text-xs font-medium opacity-90">${meta.name} (${teamMembers.length} ท่าน)</p>
+                            </div>
                         </div>
-                        <div class="grid grid-cols-3 gap-2 overflow-y-auto custom-scrollbar pr-1">
-                            ${membersHtml}
+
+                        <div class="w-full grid grid-cols-2 sm:grid-cols-3 gap-3 items-start">
+                            ${teamMembers.map((m, idx) => {
+                                const isLeader = idx === 0;
+                                const oldImg = m.oldAvatar || m.avatar;
+                                return `
+                                    <div class="old-member-card p-2.5 rounded-xl text-center relative flex flex-col items-center justify-between h-full group bg-slate-900/80 border border-slate-700/50">
+                                        ${isLeader ? '<div class="absolute -top-2 left-2 z-20 text-amber-400 text-sm drop-shadow"><i class="fa-solid fa-crown"></i></div>' : ''}
+                                        <div class="w-full aspect-square rounded-lg overflow-hidden border border-slate-700/60 bg-slate-900 mb-2">
+                                            <img src="${oldImg}" onerror="this.src='https://placehold.co/120x120/1e293b/94a3b8?text=${encodeURIComponent(m.name.charAt(0))}'" class="old-member-photo w-full h-full object-cover">
+                                        </div>
+                                        <div class="font-bold text-slate-200 text-xs sm:text-sm truncate w-full">${m.name}</div>
+                                    </div>
+                                `;
+                            }).join('')}
                         </div>
                     </div>
                 `;
-            });
+            }
 
-            html += `</div>`;
-            container.innerHTML = html;
+            container.innerHTML = `
+                ${renderOldCard("old-1", team1Members)}
+                ${renderOldCard("old-2", team2Members)}
+                ${renderOldCard("old-3", team3Members)}
+            `;
         }
         window.renderOldTeams = renderOldTeams;
 
+        // Render New Structure (4 Teams) - Full Widescreen
         function renderNewTeams() {
             const container = document.getElementById('teams-grid-container');
             if (!container) return;
 
-            const newTeamIds = ["new-1", "new-2", "new-3", "new-4"];
-            let html = `<div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 w-full h-full align-top">`;
+            container.className = 'w-full flex-grow p-4 transition-all duration-500 theme-new-container grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto custom-scrollbar';
 
-            newTeamIds.forEach((tId, idx) => {
-                const members = masterMembers.filter(m => m.newTeamId === tId);
-                const tMeta = newTeamMeta[tId];
-                const slideTarget = 6 + idx;
+            const teamIds = ["new-1", "new-2", "new-3", "new-4"];
 
-                let membersHtml = members.map(m => `
-                    <div class="p-2.5 rounded-xl bg-slate-900/60 border border-white/5 flex flex-col items-center text-center relative group hover:border-sky-400 transition">
-                        ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-xs mb-1"></i>' : ''}
-                        <img src="${m.avatar}" class="w-20 sm:w-24 md:w-28 h-20 sm:h-24 md:h-28 rounded-full object-cover mb-1.5 border-2 border-sky-400/50 shadow-md">
-                        <span class="text-xs font-bold text-white truncate w-full">${m.name}</span>
-                    </div>
-                `).join('');
+            container.innerHTML = teamIds.map(tId => {
+                const meta = newTeamMeta[tId];
+                const teamMembers = masterMembers.filter(m => m.newTeamId === tId);
 
-                html += `
-                    <div class="glass-card p-3 flex flex-col justify-start h-full hover:border-sky-400/40 transition">
-                        <div class="p-2.5 rounded-xl bg-gradient-to-r ${tMeta.badgeBg} text-white mb-2.5 flex items-center justify-between shadow-md">
-                            <div class="font-bold text-xs sm:text-sm tracking-wide flex items-center gap-2">
-                                <i class="fa-solid fa-users text-xs"></i>
-                                <span>${tMeta.name} (${members.length} ท่าน)</span>
+                return `
+                    <div class="new-team-row p-4 flex flex-col justify-start gap-3 transition-all duration-300 w-full">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r ${meta.badgeBg} text-white shadow-md">
+                            <div class="flex items-center gap-2">
+                                <span class="font-extrabold text-base sm:text-lg tracking-wide">${meta.name}</span>
+                                <span class="text-xs sm:text-sm opacity-90">(${teamMembers.length} ท่าน)</span>
                             </div>
-                            <button onclick="goToSlide(${slideTarget})" class="bg-black/30 hover:bg-black/50 text-white text-[11px] px-2.5 py-1 rounded-lg transition border border-white/20 flex items-center gap-1 cursor-pointer">
-                                <span>รายละเอียดงาน</span>
-                                <i class="fa-solid fa-arrow-right text-[9px]"></i>
+                            <button onclick="goToSlide(${meta.slideNum})" class="text-xs bg-white/20 hover:bg-white/30 text-white font-semibold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 cursor-pointer">
+                                <i class="fa-solid fa-circle-info"></i> รายละเอียดงาน
                             </button>
                         </div>
-                        <div class="grid grid-cols-3 sm:grid-cols-4 gap-2 overflow-y-auto custom-scrollbar pr-1">
-                            ${membersHtml}
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 items-start w-full">
+                            ${teamMembers.map((m, idx) => {
+                                const isLeader = idx === 0 && m.isLeader;
+                                return `
+                                    <div class="bg-slate-50 border border-slate-200 hover:border-sky-400 p-3 rounded-xl text-center relative flex flex-col items-center justify-center min-h-[140px] group hover:shadow-md pt-3">
+                                        <div class="relative shrink-0 flex justify-center mb-2">
+                                            ${isLeader ? '<div class="absolute -top-4 z-20 text-amber-500 text-xl drop-shadow animate-bounce"><i class="fa-solid fa-crown"></i></div>' : ''}
+                                            <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full p-1 bg-white shadow-md border-2 ${meta.border} overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                                                <img src="${m.avatar}" onerror="this.src='https://placehold.co/150x150/0284c7/ffffff?text=${encodeURIComponent(m.name.charAt(0))}'" class="w-full h-full rounded-full object-cover">
+                                            </div>
+                                        </div>
+                                        <div class="font-bold text-slate-800 text-xs sm:text-sm truncate w-full mt-1">${m.name}</div>
+                                    </div>
+                                `;
+                            }).join('')}
                         </div>
                     </div>
                 `;
-            });
-
-            html += `</div>`;
-            container.innerHTML = html;
+            }).join('');
         }
         window.renderNewTeams = renderNewTeams;
 
         function updateTeamFocusSlides() {
-            const teamIds = ["new-1", "new-2", "new-3", "new-4"];
+            const newTeamIds = ["new-1", "new-2", "new-3", "new-4"];
 
-            teamIds.forEach((tId, idx) => {
-                const slideNum = 6 + idx;
-                const membersListEl = document.getElementById(`slide${slideNum}-members-list`);
-                const tasksListEl = document.getElementById(`slide${slideNum}-tasks-list`);
+            newTeamIds.forEach((tId, idx) => {
+                const slideIndex = idx + 6;
+                const membersContainer = document.getElementById(`slide${slideIndex}-members-list`);
+                const tasksContainer = document.getElementById(`slide${slideIndex}-tasks-list`);
 
-                const teamMembers = masterMembers.filter(m => m.newTeamId === tId);
-                const teamTasks = masterWorkloads.filter(w => w.teamId === tId);
-
-                if (membersListEl) {
-                    membersListEl.innerHTML = teamMembers.map(m => `
-                        <div class="p-2.5 bg-slate-900/80 rounded-xl border border-white/10 flex items-center gap-3">
-                            <img src="${m.avatar}" class="w-10 h-10 rounded-full object-cover border border-sky-400">
-                            <div>
-                                <div class="text-xs font-bold text-white flex items-center gap-1.5">
+                if (membersContainer) {
+                    const members = masterMembers.filter(m => m.newTeamId === tId);
+                    membersContainer.innerHTML = members.map(m => `
+                        <div class="flex items-center gap-3 p-2.5 bg-slate-900/60 rounded-xl border border-white/5">
+                            <img src="${m.avatar}" class="w-11 h-11 rounded-full object-cover border border-sky-400 shadow">
+                            <div class="truncate">
+                                <div class="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
                                     ${m.name}
-                                    ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-[10px]"></i>' : ''}
+                                    ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-xs"></i>' : ''}
                                 </div>
-                                <div class="text-[10px] text-slate-400">${m.role}</div>
+                                <div class="text-xs text-slate-400 truncate">${m.role}</div>
                             </div>
                         </div>
                     `).join('');
                 }
 
-                if (tasksListEl) {
-                    if (teamTasks.length === 0) {
-                        tasksListEl.innerHTML = `<li class="p-4 text-center text-slate-500 italic text-xs">ยังไม่มีภาระงานที่มอบหมาย</li>`;
+                if (tasksContainer) {
+                    const tasks = masterWorkloads.filter(w => w.teamId === tId);
+                    const teamMembersCount = masterMembers.filter(m => m.newTeamId === tId).length || 1;
+
+                    if (tasks.length === 0) {
+                        tasksContainer.innerHTML = `<li class="text-slate-500 italic p-4 text-center text-sm">ยังไม่มีภาระงานบันทึกไว้ในทีมนี้</li>`;
                     } else {
-                        tasksListEl.innerHTML = teamTasks.map(t => {
-                            const totalDays = (t.baseMandays || 20) * (teamMembers.length || 1);
+                        tasksContainer.innerHTML = tasks.map(w => {
+                            const totalMandays = (w.baseMandays || 20) * teamMembersCount;
                             return `
-                                <li class="p-3 bg-slate-900/80 rounded-xl border border-white/10 flex items-center justify-between text-xs hover:border-sky-400/50 transition">
-                                    <div class="flex items-center gap-2">
-                                        <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
-                                        <div>
-                                            <div class="font-bold text-white">${t.title}</div>
-                                            <div class="text-[10px] text-slate-400">${t.category} (${t.quarter || 'Q1'})</div>
+                                <li class="p-3 bg-slate-900/80 rounded-xl border border-white/5 flex items-center justify-between">
+                                    <div>
+                                        <div class="font-bold text-white flex items-center gap-2 text-xs sm:text-sm">
+                                            <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
+                                            <span>${w.title}</span>
                                         </div>
+                                        <div class="text-xs text-slate-400 mt-1">หมวดหมู่: ${w.category} (${w.quarter || 'Q1'})</div>
                                     </div>
-                                    <span class="font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-400/30 px-2.5 py-1 rounded-lg text-[11px]">${totalDays.toLocaleString()} Mandays</span>
+                                    <span class="text-xs sm:text-sm font-bold text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-lg border border-emerald-500/30">
+                                        ${totalMandays.toLocaleString()} Mandays
+                                    </span>
                                 </li>
                             `;
                         }).join('');
@@ -1554,7 +1618,7 @@
             const newItem = { id: 'w_' + Date.now(), category, title, teamId, quarter, baseMandays };
             masterWorkloads.push(newItem);
             closeAddProjectModal();
-            refreshAllViews();
+            syncStateToCloudOrLocal();
             playChime(600, 'sine', 0.1);
         }
         window.saveWorkloadItem = saveWorkloadItem;
@@ -1565,14 +1629,12 @@
                 return;
             }
             masterWorkloads = masterWorkloads.filter(w => w.id !== id);
-            try {
-                localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
-            } catch(e) {}
+            localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
 
             if (isFirebaseConnected && firebaseDb && id) {
                 firebaseDb.collection('workloads').doc(id).delete().then(() => {
-                    console.log("Workload deleted from Firestore:", id);
-                }).catch(err => console.error("Cloud delete error:", err));
+                    console.log("Workload permanently deleted from Cloud:", id);
+                }).catch(err => console.error("Cloud delete workload error:", err));
             }
 
             refreshAllViews();
@@ -1612,7 +1674,7 @@
                                     ${m.name}
                                     ${m.isLeader ? '<i class="fa-solid fa-crown text-amber-400 text-[10px]"></i>' : ''}
                                 </div>
-                                <div class="text-[10px] text-slate-400">${newTeamMeta[m.newTeamId]?.name || m.newTeamId}</div>
+                                <div class="text-[10px] text-slate-400">${getNewTeamName(m.newTeamId).split(':')[0]}</div>
                             </div>
                         </div>
                         <i class="fa-solid fa-chevron-right text-xs text-slate-600"></i>
@@ -1674,20 +1736,13 @@
 
         function handlePhotoFileSelect(event, type = 'new') {
             const file = event.target.files[0];
-            if (!file) return;
-
-            const targetPreviewId = type === 'old' ? 'form-old-photo-preview' : 'form-photo-preview';
-            const targetUrlInputId = type === 'old' ? 'form-old-photo-url' : 'form-photo-url';
-            const previewEl = document.getElementById(targetPreviewId);
-            const urlInputEl = document.getElementById(targetUrlInputId);
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    try {
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
                         const canvas = document.createElement('canvas');
-                        const maxDim = 150;
+                        const maxDim = 180;
                         let width = img.width;
                         let height = img.height;
                         if (width > height) {
@@ -1701,23 +1756,25 @@
                                 height = maxDim;
                             }
                         }
-                        canvas.width = Math.max(1, width);
-                        canvas.height = Math.max(1, height);
+                        canvas.width = width;
+                        canvas.height = height;
                         const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, width, height);
                         
-                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.60);
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.65);
+                        const targetPreviewId = type === 'old' ? 'form-old-photo-preview' : 'form-photo-preview';
+                        const previewEl = document.getElementById(targetPreviewId);
                         if (previewEl) previewEl.src = compressedDataUrl;
+
+                        // Clear URL input field so preview data URL is used on save
+                        const targetUrlInputId = type === 'old' ? 'form-old-photo-url' : 'form-photo-url';
+                        const urlInputEl = document.getElementById(targetUrlInputId);
                         if (urlInputEl) urlInputEl.value = '';
-                    } catch(err) {
-                        console.warn("Image compression error:", err);
-                        if (previewEl) previewEl.src = e.target.result;
-                        if (urlInputEl) urlInputEl.value = '';
-                    }
+                    };
+                    img.src = e.target.result;
                 };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
+            }
         }
         window.handlePhotoFileSelect = handlePhotoFileSelect;
 
@@ -1751,65 +1808,56 @@
                 openAdminAuthModal();
                 return;
             }
-            try {
-                const editId = document.getElementById('edit-member-id')?.value;
-                const name = document.getElementById('form-name')?.value;
-                const role = document.getElementById('form-role')?.value;
-                const oldTeamId = document.getElementById('form-old-team')?.value;
-                const newTeamId = document.getElementById('form-new-team')?.value;
-                const isLeader = document.getElementById('form-is-leader')?.checked || false;
+            const editId = document.getElementById('edit-member-id').value;
+            const name = document.getElementById('form-name').value;
+            const role = document.getElementById('form-role').value;
+            const oldTeamId = document.getElementById('form-old-team').value;
+            const newTeamId = document.getElementById('form-new-team').value;
+            const isLeader = document.getElementById('form-is-leader').checked;
 
-                const photoUrlInput = document.getElementById('form-photo-url')?.value?.trim();
-                const oldPhotoUrlInput = document.getElementById('form-old-photo-url')?.value?.trim();
+            const photoUrlInput = document.getElementById('form-photo-url')?.value?.trim();
+            const oldPhotoUrlInput = document.getElementById('form-old-photo-url')?.value?.trim();
 
-                const newPhotoSrc = photoUrlInput || document.getElementById('form-photo-preview')?.src || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250';
-                const oldPhotoSrc = oldPhotoUrlInput || document.getElementById('form-old-photo-preview')?.src || newPhotoSrc;
+            const newPhotoSrc = photoUrlInput || document.getElementById('form-photo-preview').src;
+            const oldPhotoSrc = oldPhotoUrlInput || document.getElementById('form-old-photo-preview').src;
 
-                let memberObj = null;
+            let memberObj = null;
 
-                if (editId) {
-                    memberObj = masterMembers.find(m => m.id === editId);
-                    if (memberObj) {
-                        memberObj.name = name; 
-                        memberObj.role = role;
-                        memberObj.oldTeamId = oldTeamId; 
-                        memberObj.newTeamId = newTeamId;
-                        memberObj.isLeader = isLeader;
-                        memberObj.avatar = newPhotoSrc;
-                        memberObj.oldAvatar = oldPhotoSrc;
-                    }
-                } else {
-                    memberObj = {
-                        id: 'm_' + Date.now(),
-                        name, role, oldTeamId, newTeamId, isLeader,
-                        avatar: newPhotoSrc,
-                        oldAvatar: oldPhotoSrc
-                    };
-                    masterMembers.push(memberObj);
+            if (editId) {
+                memberObj = masterMembers.find(m => m.id === editId);
+                if (memberObj) {
+                    memberObj.name = name; 
+                    memberObj.role = role;
+                    memberObj.oldTeamId = oldTeamId; 
+                    memberObj.newTeamId = newTeamId;
+                    memberObj.isLeader = isLeader;
+                    memberObj.avatar = newPhotoSrc;
+                    memberObj.oldAvatar = oldPhotoSrc;
                 }
-
-                try {
-                    localStorage.setItem('audit_members', JSON.stringify(masterMembers));
-                } catch(quotaErr) {
-                    console.warn("LocalStorage quota exceeded:", quotaErr);
-                }
-
-                if (isFirebaseConnected && firebaseDb && memberObj) {
-                    firebaseDb.collection('members').doc(memberObj.id).set(memberObj, { merge: true })
-                        .then(() => console.log("Member saved to Firestore:", memberObj.id))
-                        .catch(err => console.warn("Member Firestore save error:", err));
-                }
-
-                refreshAllViews();
-                resetMemberForm();
-                showToast("บันทึกข้อมูลสมาชิกเรียบร้อยแล้ว! 🎉");
-                playChime(650, 'sine', 0.15);
-            } catch (err) {
-                console.error("Save member error:", err);
-                showToast("บันทึกข้อมูลเรียบร้อยแล้ว");
-                refreshAllViews();
-                resetMemberForm();
+            } else {
+                memberObj = {
+                    id: 'm_' + Date.now(),
+                    name, role, oldTeamId, newTeamId, isLeader,
+                    avatar: newPhotoSrc,
+                    oldAvatar: oldPhotoSrc
+                };
+                masterMembers.push(memberObj);
             }
+
+            // Save locally with update timestamp
+            localStorage.setItem('audit_members', JSON.stringify(masterMembers));
+            localStorage.setItem('audit_members_updated_at', Date.now().toString());
+
+            if (isFirebaseConnected && firebaseDb && memberObj) {
+                firebaseDb.collection('members').doc(memberObj.id).set(memberObj, { merge: true })
+                    .then(() => console.log("Member saved to Firestore successfully:", memberObj.id))
+                    .catch(err => console.warn("Member Firestore save error:", err));
+            }
+
+            refreshAllViews();
+            resetMemberForm();
+            showToast("บันทึกข้อมูลสมาชิกเรียบร้อยแล้ว! 🎉");
+            playChime(650, 'sine', 0.15);
         }
         window.saveMember = saveMember;
 
@@ -1818,202 +1866,225 @@
                 openAdminAuthModal();
                 return;
             }
-            const editId = document.getElementById('edit-member-id')?.value;
+            const editId = document.getElementById('edit-member-id').value;
             if (!editId) return;
 
             masterMembers = masterMembers.filter(m => m.id !== editId);
-            try {
-                localStorage.setItem('audit_members', JSON.stringify(masterMembers));
-            } catch(quotaErr) { console.warn(quotaErr); }
+            localStorage.setItem('audit_members', JSON.stringify(masterMembers));
+            localStorage.setItem('audit_members_updated_at', Date.now().toString());
 
             if (isFirebaseConnected && firebaseDb && editId) {
-                firebaseDb.collection('members').doc(editId).delete().then(() => {
-                    console.log("Member permanently deleted from Cloud:", editId);
-                }).catch(err => console.warn("Member Cloud deletion error:", err));
+                firebaseDb.collection('members').doc(editId).delete()
+                    .then(() => console.log("Member permanently deleted from Firestore:", editId))
+                    .catch(err => console.error("Cloud delete member error:", err));
             }
 
-            refreshAllViews();
             resetMemberForm();
+            refreshAllViews();
             showToast("ลบข้อมูลสมาชิกเรียบร้อยแล้ว");
-            playChime(350, 'sine', 0.2);
         }
         window.deleteCurrentMember = deleteCurrentMember;
 
-        function openAdminAuthModal() {
-            const modal = document.getElementById('admin-auth-modal');
-            if (modal) modal.classList.remove('hidden');
-            const pwdInput = document.getElementById('admin-password-input');
-            if (pwdInput) { pwdInput.value = ''; pwdInput.focus(); }
-            const errDiv = document.getElementById('admin-login-error');
-            if (errDiv) errDiv.classList.add('hidden');
-        }
-        window.openAdminAuthModal = openAdminAuthModal;
+        function syncStateToCloudOrLocal() {
+            localStorage.setItem('audit_members', JSON.stringify(masterMembers));
+            localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
+            localStorage.setItem('audit_members_updated_at', Date.now().toString());
 
-        function closeAdminAuthModal() {
-            const modal = document.getElementById('admin-auth-modal');
-            if (modal) modal.classList.add('hidden');
-        }
-        window.closeAdminAuthModal = closeAdminAuthModal;
+            if (isFirebaseConnected && firebaseDb) {
+                const batch = firebaseDb.batch();
+                masterMembers.forEach(m => {
+                    const docRef = firebaseDb.collection('members').doc(m.id);
+                    batch.set(docRef, m, { merge: true });
+                });
+                masterWorkloads.forEach(w => {
+                    const docRef = firebaseDb.collection('workloads').doc(w.id);
+                    batch.set(docRef, w, { merge: true });
+                });
+                batch.commit().catch(err => console.error("Cloud Sync Batch error:", err));
+            }
 
-        function toggleAdminAuthModal() {
-            if (isAdminLoggedIn) {
-                isAdminLoggedIn = false;
-                updateAdminBadgeUI();
-                showToast("ออกจากระบบผู้ดูแลเรียบร้อยแล้ว");
-            } else {
-                openAdminAuthModal();
+            refreshAllViews();
+        }
+        window.syncStateToCloudOrLocal = syncStateToCloudOrLocal;
+
+        function refreshAllViews() {
+            if (currentTeamView === 'old') renderOldTeams();
+            else renderNewTeams();
+
+            calculateMandays();
+            updateTeamFocusSlides();
+            renderSlide10Matrix();
+            renderModalRosterList();
+        }
+        window.refreshAllViews = refreshAllViews;
+
+        // Firebase Initialization
+        function initFirebase(config) {
+            try {
+                if (typeof firebase === 'undefined') {
+                    throw new Error("Firebase SDK not loaded");
+                }
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(config);
+                }
+                firebaseDb = firebase.firestore();
+                isFirebaseConnected = true;
+
+                const statusDot = document.getElementById('cloud-status-dot');
+                const statusText = document.getElementById('cloud-status-text');
+                if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
+                if (statusText) statusText.innerText = "🟢 Cloud Sync Active";
+
+                firebaseDb.collection('members').onSnapshot(snapshot => {
+                    if (!snapshot.empty) {
+                        const localUpdatedAt = parseInt(localStorage.getItem('audit_members_updated_at') || '0');
+                        const now = Date.now();
+                        // Only overwrite local state from cloud if local hasn't been modified in the last 5 seconds
+                        if (now - localUpdatedAt > 5000) {
+                            const cloudMembers = [];
+                            snapshot.forEach(doc => cloudMembers.push(doc.data()));
+                            masterMembers = cloudMembers;
+                            localStorage.setItem('audit_members', JSON.stringify(masterMembers));
+                            refreshAllViews();
+                        }
+                    }
+                }, err => console.warn("Firestore members listener error:", err));
+
+                firebaseDb.collection('workloads').onSnapshot(snapshot => {
+                    if (!snapshot.empty) {
+                        const cloudWorkloads = [];
+                        snapshot.forEach(doc => cloudWorkloads.push(doc.data()));
+                        masterWorkloads = cloudWorkloads;
+                        localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
+                        refreshAllViews();
+                    }
+                }, err => console.warn("Firestore workloads listener error:", err));
+
+            } catch (err) {
+                console.warn("Firebase Init fallback to LocalStorage:", err);
+                isFirebaseConnected = false;
+                const statusDot = document.getElementById('cloud-status-dot');
+                const statusText = document.getElementById('cloud-status-text');
+                if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-amber-400";
+                if (statusText) statusText.innerText = "🟡 Local Sync Mode";
             }
         }
-        window.toggleAdminAuthModal = toggleAdminAuthModal;
+        window.initFirebase = initFirebase;
 
-        function handleAdminLogin(e) {
-            if (e) e.preventDefault();
-            const pwdInput = document.getElementById('admin-password-input')?.value;
-            const errDiv = document.getElementById('admin-login-error');
-
-            if (pwdInput === ADMIN_PASSWORD) {
-                isAdminLoggedIn = true;
-                updateAdminBadgeUI();
-                closeAdminAuthModal();
-                showToast("เข้าสู่ระบบผู้ดูแลระบบสำเร็จ! 🔓");
-                playChime(800, 'sine', 0.2);
-            } else {
-                if (errDiv) errDiv.classList.remove('hidden');
-            }
+        // Audio Effects
+        function playChime(freq = 500, type = 'sine', duration = 0.1) {
+            if (!audioEnabled) return;
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
         }
-        window.handleAdminLogin = handleAdminLogin;
+        window.playChime = playChime;
 
-        function updateAdminBadgeUI() {
-            const badge = document.getElementById('admin-login-badge');
-            const dot = document.getElementById('admin-status-dot');
-            const text = document.getElementById('admin-status-text');
-
-            if (isAdminLoggedIn) {
-                if (badge) badge.className = "bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/50 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-emerald-300 transition shadow cursor-pointer";
-                if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
-                if (text) text.innerText = "🔓 Admin Mode (ออกจากระบบ)";
-            } else {
-                if (badge) badge.className = "bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 text-amber-300 transition shadow cursor-pointer";
-                if (dot) dot.className = "w-2 h-2 rounded-full bg-amber-400";
-                if (text) text.innerText = "🔒 Guest Mode (เข้าสู่ระบบ)";
-            }
+        function playFanfare() {
+            if (!audioEnabled) return;
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                setTimeout(() => playChime(f, 'triangle', 0.25), i * 90);
+            });
         }
+        window.playFanfare = playFanfare;
 
         function toggleAudio() {
-            isAudioPlaying = !isAudioPlaying;
+            audioEnabled = !audioEnabled;
             const btn = document.getElementById('btn-audio');
             if (btn) {
-                btn.innerHTML = isAudioPlaying 
-                    ? `<i class="fa-solid fa-volume-high text-sky-400 text-xs sm:text-sm"></i>` 
-                    : `<i class="fa-solid fa-volume-xmark text-slate-500 text-xs sm:text-sm"></i>`;
+                btn.innerHTML = audioEnabled ? '<i class="fa-solid fa-volume-high text-xs sm:text-sm"></i>' : '<i class="fa-solid fa-volume-xmark text-xs sm:text-sm text-red-400"></i>';
             }
-            if (isAudioPlaying) playChime(580, 'sine', 0.15);
         }
         window.toggleAudio = toggleAudio;
 
-        function playChime(freq, type = 'sine', duration = 0.1) {
-            if (!isAudioPlaying) return;
-            try {
-                if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioContext.state === 'suspended') audioContext.resume();
-
-                const osc = audioContext.createOscillator();
-                const gain = audioContext.createGain();
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioContext.currentTime);
-
-                gain.gain.setValueAtTime(0.08, audioContext.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
-
-                osc.connect(gain);
-                gain.connect(audioContext.destination);
-
-                osc.start();
-                osc.stop(audioContext.currentTime + duration);
-            } catch(e){}
-        }
-
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(()=>{});
-            } else {
-                if (document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+                document.documentElement.requestFullscreen().catch(() => {});
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
             }
         }
         window.toggleFullscreen = toggleFullscreen;
 
-        // Background Particle Canvas
-        function initBackgroundCanvas() {
-            const canvas = document.getElementById('bg-canvas');
+        // Global Keyboard Navigation
+        window.addEventListener('keydown', (e) => {
+            if (!document.getElementById('roster-modal')?.classList.contains('hidden')) return;
+            if (!document.getElementById('admin-auth-modal')?.classList.contains('hidden')) return;
+            if (!document.getElementById('workload-detail-modal')?.classList.contains('hidden')) return;
+            if (!document.getElementById('workload-modal')?.classList.contains('hidden')) return;
+            if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+            else if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Background Particles Canvas
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas ? canvas.getContext('2d') : null;
+        let particles = [];
+
+        function resizeCanvas() {
             if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let width = canvas.width = window.innerWidth;
-            let height = canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-            const particles = Array.from({ length: 45 }, () => ({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                r: Math.random() * 2 + 0.8,
-                dx: (Math.random() - 0.5) * 0.4,
-                dy: (Math.random() - 0.5) * 0.4,
-                alpha: Math.random() * 0.5 + 0.2
-            }));
-
-            function draw() {
-                ctx.clearRect(0, 0, width, height);
-                particles.forEach(p => {
-                    p.x += p.dx;
-                    p.y += p.dy;
-                    if (p.x < 0) p.x = width;
-                    if (p.x > width) p.x = 0;
-                    if (p.y < 0) p.y = height;
-                    if (p.y > height) p.y = 0;
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(56, 189, 248, ${p.alpha})`;
-                    ctx.fill();
-                });
-                requestAnimationFrame(draw);
+        class Particle {
+            constructor() {
+                this.x = Math.random() * (canvas ? canvas.width : 1000);
+                this.y = Math.random() * (canvas ? canvas.height : 800);
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.5 + 0.1;
             }
-
-            draw();
-
-            window.addEventListener('resize', () => {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-            });
+            update() {
+                if (!canvas) return;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                if (!ctx) return;
+                ctx.fillStyle = `rgba(56, 189, 248, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
 
-        // Initialize Application on Window Load
-        window.onload = function() {
-            initBackgroundCanvas();
+        if (canvas) {
+            for (let i = 0; i < 45; i++) particles.push(new Particle());
+        }
 
-            // Firebase Initialization Safeguard
-            try {
-                if (typeof firebase !== 'undefined' && embeddedFirebaseConfig.apiKey) {
-                    firebase.initializeApp(embeddedFirebaseConfig);
-                    firebaseDb = firebase.firestore();
-                    isFirebaseConnected = true;
-
-                    const statusDot = document.getElementById('cloud-status-dot');
-                    const statusText = document.getElementById('cloud-status-text');
-                    if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse";
-                    if (statusText) statusText.innerText = "🟢 Cloud Sync Active";
-                }
-            } catch(err) {
-                console.warn("Firebase fallback mode active:", err);
+        function animateParticles() {
+            if (ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
             }
+            requestAnimationFrame(animateParticles);
+        }
 
-            // Bind Keyboard Arrows
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight' || e.key === 'PageDown') nextSlide();
-                if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
-            });
-
-            // Initialize Presentation UI
+        // Window Load Initialization
+        window.onload = function() {
             updateSlideUI();
+            updateAdminAuthUI();
+            initFirebase(embeddedFirebaseConfig);
+            refreshAllViews();
+            animateParticles();
         };
     </script>
 </body>
 </html>
+```
