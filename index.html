@@ -61,7 +61,7 @@
             pointer-events: none;
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             transform: scale(0.98);
-            padding: 5rem 1.5rem 4.5rem 1.5rem; /* pt-20 pb-18 equivalent for header clearance */
+            padding: 5rem 1.5rem 4.5rem 1.5rem; /* Header and Footer Clearance */
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -796,7 +796,7 @@
 
                     <!-- Matrix Table -->
                     <div class="flex-grow overflow-y-auto custom-scrollbar border border-white/10 rounded-2xl glass-card p-3 w-full">
-                        <table class="w-full text-left border-collapse text-lg">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
                             <thead class="bg-slate-900/90 text-sky-300 sticky top-0 z-10 border-b border-white/10">
                                 <tr>
                                     <th class="p-3 border-r border-white/10 w-1/5 font-bold">ประเภทงานหลัก</th>
@@ -831,7 +831,7 @@
                             <div class="inline-flex items-center gap-1.5 text-sky-400 text-xs font-bold uppercase tracking-wider">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i> The Grand Reveal
                             </div>
-                            <h2 class="text-xl sm:text-3xl font-extrabold text-white">การจัดทีมตรวจสอบ ประจำปี 2570</h2>
+                            <h2 class="text-xl sm:text-3xl font-extrabold text-white">ประกาศการจัดทีมตรวจสอบใหม่ประจำปี 2570</h2>
                         </div>
 
                         <div class="flex flex-wrap items-center gap-3">
@@ -1134,7 +1134,7 @@
 
     <!-- Workload Detail Modal -->
     <div id="workload-detail-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md hidden transition-opacity duration-300 p-4">
-        <div class="glass-card w-full max-w-5xl bg-slate-900 border border-sky-400/40 rounded-2xl p-6 shadow-2xl max-h-[90vh] flex flex-col">
+        <div class="glass-card w-full max-w-6xl bg-slate-900 border border-sky-400/40 rounded-2xl p-6 shadow-2xl max-h-[90vh] flex flex-col">
             <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4 shrink-0">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-lg font-bold">
@@ -1142,7 +1142,7 @@
                     </div>
                     <div>
                         <h3 class="text-xl font-bold text-white">ตารางรายละเอียดการจัดสรรภาระงานตรวจสอบปี 2570</h3>
-                        <p class="text-xs text-slate-400">แสดงรายการภาระงานทั้งหมดอย่างรายละเอียด พร้อมตัวกรองหมวดหมู่ ทีม และไตรมาส</p>
+                        <p class="text-xs text-slate-400">แสดงรายการภาระงานทั้งหมดอย่างรายละเอียด พร้อมตัวกรองหมวดหมู่ กิจกรรม ทีม ไตรมาส และปุ่มแก้ไข</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -1155,8 +1155,8 @@
                 </div>
             </div>
 
-            <!-- Filters Bar -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 bg-slate-950/60 rounded-xl border border-white/5 mb-4 text-xs sm:text-sm shrink-0">
+            <!-- Filters Bar (4 Dropdowns) -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3.5 bg-slate-950/60 rounded-xl border border-white/5 mb-4 text-xs sm:text-sm shrink-0">
                 <div>
                     <label class="block text-slate-400 mb-1">กรองตามภาระงานหลัก</label>
                     <select id="detail-filter-category" onchange="renderWorkloadDetailTable()" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700 focus:border-sky-400">
@@ -1165,6 +1165,17 @@
                         <option value="งานตรวจสอบเฉพาะด้าน">งานตรวจสอบเฉพาะด้าน</option>
                         <option value="งานตรวจสอบงบการเงิน">งานตรวจสอบงบการเงิน</option>
                         <option value="งานอื่นๆ">งานอื่นๆ</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">กรองตามกิจกรรม</label>
+                    <select id="detail-filter-activity" onchange="renderWorkloadDetailTable()" class="w-full bg-slate-900 text-white p-2 rounded-lg border border-slate-700 focus:border-sky-400">
+                        <option value="ALL">ทั้งหมดทุกกิจกรรม</option>
+                        <option value="ด้านผลการดำเนินงาน">ด้านผลการดำเนินงาน</option>
+                        <option value="ด้านการเงิน">ด้านการเงิน</option>
+                        <option value="ด้านการดำเนินงาน">ด้านการดำเนินงาน</option>
+                        <option value="ด้านการปฏิบัติตามกฎระเบียบ">ด้านการปฏิบัติตามกฎระเบียบ</option>
+                        <option value="ด้านอื่นๆ">ด้านอื่นๆ</option>
                     </select>
                 </div>
                 <div>
@@ -1194,11 +1205,13 @@
                 <table class="w-full text-left border-collapse text-xs sm:text-sm">
                     <thead class="sticky top-0 bg-slate-900 border-b border-white/10 text-sky-300 font-bold z-10">
                         <tr>
-                            <th class="p-3 border-r border-white/10 w-[30%]">รายละเอียดงาน / โครงการ</th>
-                            <th class="p-3 border-r border-white/10 w-[26%]">ประเภทภาระงานหลัก</th>
-                            <th class="p-3 border-r border-white/10 w-[16%] text-center">ทีมรับผิดชอบ</th>
-                            <th class="p-3 border-r border-white/10 w-[14%] text-center">ไตรมาส</th>
-                            <th class="p-3 w-[14%] text-right">Manday</th>
+                            <th class="p-3 border-r border-white/10 w-[24%]">รายละเอียดงาน / โครงการ</th>
+                            <th class="p-3 border-r border-white/10 w-[18%]">ประเภทภาระงานหลัก</th>
+                            <th class="p-3 border-r border-white/10 w-[18%]">กิจกรรม</th>
+                            <th class="p-3 border-r border-white/10 w-[14%] text-center">ทีมรับผิดชอบ</th>
+                            <th class="p-3 border-r border-white/10 w-[10%] text-center">ไตรมาส</th>
+                            <th class="p-3 border-r border-white/10 w-[10%] text-right">Manday</th>
+                            <th class="p-3 w-[6%] text-center">จัดการ</th>
                         </tr>
                     </thead>
                     <tbody id="workload-detail-tbody" class="divide-y divide-white/10 text-slate-300">
@@ -1331,11 +1344,11 @@
         </div>
     </div>
 
-    <!-- Workload Modal -->
+    <!-- Workload Add / Edit Modal -->
     <div id="workload-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden">
         <div class="glass-card w-full max-w-lg bg-slate-900 border border-emerald-400/30 rounded-2xl p-6 shadow-2xl">
             <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                <h3 id="workload-modal-title" class="text-lg font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-file-circle-plus text-emerald-400"></i>
                     <span>เพิ่มโครงการ / ภาระงานตรวจสอบ</span>
                 </h3>
@@ -1343,6 +1356,8 @@
             </div>
 
             <form onsubmit="saveWorkloadItem(event)" class="space-y-4 text-xs sm:text-sm">
+                <input type="hidden" id="wl-id" value="">
+
                 <div>
                     <label class="block text-slate-300 mb-1.5">ประเภทภาระงานหลัก</label>
                     <select id="wl-category" class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700">
@@ -1350,6 +1365,18 @@
                         <option value="งานตรวจสอบเฉพาะด้าน">2) งานตรวจสอบเฉพาะด้าน</option>
                         <option value="งานตรวจสอบงบการเงิน">3) งานตรวจสอบงบการเงิน</option>
                         <option value="งานอื่นๆ">4) งานอื่นๆ</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 mb-1.5">กิจกรรม (เลือกหรือไม่ก็ได้)</label>
+                    <select id="wl-activity" class="w-full bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700">
+                        <option value="">-- ไม่ระบุ --</option>
+                        <option value="ด้านผลการดำเนินงาน">ด้านผลการดำเนินงาน</option>
+                        <option value="ด้านการเงิน">ด้านการเงิน</option>
+                        <option value="ด้านการดำเนินงาน">ด้านการดำเนินงาน</option>
+                        <option value="ด้านการปฏิบัติตามกฎระเบียบ">ด้านการปฏิบัติตามกฎระเบียบ</option>
+                        <option value="ด้านอื่นๆ">ด้านอื่นๆ</option>
                     </select>
                 </div>
 
@@ -1417,22 +1444,22 @@
             { id: "m16", name: "คุณอมรเทพ", role: "ผู้ช่วยนักวิเคราะห์", oldTeamId: "old-1", newTeamId: "new-4", isLeader: false, avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=250", oldAvatar: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&q=80&w=250" }
         ];
 
-        // Initial Default Workloads Seed
+        // Initial Default Workloads Seed (with activity option)
         const initialWorkloads = [
-            { id: "w1", category: "งานตรวจสอบปกติ", title: "คณะแพทยศาสตร์", teamId: "new-1", quarter: "Q3", baseMandays: 25 },
-            { id: "w2", category: "งานตรวจสอบปกติ", title: "คณะเทคนิคการแพทย์", teamId: "new-2", quarter: "Q1", baseMandays: 20 },
-            { id: "w3", category: "งานตรวจสอบปกติ", title: "คณะทันตแพทยศาสตร์", teamId: "new-1", quarter: "Q3", baseMandays: 20 },
-            { id: "w4", category: "งานตรวจสอบเฉพาะด้าน", title: "IT Audit", teamId: "new-3", quarter: "Q2", baseMandays: 15 },
-            { id: "w5", category: "งานตรวจสอบเฉพาะด้าน", title: "ครุภัณฑ์", teamId: "new-2", quarter: "Q4", baseMandays: 15 },
-            { id: "w6", category: "งานตรวจสอบเฉพาะด้าน", title: "กองทุนสวัสดิการ", teamId: "new-4", quarter: "Q1", baseMandays: 10 },
-            { id: "w7", category: "งานตรวจสอบงบการเงิน", title: "งบการเงินมหาวิทยาลัย", teamId: "new-1", quarter: "Q2", baseMandays: 30 },
-            { id: "w8", category: "งานตรวจสอบงบการเงิน", title: "งบการเงินคณะสังคมศาสตร์", teamId: "new-1", quarter: "Q2", baseMandays: 15 },
-            { id: "w9", category: "งานตรวจสอบงบการเงิน", title: "งบการเงินคณะมนุษยศาสตร์", teamId: "new-2", quarter: "Q2", baseMandays: 15 },
-            { id: "w10", category: "งานอื่นๆ", title: "คณะกรรมการตรวจสอบ", teamId: "new-4", quarter: "Q4", baseMandays: 10 },
-            { id: "w11", category: "งานอื่นๆ", title: "ประกันคุณภาพ", teamId: "new-3", quarter: "Q3", baseMandays: 10 }
+            { id: "w1", category: "งานตรวจสอบปกติ", activity: "ด้านการดำเนินงาน", title: "คณะแพทยศาสตร์", teamId: "new-1", quarter: "Q3", baseMandays: 25 },
+            { id: "w2", category: "งานตรวจสอบปกติ", activity: "ด้านการเงิน", title: "คณะเทคนิคการแพทย์", teamId: "new-2", quarter: "Q1", baseMandays: 20 },
+            { id: "w3", category: "งานตรวจสอบปกติ", activity: "ด้านผลการดำเนินงาน", title: "คณะทันตแพทยศาสตร์", teamId: "new-1", quarter: "Q3", baseMandays: 20 },
+            { id: "w4", category: "งานตรวจสอบเฉพาะด้าน", activity: "ด้านการปฏิบัติตามกฎระเบียบ", title: "IT Audit", teamId: "new-3", quarter: "Q2", baseMandays: 15 },
+            { id: "w5", category: "งานตรวจสอบเฉพาะด้าน", activity: "ด้านการเงิน", title: "ครุภัณฑ์", teamId: "new-2", quarter: "Q4", baseMandays: 15 },
+            { id: "w6", category: "งานตรวจสอบเฉพาะด้าน", activity: "ด้านการเงิน", title: "กองทุนสวัสดิการ", teamId: "new-4", quarter: "Q1", baseMandays: 10 },
+            { id: "w7", category: "งานตรวจสอบงบการเงิน", activity: "ด้านการเงิน", title: "งบการเงินมหาวิทยาลัย", teamId: "new-1", quarter: "Q2", baseMandays: 30 },
+            { id: "w8", category: "งานตรวจสอบงบการเงิน", activity: "ด้านการเงิน", title: "งบการเงินคณะสังคมศาสตร์", teamId: "new-1", quarter: "Q2", baseMandays: 15 },
+            { id: "w9", category: "งานตรวจสอบงบการเงิน", activity: "ด้านการเงิน", title: "งบการเงินคณะมนุษยศาสตร์", teamId: "new-2", quarter: "Q2", baseMandays: 15 },
+            { id: "w10", category: "งานอื่นๆ", activity: "ด้านอื่นๆ", title: "คณะกรรมการตรวจสอบ", teamId: "new-4", quarter: "Q4", baseMandays: 10 },
+            { id: "w11", category: "งานอื่นๆ", activity: "ด้านผลการดำเนินงาน", title: "ประกันคุณภาพ", teamId: "new-3", quarter: "Q3", baseMandays: 10 }
         ];
 
-        const ADMIN_PASSWORD = "Ia135790";
+        const ADMIN_PASSWORD = "1234";
         let isAdminLoggedIn = false;
 
         let masterMembers = initialMembers;
@@ -1537,9 +1564,9 @@
         };
 
         const oldTeamMeta = {
-            "old-1": { name: "กลุ่มที่ 1 (เดิม)", headerTitle: "AUDIT 1", bgHeader: "bg-[#d6e2f0] text-slate-900 border-slate-300" },
+            "old-1": { name: "กลุ่มที่ 1 (เดิม)", headerTitle: "AUDIT 1", bgHeader: "bg-[#cbd5e1] text-slate-900 border-slate-300" },
             "old-2": { name: "กลุ่มที่ 2 (เดิม)", headerTitle: "AUDIT 2", bgHeader: "bg-[#d1fae5] text-slate-900 border-emerald-300" },
-            "old-3": { name: "กลุ่มที่ 3 (เดิม)", headerTitle: "AUDIT 3", bgHeader: "bg-[#d3d0e5] text-slate-900 border-indigo-300" }
+            "old-3": { name: "กลุ่มที่ 3 (เดิม)", headerTitle: "AUDIT 3", bgHeader: "bg-[#e0e7ff] text-slate-900 border-indigo-300" }
         };
 
         const matrixCategoryCollapsed = {
@@ -1777,13 +1804,14 @@
                     } else {
                         tasksListEl.innerHTML = teamTasks.map(t => {
                             const totalDays = (t.baseMandays || 20) * (teamMembers.length || 1);
+                            const actTag = t.activity ? `<span class="bg-sky-950/80 text-sky-300 border border-sky-500/30 px-1.5 py-0.5 rounded text-[9px] mr-1">${t.activity}</span>` : '';
                             return `
                                 <li class="p-3 bg-slate-900/80 rounded-xl border border-white/10 flex items-center justify-between text-xs hover:border-sky-400/50 transition">
                                     <div class="flex items-center gap-2">
                                         <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
                                         <div>
                                             <div class="font-bold text-white">${t.title}</div>
-                                            <div class="text-[10px] text-slate-400">${t.category} (${t.quarter || 'Q1'})</div>
+                                            <div class="text-[10px] text-slate-400">${actTag}${t.category} (${t.quarter || 'Q1'})</div>
                                         </div>
                                     </div>
                                     <span class="font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-400/30 px-2.5 py-1 rounded-lg text-[11px]">${totalDays.toLocaleString()} Mandays</span>
@@ -1801,6 +1829,7 @@
                 toggleAdminAuthModal();
                 return;
             }
+            resetWorkloadForm();
             const modal = document.getElementById('workload-modal');
             if (modal) modal.classList.remove('hidden');
             const select = document.getElementById('wl-team');
@@ -1851,16 +1880,23 @@
                     const itemsCellHtml = items.map(item => {
                         const totalItemMandays = (item.baseMandays || 20) * memberCount;
                         usedMandays += totalItemMandays;
+                        const actTag = item.activity ? `<div class="text-[9px] text-sky-300 font-normal mb-0.5"><i class="fa-solid fa-tag mr-1"></i>${item.activity}</div>` : '';
                         return `
                             <div class="bg-slate-900/90 p-2 rounded-xl border border-white/10 mb-2 text-xs relative group hover:border-sky-400 transition">
+                                ${actTag}
                                 <div class="font-semibold text-white leading-tight mb-1.5 pr-4">${item.title}</div>
                                 <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1.5 border-t border-white/5">
                                     <span class="text-sky-300 font-bold">${item.quarter || 'Q1'}</span>
                                     <span class="font-bold text-emerald-400">${totalItemMandays.toLocaleString()} Mandays</span>
                                 </div>
-                                <button onclick="deleteWorkloadItem('${item.id}')" class="absolute top-1.5 right-1.5 text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition p-0.5 cursor-pointer" title="ลบรายการ">
-                                    <i class="fa-solid fa-xmark"></i>
-                                </button>
+                                <div class="absolute top-1.5 right-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+                                    <button onclick="editWorkloadItem('${item.id}')" class="text-sky-400 hover:text-sky-300 p-0.5 cursor-pointer" title="แก้ไขรายการ">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button onclick="deleteWorkloadItem('${item.id}')" class="text-red-400 hover:text-red-300 p-0.5 cursor-pointer" title="ลบรายการ">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
                             </div>
                         `;
                     }).join('');
@@ -1895,6 +1931,7 @@
                     const memberCount = teamMembers.length || 1;
                     return {
                         "ประเภทภาระงานหลัก": w.category,
+                        "กิจกรรม": w.activity || "",
                         "รายละเอียดงาน / โครงการ": w.title,
                         "ทีมรับผิดชอบ": newTeamMeta[w.teamId]?.name || w.teamId,
                         "ไตรมาส": w.quarter || 'Q1',
@@ -1946,6 +1983,7 @@
                     const importedWorkloads = jsonRows.map((row, idx) => ({
                         id: 'w_imp_' + Date.now() + '_' + idx,
                         category: row["ประเภทภาระงานหลัก"] || row["category"] || "งานตรวจสอบปกติ",
+                        activity: row["กิจกรรม"] || row["activity"] || "",
                         title: row["รายละเอียดงาน / โครงการ"] || row["title"] || ("งานนำเข้า " + (idx+1)),
                         teamId: teamMap[row["ทีมรับผิดชอบ"]] || row["teamId"] || "new-1",
                         quarter: row["ไตรมาส"] || row["quarter"] || "Q1",
@@ -1988,20 +2026,22 @@
             if (!tbody) return;
 
             const catFilter = document.getElementById('detail-filter-category')?.value || 'ALL';
+            const actFilter = document.getElementById('detail-filter-activity')?.value || 'ALL';
             const teamFilter = document.getElementById('detail-filter-team')?.value || 'ALL';
             const quarterFilter = document.getElementById('detail-filter-quarter')?.value || 'ALL';
 
             let filteredList = masterWorkloads.filter(w => {
                 const catMatch = (catFilter === 'ALL' || w.category === catFilter);
+                const actMatch = (actFilter === 'ALL' || (w.activity || '') === actFilter);
                 const teamMatch = (teamFilter === 'ALL' || w.teamId === teamFilter);
                 const qMatch = (quarterFilter === 'ALL' || (w.quarter || 'Q1') === quarterFilter);
-                return catMatch && teamMatch && qMatch;
+                return catMatch && actMatch && teamMatch && qMatch;
             });
 
             if (countEl) countEl.innerText = filteredList.length;
 
             if (filteredList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-500 italic">ไม่พบข้อมูลที่ตรงตามเงื่อนไขที่กรอง</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-500 italic">ไม่พบข้อมูลที่ตรงตามเงื่อนไขที่กรอง</td></tr>`;
                 return;
             }
 
@@ -2022,11 +2062,17 @@
                     <tr class="hover:bg-slate-800/50 transition">
                         <td class="p-3 border-r border-white/10 font-bold text-white">${w.title}</td>
                         <td class="p-3 border-r border-white/10 text-slate-300">${w.category}</td>
-                        <td class="p-3 border-r border-white/10 text-center w-[16%]">
+                        <td class="p-3 border-r border-white/10 text-slate-300">${w.activity || '<span class="text-slate-600 italic">-</span>'}</td>
+                        <td class="p-3 border-r border-white/10 text-center">
                             <span class="px-2.5 py-1 rounded-full text-xs font-semibold border ${teamMeta.bgLight}">${teamMeta.name}</span>
                         </td>
-                        <td class="p-3 border-r border-white/10 text-center w-[14%] font-bold text-sky-300">${quarterLabels[w.quarter || 'Q1']}</td>
-                        <td class="p-3 text-right w-[14%] font-bold text-emerald-400">${totalMandays.toLocaleString()} Mandays</td>
+                        <td class="p-3 border-r border-white/10 text-center font-bold text-sky-300">${quarterLabels[w.quarter || 'Q1']}</td>
+                        <td class="p-3 border-r border-white/10 text-right font-bold text-emerald-400">${totalMandays.toLocaleString()} Mandays</td>
+                        <td class="p-3 text-center">
+                            <button onclick="editWorkloadItem('${w.id}')" class="bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-400/40 text-xs px-2.5 py-1 rounded-lg font-bold transition cursor-pointer" title="แก้ไข">
+                                <i class="fa-solid fa-pen-to-square mr-1"></i> แก้ไข
+                            </button>
+                        </td>
                     </tr>
                 `;
             }).join('');
@@ -2140,12 +2186,14 @@
                                 `;
                             }).join('');
 
+                            const actSpan = task.activity ? `<span class="text-[10px] text-sky-400 font-semibold bg-sky-950/60 px-2 py-0.5 rounded border border-sky-500/20 mr-1.5">${task.activity}</span>` : '';
+
                             html += `
                                 <tr class="hover:bg-slate-800/40 transition">
                                     <td class="py-3 pl-8 pr-3 font-medium text-slate-200 text-xs sm:text-sm bg-slate-950/40 rounded-l-xl border-l border-y border-white/5">
                                         <div class="flex items-center gap-2">
                                             <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shrink-0"></span>
-                                            <span class="truncate">${task.title}</span>
+                                            <span class="truncate">${actSpan}${task.title}</span>
                                         </div>
                                     </td>
                                     ${cellsHtml}
@@ -2191,12 +2239,33 @@
         }
         window.handleAdminLogin = handleAdminLogin;
 
-        // Workload Modal Handlers
+        function resetWorkloadForm() {
+            const idInput = document.getElementById('wl-id');
+            const catSelect = document.getElementById('wl-category');
+            const actSelect = document.getElementById('wl-activity');
+            const titleInput = document.getElementById('wl-title');
+            const teamSelect = document.getElementById('wl-team');
+            const qSelect = document.getElementById('wl-quarter');
+            const mInput = document.getElementById('wl-mandays');
+            const modalTitle = document.getElementById('workload-modal-title');
+
+            if (idInput) idInput.value = '';
+            if (catSelect) catSelect.value = 'งานตรวจสอบปกติ';
+            if (actSelect) actSelect.value = '';
+            if (titleInput) titleInput.value = '';
+            if (teamSelect) teamSelect.value = 'new-1';
+            if (qSelect) qSelect.value = 'Q1';
+            if (mInput) mInput.value = '20';
+            if (modalTitle) modalTitle.innerHTML = `<i class="fa-solid fa-file-circle-plus text-emerald-400"></i><span>เพิ่มโครงการ / ภาระงานตรวจสอบ</span>`;
+        }
+        window.resetWorkloadForm = resetWorkloadForm;
+
         function openAddProjectModal() {
             if (!isAdminLoggedIn) {
                 toggleAdminAuthModal();
                 return;
             }
+            resetWorkloadForm();
             const modal = document.getElementById('workload-modal');
             if (modal) modal.classList.remove('hidden');
         }
@@ -2208,31 +2277,79 @@
         }
         window.closeAddProjectModal = closeAddProjectModal;
 
+        function editWorkloadItem(id) {
+            if (!isAdminLoggedIn) {
+                toggleAdminAuthModal();
+                return;
+            }
+            const item = masterWorkloads.find(w => w.id === id);
+            if (!item) return;
+
+            const idInput = document.getElementById('wl-id');
+            const catSelect = document.getElementById('wl-category');
+            const actSelect = document.getElementById('wl-activity');
+            const titleInput = document.getElementById('wl-title');
+            const teamSelect = document.getElementById('wl-team');
+            const qSelect = document.getElementById('wl-quarter');
+            const mInput = document.getElementById('wl-mandays');
+            const modalTitle = document.getElementById('workload-modal-title');
+
+            if (idInput) idInput.value = item.id;
+            if (catSelect) catSelect.value = item.category || 'งานตรวจสอบปกติ';
+            if (actSelect) actSelect.value = item.activity || '';
+            if (titleInput) titleInput.value = item.title || '';
+            if (teamSelect) teamSelect.value = item.teamId || 'new-1';
+            if (qSelect) qSelect.value = item.quarter || 'Q1';
+            if (mInput) mInput.value = item.baseMandays || 20;
+
+            if (modalTitle) modalTitle.innerHTML = `<i class="fa-solid fa-pen-to-square text-sky-400"></i><span>แก้ไขโครงการ / ภาระงานตรวจสอบ</span>`;
+
+            closeWorkloadDetailModal();
+            const modal = document.getElementById('workload-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+        window.editWorkloadItem = editWorkloadItem;
+
         function saveWorkloadItem(e) {
             e.preventDefault();
+            const id = document.getElementById('wl-id')?.value;
             const category = document.getElementById('wl-category')?.value;
+            const activity = document.getElementById('wl-activity')?.value;
             const title = document.getElementById('wl-title')?.value;
             const teamId = document.getElementById('wl-team')?.value;
             const quarter = document.getElementById('wl-quarter')?.value;
             const baseMandays = parseInt(document.getElementById('wl-mandays')?.value) || 20;
 
-            const newItem = {
-                id: 'w_' + Date.now(),
-                category,
-                title,
-                teamId,
-                quarter,
-                baseMandays
-            };
+            if (id) {
+                const item = masterWorkloads.find(w => w.id === id);
+                if (item) {
+                    item.category = category;
+                    item.activity = activity;
+                    item.title = title;
+                    item.teamId = teamId;
+                    item.quarter = quarter;
+                    item.baseMandays = baseMandays;
+                }
+            } else {
+                const newItem = {
+                    id: 'w_' + Date.now(),
+                    category,
+                    activity,
+                    title,
+                    teamId,
+                    quarter,
+                    baseMandays
+                };
+                masterWorkloads.push(newItem);
+            }
 
-            masterWorkloads.push(newItem);
             try {
                 localStorage.setItem('audit_workloads', JSON.stringify(masterWorkloads));
             } catch(err){}
 
             closeAddProjectModal();
             refreshAllViews();
-            showToast("บันทึกภาระงานใหม่เรียบร้อยแล้ว! 📌");
+            showToast("บันทึกภาระงานเรียบร้อยแล้ว! 📌");
             playChime(600, 'sine', 0.15);
         }
         window.saveWorkloadItem = saveWorkloadItem;
@@ -2251,7 +2368,6 @@
         }
         window.deleteWorkloadItem = deleteWorkloadItem;
 
-        // Roster Management Modal Handlers
         function openRosterModal() {
             if (!isAdminLoggedIn) {
                 toggleAdminAuthModal();
@@ -2479,7 +2595,6 @@
         }
         window.toggleFullscreen = toggleFullscreen;
 
-        // Initialize on Window Load
         window.onload = function() {
             updateSlideUI();
             
